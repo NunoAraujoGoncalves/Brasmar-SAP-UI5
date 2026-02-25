@@ -1,0 +1,13 @@
+{
+  "name": "sap-m-sample--p-d-f-viewer-embedded",
+  "version": "1.0.0",
+  "author": "SAP SE",
+  "description": "Sample: PDF Viewer - Embedded",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4"
+  }
+}
