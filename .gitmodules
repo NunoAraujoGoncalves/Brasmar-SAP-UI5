@@ -1,0 +1,3 @@
+[submodule "sapui5-development-learning-journey"]
+	path = sapui5-development-learning-journey
+	url = https://github.com/SAP-samples/sapui5-development-learning-journey.git
