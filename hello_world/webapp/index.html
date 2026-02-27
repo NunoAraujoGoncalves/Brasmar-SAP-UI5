@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Exercise Application</title>
+    <style>
+        html, body, body > div, #container, #container-uiarea {
+            height: 100%;
+        }
+    </style>
+    <!-- data-sap-ui-theme="sap_horizon"  -->
+    <script
+        id="sap-ui-bootstrap"
+        src="resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_fiori_3"  
+        data-sap-ui-resource-roots='{
+            "helloworld": "./"
+        }'
+        data-sap-ui-on-init="module:sap/ui/core/ComponentSupport"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-compat-version="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-frame-options="trusted"
+    ></script>
+   
+    <script>
+        var oText = new sap.m.Text({text: "Hello World"});
+        oText.placeAt("content");
+    </script>
+    
+</head>
+<body class="sapUiBody sapUiSizeCompact" id="content">
+    <div
+        data-sap-ui-component
+        data-name="helloworld"
+        data-id="container"
+        data-settings='{"id" : "helloworld"}'
+        data-handle-validation="true"
+    ></div>
+    <div>Hello World!</div>
+</body>
+</html>
