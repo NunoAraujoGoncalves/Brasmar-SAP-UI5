@@ -15,14 +15,8 @@
         id="sap-ui-bootstrap"
         src="resources/sap-ui-core.js"
         data-sap-ui-theme="sap_fiori_3"  
-        data-sap-ui-resource-roots='{
-            "helloworld": "./"
-        }'
-        data-sap-ui-on-init="module:sap/ui/core/ComponentSupport"
         data-sap-ui-libs="sap.m"
-        data-sap-ui-compat-version="edge"
-        data-sap-ui-async="true"
-        data-sap-ui-frame-options="trusted"
+        data-sap-ui-compatVersion="edge"
     ></script>
    
     <script>
@@ -31,14 +25,6 @@
     </script>
     
 </head>
-<body class="sapUiBody sapUiSizeCompact" id="content">
-    <div
-        data-sap-ui-component
-        data-name="helloworld"
-        data-id="container"
-        data-settings='{"id" : "helloworld"}'
-        data-handle-validation="true"
-    ></div>
-    <div>Hello World!</div>
+<body class="sapUiBody" id="content">
 </body>
 </html>
