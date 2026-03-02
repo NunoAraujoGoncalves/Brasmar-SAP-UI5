@@ -12,7 +12,9 @@
               <Toolbar>
                 <content>
                   <ToolbarSpacer />
-                  <Button icon="sap-icon://create" text="Create Customer" press=".onSave" />
+                  <Button icon="sap-icon://create" text="Create Customer" press=".onSave"
+                          enabled="{= ${customer>/CustomerName} !== undefined &amp;&amp;
+                                      ${customer>/CustomerName}.length > 0 }" />
                 </content>
               </Toolbar>
             </f:toolbar>
@@ -21,7 +23,7 @@
               <Label text="Form" />
               <Input value="{customer>/Form}" />
               <Label text="Customer Name" />
-              <Input value="{customer>/CustomerName}" />
+              <Input value="{customer>/CustomerName}" valueLiveUpdate="true" />
               <Label text="Discount" />
               <Input value="{ path: 'customer>/Discount',
                               type: 'sap.ui.model.type.Integer',
@@ -152,7 +154,8 @@
                                                {path: 'ForeignCurrency'} ],
                                       type: 'sap.ui.model.type.Currency',
                                       formatOptions: {showMeasure: false} }" unit="{ForeignCurrency}"/>
-              <Text text="{IsCancelled}"/>
+              <core:Icon src="{= ${IsCancelled} === 'X' ? 'sap-icon://cancel' : 'sap-icon://accept' }"
+                         tooltip="{= ${IsCancelled} === 'X' ? 'Cancelada' : 'Não cancelada' }" />
             </cells>
           </ColumnListItem>
         </items>
