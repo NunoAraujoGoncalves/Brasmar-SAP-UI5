@@ -1,7 +1,7 @@
 {
   "_version": "1.76.0",
   "sap.app": {
-    "id": "helloworld",
+    "id": "sap.training.exc",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -89,7 +89,7 @@
       }
     },
     "rootView": {
-      "viewName": "helloworld.view.App",
+      "viewName": "sap.training.exc.view.App",
       "type": "XML",
       "id": "App",
       "async": true
