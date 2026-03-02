@@ -2,7 +2,7 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.ui.layout.form"
   xmlns:core="sap.ui.core"
-  xmlns="sap.m">
+  xmlns="sap.m" core:require="{formatter: 'sap/training/exc/model/formatter'}">
   <Page title="Flight Customers" backgroundDesign="Transparent">
     <content>
       <Panel headerText="New Customer" expandable="true" expanded="true" class="sapUiResponsiveMargin sapUiHideOnPhone" width="auto">
@@ -45,8 +45,7 @@
         </content>
       </Panel>
 
-      <Table headerText="Customers" growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto" items="{/Customers}"
-             mode="SingleSelectLeft" selectionChange=".onCustomerChange">
+      <Table headerText="Customers" growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto" items="{/Customers}" mode="SingleSelectLeft" selectionChange=".onCustomerChange">
         <columns>
           <Column>
             <header>
@@ -135,12 +134,12 @@
                                          type: 'sap.ui.model.type.Date',
                                          formatOptions: {source: {pattern: 'yyy-MM-dd'},
                                                          style: 'medium'} }"/>
-              <Text text="{Class}"/>
+              <Text text="{ path: 'Class',
+                            formatter: 'formatter.classText' }"/>
               <ObjectNumber number="{ parts: [ {path: 'ForeignCurrencyPayment' },
                                                {path: 'ForeignCurrency'} ],
                                       type: 'sap.ui.model.type.Currency',
-                                      formatOptions: {showMeasure: false} }" 
-                            unit="{ForeignCurrency}"/>
+                                      formatOptions: {showMeasure: false} }" unit="{ForeignCurrency}"/>
               <Text text="{IsCancelled}"/>
             </cells>
           </ColumnListItem>
