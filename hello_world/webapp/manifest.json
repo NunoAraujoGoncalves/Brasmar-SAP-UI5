@@ -51,6 +51,10 @@
         "settings": {
           "bundleName": "helloworld.i18n.i18n"
         }
+      },
+      "": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data.json"
       }
     },
     "resources": {
@@ -69,8 +73,7 @@
         "type": "View",
         "viewType": "XML",
         "path": "helloworld.view",
-        "async": true,
-        "viewPath": "helloworld.view"
+        "async": true
       },
       "routes": [
         {

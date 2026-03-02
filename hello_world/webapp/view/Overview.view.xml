@@ -11,37 +11,84 @@
             <f:toolbar>
               <Toolbar>
                 <content>
-                  <ToolbarSpacer/>
-                  <Button icon="sap-icon://create" text="Create Customer" press=".onSave"/>
+                  <ToolbarSpacer />
+                  <Button icon="sap-icon://create" text="Create Customer" press=".onSave" />
                 </content>
               </Toolbar>
             </f:toolbar>
             <f:content>
-              <core:Title text="General Data"/>
-              <Label text="Form"/>
-              <Input value="{customer>/Form}"/>
-              <Label text="Customer Name"/>
-              <Input value="{customer>/CustomerName}"/>
-              <Label text="Discount"/>
-              <Input value="{customer>/Discount}"/>
-              <core:Title text="Address Data"/>
-              <Label text="Street"/>
-              <Input value="{customer>/Street}"/>
-              <Label text="Post Code"/>
-              <Input value="{customer>/PostCode}"/>
-              <Label text="City"/>
-              <Input value="{customer>/City}"/>
-              <Label text="Country"/>
-              <Input value="{customer>/Country}"/>
-              <core:Title text="Contact Data"/>
-              <Label text="Email"/>
-              <Input value="{customer>/Email}"/>
-              <Label text="Telephone"/>
-              <Input value="{customer>/Telephone}"/>
+              <core:Title text="General Data" />
+              <Label text="Form" />
+              <Input value="{customer>/Form}" />
+              <Label text="Customer Name" />
+              <Input value="{customer>/CustomerName}" />
+              <Label text="Discount" />
+              <Input value="{customer>/Discount}" />
+              <core:Title text="Address Data" />
+              <Label text="Street" />
+              <Input value="{customer>/Street}" />
+              <Label text="Post Code" />
+              <Input value="{customer>/PostCode}" />
+              <Label text="City" />
+              <Input value="{customer>/City}" />
+              <Label text="Country" />
+              <Input value="{customer>/Country}" />
+              <core:Title text="Contact Data" />
+              <Label text="Email" />
+              <Input value="{customer>/Email}" />
+              <Label text="Telephone" />
+              <Input value="{customer>/Telephone}" />
             </f:content>
           </f:SimpleForm>
         </content>
       </Panel>
+
+      <Table headerText="Customers" growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto" items="{/Customers}">
+        <columns>
+          <Column>
+            <header>
+              <Text text="Customer Name" />
+            </header>
+          </Column>
+          <Column>
+            <header>
+              <Text text="Street" />
+            </header>
+          </Column>
+          <Column>
+            <header>
+              <Text text="Post Code" />
+            </header>
+          </Column>
+          <Column>
+            <header>
+              <Text text="City" />
+            </header>
+          </Column>
+          <Column>
+            <header>
+              <Text text="Country" />
+            </header>
+          </Column>
+          <Column>
+            <header>
+              <Text text="Email" />
+            </header>
+          </Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <ObjectIdentifier title="{CustomerName}" />
+              <Text text="{Street}" />
+              <Text text="{PostCode}" />
+              <Text text="{City}" />
+              <Text text="{Country}" />
+              <Text text="{Email}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
     </content>
   </Page>
 </mvc:View>
