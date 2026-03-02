@@ -23,7 +23,9 @@
               <Label text="Customer Name" />
               <Input value="{customer>/CustomerName}" />
               <Label text="Discount" />
-              <Input value="{customer>/Discount}" />
+              <Input value="{ path: 'customer>/Discount',
+                              type: 'sap.ui.model.type.Integer',
+                              constraints: {minimum: 0, maximum: 100} }" />
               <core:Title text="Address Data" />
               <Label text="Street" />
               <Input value="{customer>/Street}" />
@@ -129,9 +131,16 @@
             <cells>
               <ObjectIdentifier title="{AirlineID}"/>
               <ObjectIdentifier title="{ConnectionNumber}"/>
-              <ObjectIdentifier title="{FlightDate}"/>
+              <ObjectIdentifier title="{ path: 'FlightDate',
+                                         type: 'sap.ui.model.type.Date',
+                                         formatOptions: {source: {pattern: 'yyy-MM-dd'},
+                                                         style: 'medium'} }"/>
               <Text text="{Class}"/>
-              <ObjectNumber number="{ForeignCurrencyPayment}" unit="{ForeignCurrency}"/>
+              <ObjectNumber number="{ parts: [ {path: 'ForeignCurrencyPayment' },
+                                               {path: 'ForeignCurrency'} ],
+                                      type: 'sap.ui.model.type.Currency',
+                                      formatOptions: {showMeasure: false} }" 
+                            unit="{ForeignCurrency}"/>
               <Text text="{IsCancelled}"/>
             </cells>
           </ColumnListItem>
