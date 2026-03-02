@@ -5,8 +5,7 @@
   xmlns="sap.m">
   <Page title="Flight Customers" backgroundDesign="Transparent">
     <content>
-      <Panel headerText="New Customer" expandable="true" expanded="true"
-             class="sapUiResponsiveMargin sapUiHideOnPhone" width="auto">
+      <Panel headerText="New Customer" expandable="true" expanded="true" class="sapUiResponsiveMargin sapUiHideOnPhone" width="auto">
         <content>
           <f:SimpleForm layout="ColumnLayout" editable="true">
             <f:toolbar>
@@ -20,25 +19,25 @@
             <f:content>
               <core:Title text="General Data"/>
               <Label text="Form"/>
-              <Input value=""/>
+              <Input value="{customer>/Form}"/>
               <Label text="Customer Name"/>
-              <Input value=""/>
+              <Input value="{customer>/CustomerName}"/>
               <Label text="Discount"/>
-              <Input value=""/>
+              <Input value="{customer>/Discount}"/>
               <core:Title text="Address Data"/>
               <Label text="Street"/>
-              <Input value=""/>
+              <Input value="{customer>/Street}"/>
               <Label text="Post Code"/>
-              <Input value=""/>
+              <Input value="{customer>/PostCode}"/>
               <Label text="City"/>
-              <Input value=""/>
+              <Input value="{customer>/City}"/>
               <Label text="Country"/>
-              <Input value=""/>
+              <Input value="{customer>/Country}"/>
               <core:Title text="Contact Data"/>
               <Label text="Email"/>
-              <Input value=""/>
+              <Input value="{customer>/Email}"/>
               <Label text="Telephone"/>
-              <Input value=""/>
+              <Input value="{customer>/Telephone}"/>
             </f:content>
           </f:SimpleForm>
         </content>

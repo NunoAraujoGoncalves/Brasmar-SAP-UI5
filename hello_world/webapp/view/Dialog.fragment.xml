@@ -3,10 +3,10 @@
     xmlns:core="sap.ui.core">
     <Dialog id="dialog" title="Info" type="Message">
         <content>
-            <Text text="Customer data is later saved via an OData service."/>
+            <Text text="Customer {customer>/CustomerName} is later saved via an OData service."/>
         </content>
         <beginButton>
-            <Button text="Ok!" press=".onCloseDialog" />
+            <Button text="OK" press=".onCloseDialog" />
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>
