@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: sap.training.exc
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap
+            url: https://apps4dq-01.vigent.pt:44300
+            client: '300'
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        flp:
+          theme: sap_horizon
+    - name: ui5-tooling-transpile-middleware
+      afterMiddleware: compression
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
+        excludePatterns:
+          - /Component-preload.js    
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        service:
+          urlPath: /sap/opu/odata4/sap/ux_ui_customer_o4/srvd/sap/ux_ui_customer/0001
+          metadataXmlPath: ./webapp/localService/metadata.xml
+          mockdataRootPath: ./webapp/localService/data
+          generateMockData: true
+        annotations: []
+builder:
+  customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
