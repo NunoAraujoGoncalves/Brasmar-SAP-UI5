@@ -93,22 +93,51 @@
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
-        "path": "helloworld.view",
-        "async": true
+        "path": "sap.training.exc.view",
+        "async": true,
+        "bypassed": {
+          "target": [
+            "notFound"
+          ]
+        }
       },
       "routes": [
         {
-          "name": "RouteHelloWorld",
-          "pattern": ":?query:",
+          "name": "overview",
+          "pattern": "",
           "target": [
-            "TargetHelloWorld"
+            "overview"
+          ]
+        },
+        {
+          "name": "detail",
+          "pattern": "detail/{customerId}",
+          "target": [
+            "detail"
           ]
         }
       ],
       "targets": {
-        "TargetHelloWorld": {
-          "id": "HelloWorld",
-          "name": "HelloWorld"
+        "overview": {
+          "Id": "overview",
+          "type": "View",
+          "name": "Overview",
+          "viewName": "Overview",
+          "viewLevel": 1
+        },
+        "detail": {
+          "Id": "detail",
+          "type": "View",
+          "name": "Detail",
+          "viewName": "Detail",
+          "viewLevel": 2
+        },
+        "notFound": {
+          "Id": "notFound",
+          "type": "View",
+          "name": "NotFound",
+          "viewName": "NotFound",
+          "transition": "show"
         }
       }
     },

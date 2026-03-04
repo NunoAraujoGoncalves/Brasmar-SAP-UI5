@@ -21,7 +21,7 @@ sap.ui.define([
                 this.setModel(oDeviceModel, "device");
 
                 // enable routing
-                //this.getRouter().initialize();
+                this.getRouter().initialize();
             },
 
             getContentDensityClass: function () {

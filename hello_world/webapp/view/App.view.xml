@@ -4,10 +4,9 @@
     <Shell>
         <App backgroundImage="img/background.png"
              backgroundOpacity="1"
-             backgroundRepeat="false">
-            <pages>
-                <mvc:XMLView viewName="sap.training.exc.view.Overview"/>
-            </pages>
+             backgroundRepeat="false"
+             id="app">
+            
         </App>
     </Shell>
 
