@@ -17,7 +17,7 @@
         </columns>
       
         <items>
-              <ColumnListItem id="carrcolumnListItem">
+              <ColumnListItem id="carrcolumnListItem" press="onPress" type="Navigation">
                 <cells>
                   <ObjectIdentifier id="carrobjectIdentifier" title="{Carrid}" />
                   <Text id="carrnametext" text="{Carrname}" />
