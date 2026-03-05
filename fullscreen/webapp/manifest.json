@@ -1,5 +1,5 @@
 {
-  "_version": "1.60.0",
+  "_version": "1.6.0",
   "sap.app": {
     "id": "student.com.sap.training.advancedsapui5.fullscreen",
     "type": "application",
@@ -83,7 +83,8 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "student.com.sap.training.advancedsapui5.fullscreen.view",
+        "type": "View",
+        "path": "student.com.sap.training.advancedsapui5.fullscreen.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false,
@@ -113,18 +114,24 @@
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "Carrier",
+          "Id": "Carrier",
+          "type": "View",
+          "name": "Carrier",
           "viewName": "Carrier"
         },
         "flights": {
           "viewType": "XML",
           "transition": "slide",
-          "viewId": "Flights",
+          "Id": "Flights",
+          "type": "View",
+          "name": "Flights",
           "viewName": "Flights",
           "viewLevel": 2
         },
         "notFound": {
-          "viewId": "NotFound",
+          "Id": "NotFound",
+          "type": "View",
+          "name": "NotFound",
           "viewName": "NotFound",
           "transition": "show"
         }
