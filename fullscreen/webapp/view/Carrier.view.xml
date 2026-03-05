@@ -7,10 +7,10 @@
         
         <columns>
          
-            <Column id="idcolumn">
+            <Column id="idcolumn" minScreenWidth="Tablet" demandPopin="true">
                 <Text id="idheader" text="{i18n>columnId}"/>
             </Column>
-            <Column id="namecolumn">
+            <Column id="namecolumn" minScreenWidth="Tablet" demandPopin="true">
                 <Text id="nameheader" text="{i18n>columnName}"/>
             </Column>
       

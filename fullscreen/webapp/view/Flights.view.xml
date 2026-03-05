@@ -37,16 +37,16 @@
                 </headerToolbar>
                 
                 <columns>
-                    <Column id="flcarrnamecolumn">
+                    <Column id="flcarrnamecolumn" width="12em">
                         <Text id="flcarrnameheader" text="{i18n>carriername}" />
                     </Column>
-                    <Column id="fldatecolumn">
+                    <Column id="fldatecolumn" minScreenWidth="Tablet" demandPopin="true">
                         <Text id="fldateheader" text="{i18n>flightdate}" />
                     </Column>
-                    <Column id="flseatmaxcolumn">
+                    <Column id="flseatmaxcolumn" minScreenWidth="Tablet" demandPopin="true">
                         <Text id="seatmaxheader" text="{i18n>seatmax}" />
                     </Column>
-                    <Column id="flseatocccolumn">
+                    <Column id="flseatocccolumn" hAlign="Right">
                         <Text id="seatoccheader" text="{i18n>seatocc}" />
                     </Column>
                 </columns>
