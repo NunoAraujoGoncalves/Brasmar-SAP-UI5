@@ -88,12 +88,12 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "student.com.sap.training.advancedsapui5.listdetail.view",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "clearControlAggregation": false,
+        "controlAggregation": "beginColumnPages",
+        "controlId": "layout",
+        "clearControlAggregation": true,
         "transition": "slide",
         "bypassed": {
-          "target": ["notFound"]
+          "target": ["overview","notFound"]
         }
       },
       "routes": [
@@ -109,14 +109,15 @@
           "pattern": "carriers/{carrid}",
           "titleTarget": "",
           "greedy": false,
-          "target": ["flights"]
+          "target": ["overview", "flights"]
         }
       ],
       "targets": {
         "overview": {
           "viewType": "XML",
           "transition": "slide",
-          "clearControlAggregation": false,
+          "ControlAggregation": "beginColumnPages",
+          "viewLevel": 1,
           "viewId": "Carrier",
           "viewName": "Carrier"
         },
@@ -125,12 +126,14 @@
           "transition": "slide",
           "viewId": "Flights",
           "viewName": "Flights",
-          "viewLevel": 2
+          "viewLevel": 2,
+          "controlAggregation": "midColumnPages"
         },
         "notFound": {
           "viewId": "NotFound",
           "viewName": "NotFound",
-          "transition": "show"
+          "transition": "show",
+          "controlAggregation": "midColumnPages"
         }
       }
     },
