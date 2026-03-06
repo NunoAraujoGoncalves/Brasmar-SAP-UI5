@@ -1,14 +1,16 @@
 <mvc:View controllerName="student.com.sap.training.advancedsapui5.fullscreen.controller.Flights"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m" xmlns:l="sap.ui.layout">
-    
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:cust="student.com.sap.training.advancedsapui5.fullscreen.control">
+
     <Page id="idFlightsPage" navButtonPress="onNavBack" showNavButton="true" title="{Carrname}">
-      
+
         <content>
             <l:VerticalLayout id="verticalLayout">
-                
+
                 <ObjectHeader id="objectHeader" title="{Carrname}" number="" numberUnit="{Currcode}" titleHref="{Url}">
-                    
+
                     <attributes>
                         <ObjectAttribute id="objectAttribute1" text="{Carrid}"/>
                         <ObjectAttribute id="objectAttribute2" text="{Url}"/>
@@ -20,12 +22,9 @@
 
             </l:VerticalLayout>
 
-            
-            <Table id="idFlights" items="{path: 'to_Flight', sorter: {path: 'Carrid'}}"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10">
-                    
+
+            <Table id="idFlights" items="{path: 'to_Flight', sorter: {path: 'Carrid'}}" mode="SingleSelectMaster" growing="true" growingThreshold="10">
+
                 <headerToolbar>
 
                     <Toolbar id="toolbar1">
@@ -35,7 +34,7 @@
                     </Toolbar>
 
                 </headerToolbar>
-                
+
                 <columns>
                     <Column id="flcarrnamecolumn" width="12em">
                         <Text id="flcarrnameheader" text="{i18n>carriername}" />
@@ -49,8 +48,11 @@
                     <Column id="flseatocccolumn" hAlign="Right">
                         <Text id="seatoccheader" text="{i18n>seatocc}" />
                     </Column>
+                    <Column id="flbooking" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                        <Text id="flbookingtext" text="{i18n>bookaction}"/>
+                    </Column>
                 </columns>
-                
+
                 <items>
                     <ColumnListItem id="flcolumnListItem">
                         <cells>
@@ -58,6 +60,10 @@
                             <Text id="fldatetext" text="{path: 'Fldate', type: 'sap.ui.model.type.Date'}" />
                             <Text id="flseatsmaxtext" text="{Seatsmax}" />
                             <Text id="flseatsocctext" text="{Seatsocc}" />
+                            <cust:HoverButton id="hoverButton1" text="{i18n>bookaction}" 
+                                  allowHover="true" 
+                                  hoverText="{=${Seatsmax} - ${Seatsocc}}" 
+                                  hover="onHover" />
                         </cells>
                     </ColumnListItem>
                 </items>

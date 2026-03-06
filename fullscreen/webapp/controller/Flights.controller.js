@@ -1,7 +1,8 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast"
 ],
-    function (Controller) {
+    function (Controller, MessageToast) {
         "use strict";
 
         return Controller.extend("student.com.sap.training.advancedsapui5.fullscreen.controller.Flights", {
@@ -15,7 +16,7 @@ sap.ui.define([
                 return sap.ui.core.UIComponent.getRouterFor(this);
             },
 
-            _onObjectMatched: function(oEvent) {
+            _onObjectMatched: function (oEvent) {
                 var oArgs = oEvent.getParameter("arguments");
                 this._sCarridId = oArgs.carrid;
                 var oView = this.getView();
@@ -36,7 +37,7 @@ sap.ui.define([
 
             _onBindingChange: function () {
                 var oElementBinding;
-                oElementBinding = this.getView().getElementBinding();                
+                oElementBinding = this.getView().getElementBinding();
                 //Se element binding é vazio e nao tem contexto
                 if (oElementBinding && !oElementBinding.getBoundContext()) {
                     this.getRouter().getTargets().display("notFound");
@@ -51,8 +52,13 @@ sap.ui.define([
                 if (sPreviousHash !== undefined) {
                     window.history.go(-1);
                 } else {
-                    this.getRouter().navTo("overview",true /* nao grava no historico de calls*/);
+                    this.getRouter().navTo("overview", true /* nao grava no historico de calls*/);
                 }
+            },
+
+            onHover: function (evt) {
+                var sText = this.getOwnerComponent().getModel("i18n").getProperty("msgSeatsAv");
+                MessageToast.show(evt.getSource().getHoverText() + " " + sText, { duration: 1000 });
             }
         });
     });
