@@ -87,8 +87,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "type": "View",
-        "Path": "student.com.sap.training.advancedsapui5.listdetail.view",
+        "viewPath": "student.com.sap.training.advancedsapui5.listdetail.view",
         "controlAggregation": "beginColumnPages",
         "controlId": "layout",
         "clearControlAggregation": true,
@@ -110,7 +109,7 @@
           "pattern": "carriers/{carrid}",
           "titleTarget": "",
           "greedy": false,
-          "target": ["overview","flights"]
+          "target": ["overview", "flights"]
         }
       ],
       "targets": {
@@ -119,9 +118,7 @@
           "transition": "slide",
           "ControlAggregation": "beginColumnPages",
           "viewLevel": 1,
-          "type": "View",
-          "Id": "Carrier",
-          "name": "Carrier",
+          "viewId": "Carrier",
           "viewName": "Carrier"
         },
         "flights": {
