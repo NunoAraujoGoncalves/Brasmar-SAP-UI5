@@ -3,11 +3,12 @@
  */
 
 sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "sap/ui/Device",
-        "student/com/sap/training/advancedsapui5/listdetail/model/models"
-    ],
-    function (UIComponent, Device, models) {
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "student/com/sap/training/advancedsapui5/listdetail/model/models",
+    "student/com/sap/training/advancedsapui5/listdetail/controller/ListSelector"
+],
+    function (UIComponent, Device, models, ListSelector) {
         "use strict";
 
         return UIComponent.extend("student.com.sap.training.advancedsapui5.listdetail.Component", {
@@ -29,6 +30,10 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+
+                // instantiation of the listselector
+                this.oListSelector = new ListSelector();
             }
         });
     }

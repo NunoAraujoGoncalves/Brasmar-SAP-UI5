@@ -1,61 +1,49 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+  "student/com/sap/training/advancedsapui5/listdetail/controller/BaseController"
 ],
-function (Controller) {
+  function (Controller) {
     "use strict";
 
     return Controller.extend("student.com.sap.training.advancedsapui5.listdetail.controller.Flights", {
-       
+
       onInit: function () {
         var oRouter = this.getRouter();
-          oRouter.getRoute("flights").attachMatched(this._onObjectMatched, this);
-        },
+        oRouter.getRoute("flights").attachMatched(this._onObjectMatched, this);
 
-      getRouter: function () {
-        return sap.ui.core.UIComponent.getRouterFor(this);
+        var oModel = this.getOwnerComponent().getModel();
+        oModel.attachRequestSent(function (oEvent) {
+          this.getView().setBusy(true);
+        }, this);
+        oModel.attachRequestCompleted(function (oEvent) {
+          this.getView().setBusy(false);
+        }, this);
       },
-      
+
       _onObjectMatched: function (oEvent) {
         var oArgs = oEvent.getParameter("arguments");
         this._sCarrierId = oArgs.carrid;
         var oView = this.getView();
-              
+
+        oView.getModel("mainView").setProperty("/layout", "TwoColumnsMidExpanded");
+
         oView.bindElement({
           path: "/UX_C_Carrier_TP('" + this._sCarrierId + "')",
-            events: {
-              change: this._onBindingChange.bind(this),
-              dataRequested: function () {
-                oView.setBusy(true);
-              },
-              dataReceived: function () {
-                oView.setBusy(false);
-              }
-            }
+          events: {
+            change: this._onBindingChange.bind(this)
+          }
         });
       },
-        
+
       _onBindingChange: function () {
-        var oElementBinding;
-              
-        oElementBinding = this.getView().getElementBinding();
-              
-        // No data for the binding 
-        if (oElementBinding && !oElementBinding.getBoundContext()) {
+        var oView = this.getView();
+        var oElementBinding = oView.getElementBinding();
+        if (!oElementBinding.getBoundContext()) {
           this.getRouter().getTargets().display("notFound");
+          this.getOwnerComponent().oListSelector.clearMasterListSelection();
+          return;
         }
-      },
-        
-      onNavBack: function () {
-        var oHistory, sPreviousHash;
-         
-        oHistory = sap.ui.core.routing.History.getInstance();
-        sPreviousHash = oHistory.getPreviousHash();
-              
-        if (sPreviousHash !== undefined) {
-          window.history.go(-1);
-        } else {
-          this.getRouter().navTo("overview", true /*no history*/);
-        }
+        var sPath = oElementBinding.getPath();
+        this.getOwnerComponent().oListSelector.selectAListItem(sPath);
       }
     });
-});
+  });
