@@ -6,10 +6,10 @@
         <f:content>
             <List id="list" items="{/UX_C_Carrier_TP}" busyIndicatorDelay="0" 
                   growing="true" growingThreshold="10" growingScrollToLoad="true" 
-                  mode="SingleSelectMaster" selectionChange="onSelect">
+                  mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" selectionChange="onSelect">
 
                 <items>
-                    <ObjectListItem id="objectListItem" title="{Carrname}" intro="{Carrid}" type="Inactive">
+                    <ObjectListItem id="objectListItem" title="{Carrname}" intro="{Carrid}" type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelect">
                     </ObjectListItem>
                 </items>
             </List>
