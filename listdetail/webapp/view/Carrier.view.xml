@@ -1,36 +1,19 @@
-<mvc:View
-    controllerName="student.com.sap.training.advancedsapui5.listdetail.controller.Carrier"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
+<mvc:View controllerName="student.com.sap.training.advancedsapui5.listdetail.controller.Carrier"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
->
-     <Page id="idCarrierPage" title="{i18n>overviewPageTitle}">
-        <content>
-        <Table id="carrierTable" items="{/UX_C_Carrier_TP}">
-        
-        <columns>
-         
-            <Column id="idcolumn" minScreenWidth="Tablet" demandPopin="true">
-                <Text id="idheader" text="{i18n>columnId}"/>
-            </Column>
-            <Column id="namecolumn" minScreenWidth="Tablet" demandPopin="true">
-                <Text id="nameheader" text="{i18n>columnName}"/>
-            </Column>
-      
-        </columns>
-      
-        <items>
-              <ColumnListItem id="carrcolumnListItem" press="onPress" type="Navigation">
-                <cells>
-                  <ObjectIdentifier id="carrobjectIdentifier" title="{Carrid}" />
-                  <Text id="carrnametext" text="{Carrname}" />
-                </cells> 
-              </ColumnListItem>
-        </items>
+    xmlns:f="sap.f">
+    <f:DynamicPage id="dynamicPageOverviewId" headerExpanded="true" toggleHeaderOnTitleClick="true">
+        <f:content>
+            <List id="list" items="{/UX_C_Carrier_TP}" busyIndicatorDelay="0" 
+                  growing="true" growingThreshold="10" growingScrollToLoad="true" 
+                  mode="SingleSelectMaster" selectionChange="onSelect">
 
-    
+                <items>
+                    <ObjectListItem id="objectListItem" title="{Carrname}" intro="{Carrid}" type="Inactive">
+                    </ObjectListItem>
+                </items>
+            </List>
 
-    </Table>
-        </content>
-    </Page>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
