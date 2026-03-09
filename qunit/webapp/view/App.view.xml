@@ -1,0 +1,7 @@
+<mvc:View controllerName="student.com.sap.training.advancedsapui5.qunit.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="app">
+    </App>
+</mvc:View>
