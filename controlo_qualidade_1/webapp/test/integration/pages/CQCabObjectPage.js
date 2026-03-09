@@ -1,0 +1,17 @@
+sap.ui.define(['sap/fe/test/ObjectPage'], function(ObjectPage) {
+    'use strict';
+
+    var CustomPageDefinitions = {
+        actions: {},
+        assertions: {}
+    };
+
+    return new ObjectPage(
+        {
+            appId: 'controlo.qualidade1.controloqualidade1',
+            componentId: 'CQCabObjectPage',
+            contextPath: '/CQCab'
+        },
+        CustomPageDefinitions
+    );
+});

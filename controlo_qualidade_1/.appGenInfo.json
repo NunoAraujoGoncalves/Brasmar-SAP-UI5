@@ -1,0 +1,33 @@
+{
+  "generationParameters": {
+    "generationDate": "Mon Mar 09 2026 14:54:24 GMT+0000 (Western European Standard Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "https://apps4dq-01.vigent.pt:44300/sap/opu/odata4/sap/zui_tabcq_o4/srvd/sap/zui_tabcq_o4/0001/",
+    "appName": "controlo_qualidade_1",
+    "appTitle": "Controlo Qualidade",
+    "appDescription": "Brasmar Controlo Qualidade",
+    "appNamespace": "controlo.qualidade1",
+    "ui5Theme": "sap_horizon_dark",
+    "ui5Version": "1.120.23",
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.20.4",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "CQCab"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "_linhas"
+      }
+    ],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```",
+    "valueHelpDownloaded": true
+  }
+}
