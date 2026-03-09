@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<library xmlns="http://www.sap.com/sap.ui.library.xsd">
+	<name>student.com.sap.training.advancedsapui5.uicontrols</name>
+	<vendor>speeddragon2</vendor>
+	<version>${version}</version>
+	<copyright>${copyright}</copyright>
+	<title>uicontrols</title>
+	<documentation>Some description about uicontrols</documentation>
+	<dependencies>
+		<dependency>
+			<libraryName>sap.ui.core</libraryName>
+		</dependency>
+	</dependencies>
+</library>

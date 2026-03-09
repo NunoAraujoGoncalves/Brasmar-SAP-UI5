@@ -1,0 +1,16 @@
+{
+  "generator-ui5-library": {
+    "libraryname": "uicontrols",
+    "namespace": "student.com.sap.training.advancedsapui5",
+    "framework": "SAPUI5",
+    "frameworkVersion": "1.126.0",
+    "author": "speeddragon2",
+    "newdir": true,
+    "namespaceURI": "student/com/sap/training/advancedsapui5",
+    "librarynamespace": "student.com.sap.training.advancedsapui5.uicontrols",
+    "librarynamespaceURI": "student/com/sap/training/advancedsapui5/uicontrols",
+    "librarybasepath": "../../../../../../",
+    "frameworklowercase": "sapui5",
+    "setupCompleted": true
+  }
+}
