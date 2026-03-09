@@ -245,28 +245,28 @@
                 "_PesosCX/@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "InlineCreationRows"
+                      "name": "Inline"
                     }
                   }
                 },
                 "_PesosUn/@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "InlineCreationRows"
+                      "name": "Inline"
                     }
                   }
                 },
                 "_Vidragens/@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "InlineCreationRows"
+                      "name": "Inline"
                     }
                   }
                 },
                 "_Calibres/@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "InlineCreationRows"
+                      "name": "Inline"
                     }
                   }
                 },

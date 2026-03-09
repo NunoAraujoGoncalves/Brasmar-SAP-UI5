@@ -1177,6 +1177,16 @@
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="CQIngredientes"/>
                     <NavigationPropertyBinding Path="_CabCQ" Target="CQCab"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record Type="Capabilities.InsertRestrictionsType">
+                            <PropertyValue Property="RequiredProperties">
+                                <Collection>
+                                    <PropertyPath>Nrproduto</PropertyPath>
+                                    <PropertyPath>Ingrediente</PropertyPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
                 </EntitySet>
                 <EntitySet Name="CQLinhas" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType">
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>

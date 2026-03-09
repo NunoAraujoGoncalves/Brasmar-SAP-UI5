@@ -2652,6 +2652,12 @@
                     </Collection>
                 </Annotation>
             </Annotations>
+            <Annotations Target="SAP__self.CQIngredientesType/Nrproduto">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/ReadOnly"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQIngredientesType/Ingrediente">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
