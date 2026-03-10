@@ -9,12 +9,18 @@ sap.ui.define([
          *
          * @param oEvent the event object provided by the event provider.
          */
-        onPress: function (oEvent) {
+        onPress: async function (oEvent) {
             if (!('serial' in navigator)) {
                 console.log('Web Serial API not supported');
             }
 
-            console.log(this);
+            var oResourceBundle = this.getModel("i18n").getResourceBundle();
+            const oRowCtx = oEvent.getSource().getBindingContext();
+            const oModel = oRowCtx.getModel();
+            var pb = parseFloat(oRowCtx.getProperty("Pb"));
+            pb += parseFloat("1.30");
+            oRowCtx.setProperty("Pb", pb.toFixed(3));
+            MessageToast.show(oResourceBundle.getText("pesoBalanca"));
 
             //para debug usar about://device-log
             // Let user pick the COM/USB-serial device
