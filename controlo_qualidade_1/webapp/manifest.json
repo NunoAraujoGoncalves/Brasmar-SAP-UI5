@@ -247,6 +247,16 @@
                     "creationMode": {
                       "name": "Inline"
                     }
+                  },
+                  "columns": {
+                    "Balanca": {
+                      "header": "{i18n>balanca}",
+                      "position": {
+                        "anchor": "DataField::Pb",
+                        "placement": "Before"
+                      },
+                      "template": "controlo.qualidade1.controloqualidade1.ext.fragment.Balanca"
+                    }
                   }
                 },
                 "_PesosUn/@com.sap.vocabularies.UI.v1.LineItem": {
