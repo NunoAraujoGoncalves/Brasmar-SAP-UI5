@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "The UI5 walkthrough application",
   "scripts": {
-      "start": "ui5 serve -o index.html"
+    "start": "ui5 serve -o index.html"
+  },
+  "devDependencies": {
+    "ui5-middleware-simpleproxy": "^3.6.2"
   }
 }
