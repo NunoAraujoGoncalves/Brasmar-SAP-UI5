@@ -2,18 +2,20 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc">
-    <List id="invoiceList" class="sapUiResponsiveMargin" width="auto" items="{
-         path : 'invoice>/Invoices',
-         sorter : {
+
+    <List id="invoiceList" headerText="{i18n>invoiceListTitle}" class="sapUiResponsiveMargin" width="auto" items="{
+            path : 'invoice>/Invoices',
+            sorter : {
                 path : 'ShipperName',
                 group : true
             }
-      }">
+        }">
+
         <headerToolbar>
             <Toolbar>
-                <Title text="{i18n>invoiceListTitle}"></Title>
-                <ToolbarSeparator/>
-                <SearchField width="50%" search=".onFilterInvoices"></SearchField>
+                <Title text="{i18n>invoiceListTitle}" />
+                <ToolbarSpacer />
+                <SearchField width="50%" search=".onFilterInvoices"/>
             </Toolbar>
         </headerToolbar>
         <items>
@@ -21,7 +23,7 @@
                     Currency: 'sap/ui/model/type/Currency'
                 }" title="{invoice>Quantity} x {invoice>ProductName}" number="{
                     parts: [
-                        'invoice>ExtendedPrice',
+                        'invoice>ExTendedPrice',
                         'view>/currency'
                     ],
                     type: 'Currency',
