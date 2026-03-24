@@ -26,12 +26,16 @@ sap.ui.define([
             this.setModel(oModel);
 
             // set device model
-			const oDeviceModel = new JSONModel(Device);
-			oDeviceModel.setDefaultBindingMode("OneWay");
-			this.setModel(oDeviceModel, "device");
+            const oDeviceModel = new JSONModel(Device);
+            oDeviceModel.setDefaultBindingMode("OneWay");
+            this.setModel(oDeviceModel, "device");
 
             // create the views based on the url/hash
-			this.getRouter().initialize();
+            this.getRouter().initialize();
+        },
+
+        getContentDensityClass() {
+            return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";
         }
     });
 });

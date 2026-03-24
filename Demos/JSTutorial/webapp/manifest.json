@@ -50,6 +50,10 @@
         "dataSource": "invoiceRemote"
       }
     },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
     "rootView": {
       "viewName": "ui5.walkthrough.view.App",
       "type": "XML",
