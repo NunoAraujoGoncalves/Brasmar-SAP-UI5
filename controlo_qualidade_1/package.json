@@ -15,10 +15,10 @@
     "@sap-ux/ui5-middleware-fe-mockserver": "2"
   },
   "scripts": {
-    "start": "fiori run --open \"test/flp.html#app-preview\"",
-    "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html#app-preview\"",
+    "start": "fiori run --config ./ui5.yaml --open \"test/flp.html?sap-ui-xx-viewCache=false&sap-language=PT#app-preview\"",
+    "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html?sap-ui-xx-viewCache=false&sap-language=PT#app-preview\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
-    "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flp.html#app-preview\"",
+    "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flp.html?sap-ui-xx-viewCache=false&sap-language=PT#app-preview\"",
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "start-noflp": "fiori run --open \"/index.html?sap-ui-xx-viewCache=false\"",
