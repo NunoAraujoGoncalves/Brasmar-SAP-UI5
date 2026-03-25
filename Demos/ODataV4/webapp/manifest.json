@@ -42,6 +42,7 @@
 				"sap.ui.core": {}
 			}
 		},
+		"handleValidation": true,
 		"models": {
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
@@ -55,11 +56,10 @@
 			},
 			"": {
 				"dataSource": "default",
-				"preload": true,
 				"settings": {
 					"autoExpandSelect": true,
-					"earlyRequests": true,
-					"operationMode": "Server"
+					"operationMode": "Server",
+					"groupId": "$auto"
 				}
 			}
 		}
