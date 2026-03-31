@@ -1266,6 +1266,75 @@
                         </Record>
                     </Collection>
                 </Annotation>
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="tableView">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection/>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Text" String="Table View"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="tableView">
+                    <Collection/>
+                </Annotation>
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="tableView1">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem#tableView</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection/>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Text" String="Table View 1"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="tableView1">
+                    <Collection/>
+                </Annotation>
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="tableView2">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem#tableView1</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection/>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Text" String="Table View 2"/>
+                    </Record>
+                </Annotation>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Centro">
                 <Annotation Term="Common.Label" String="{@i18n>centro}"/>
