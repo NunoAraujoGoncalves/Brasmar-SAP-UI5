@@ -1,0 +1,305 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "controloqualidade2",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.20.4",
+      "toolsId": "921bebc2-6369-4530-a299-914286aaa060"
+    },
+    "dataSources": {
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zui_tabcq_o4/srvd/sap/zui_tabcq_o4/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.23",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "controloqualidade2.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "CQCabList",
+          "target": "CQCabList"
+        },
+        {
+          "pattern": "CQCab({key}):?query:",
+          "name": "CQCabObjectPage",
+          "target": "CQCabObjectPage"
+        },
+        {
+          "name": "CQCab__linhasObjectPage",
+          "pattern": "CQCab({key})/_linhas({_linhasKey}):?query:",
+          "target": "CQCab__linhasObjectPage"
+        }
+      ],
+      "targets": {
+        "CQCabList": {
+          "type": "Component",
+          "id": "CQCabList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/CQCab",
+              "variantManagement": "Page",
+              "navigation": {
+                "CQCab": {
+                  "detail": {
+                    "route": "CQCabObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "DataFieldForAction::com.sap.gateway.srvd.zui_tabcq_o4.v0001.Discard": {
+                      "afterExecution": {
+                        "enableAutoScroll": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CQCabObjectPage": {
+          "type": "Component",
+          "id": "CQCabObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/CQCab",
+              "navigation": {
+                "_linhas": {
+                  "detail": {
+                    "route": "CQCab__linhasObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "_HabBrasil/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                },
+                "_ingredientes/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                },
+                "_alegerneosContem/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                },
+                "_alegerneosPodeConter/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                },
+                "_semControlo/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "selectionMode": "Multi",
+                    "selectAll": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CQCab__linhasObjectPage": {
+          "type": "Component",
+          "id": "CQCab__linhasObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/CQCab/_linhas",
+              "controlConfiguration": {
+                "_PesosCX/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  },
+                  "columns": {
+                    "Balanca": {
+                      "header": "{i18n>balanca}",
+                      "position": {
+                        "anchor": "DataField::Pb",
+                        "placement": "Before"
+                      },
+                      "template": "controloqualidade2.ext.fragment.Balanca"
+                    },
+                    "DataField::Pb": {
+                      "width": "1px"
+                    }
+                  }
+                },
+                "_PesosUn/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  },
+                  "actions": {
+                    "balancaPesoUn": {
+                      "press": "controloqualidade2.ext.controller.BalancaPesoUn.multiplePesosUn",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "{i18n>balanca}"
+                    }
+                  }
+                },
+                "_Vidragens/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  },
+                  "columns": {
+                    "BalancaVidPL": {
+                      "header": "{i18n>balanca}",
+                      "position": {
+                        "anchor": "DataField::Pl",
+                        "placement": "Before"
+                      },
+                      "template": "controloqualidade2.ext.fragment.BalancaVidPL"
+                    },
+                    "BalancaVidPLE": {
+                      "header": "{i18n>balanca}",
+                      "position": {
+                        "anchor": "DataField::Ple",
+                        "placement": "Before"
+                      },
+                      "template": "controloqualidade2.ext.fragment.BalancaVidPLE"
+                    }
+                  }
+                },
+                "_Calibres/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                },
+                "_Temperaturas/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  }
+                }
+              },
+              "editableHeaderContent": false
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}

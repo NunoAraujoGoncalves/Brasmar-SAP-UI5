@@ -1,0 +1,12 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <Button
+        id="ButtonCaixaPBruto"
+        core:require="{ handler: 'controloqualidade2/ext/fragment/Balanca'}"
+        text="{i18n>balanca}"
+        press="handler.onPress"
+		icon="sap-icon://compare"
+    />
+</core:FragmentDefinition>
