@@ -575,6 +575,7 @@
                                                 <Record Type="UI.ReferenceFacet">
                                                     <PropertyValue Property="Label" String="{@i18n>mestreMaterial}"/>
                                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#MestreProd"/>
+                                                    <Annotation Term="UI.PartOfPreview" Bool="false"/>
                                                 </Record>
                                             </Collection>
                                         </PropertyValue>
@@ -752,6 +753,10 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Lote"/>
                                     <PropertyValue Property="Label" String="{@i18n>lote}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>responsvel}"/>
+                                    <PropertyValue Property="Value" Path="Responsavel"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="DtCongelacao"/>
@@ -1263,10 +1268,6 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Usercriacao"/>
                                     <PropertyValue Property="Label" String="{@i18n>userCriao}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>responsvel}"/>
-                                    <PropertyValue Property="Value" Path="Responsavel"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
