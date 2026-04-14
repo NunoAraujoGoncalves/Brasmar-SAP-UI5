@@ -1,6 +1,73 @@
-<mvc:View controllerName="project1.controller.Main"
+<mvc:View
+    controllerName="project1.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    displayBlock="true"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <customHeader>
+            <!-- your own header toolbar (like sap.m.OverflowToolbar) belongs here-->
+        </customHeader>
+
+        <content>
+            <!-- The UI Componentes regarding the content of the page belongs here -->
+            <f:SimpleForm
+                id="detail_simpleform"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+            >
+                <f:content>
+                    <!-- Contents of the SimpleForm belongs here-->
+                    <Label
+                        id="labelFirstname"
+                        labelFor="inputFirstname"
+                        text="First name"
+                    />
+                    <Input id="inputFirstname" />
+                    <Label
+                        id="labelLastname"
+                        labelFor="inputLastname"
+                        text="Last name"
+                    />
+                    <Input id="inputLastname" />
+                </f:content>
+            </f:SimpleForm>
+        </content>
+
+        <footer>
+            <!-- your footer showing some information or buttons in an toolbar belongs here -->
+            <OverflowToolbar id="footerToolbar">
+                <ToolbarSpacer id="footerToolbarSpacer" />
+                <Button
+                    id="saveButton"
+                    text="Save"
+                    type="Accept"
+                    icon="sap-icon://Save"
+                    press="onSavePressed"
+                />
+                <Button
+                    id="cancelButton"
+                    text="Cancel"
+                    type="Reject"
+                    icon="sap-icon://Cancel"
+                    press="onCancelPressed"
+                />
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>

@@ -37,6 +37,20 @@ server:
       afterMiddleware: compression
       configuration:
         ignoreCertErrors: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - path: /sap/opu/odata4/sap/zui_tabcq_o4/srvd/sap/zui_tabcq_o4/0001/
+            url: https://apps4dq-01.vigent.pt:44300
+            client: '300'
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata4/sap/zui_tabcq_o4/srvd/sap/zui_tabcq_o4/0001
+            metadataPath: ./webapp/localService/mainService/metadata.xml
+            mockdataPath: ./webapp/localService/mainService/data
+            generateMockData: true
+        annotations: []
 builder:
   customTasks:
     - name: ui5-tooling-transpile-task
