@@ -2,434 +2,158 @@
     controllerName="project1.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core"
-    xmlns:l="sap.ui.layout"
+    xmlns:uxap="sap.uxap"
     displayBlock="true"
 >
-    <Page
-        id="page"
-        title="{i18n>title}"
+    <uxap:ObjectPageLayout
+        id="objPage"
+        showTitleInHeaderContent="true"
+        showFooter="true"
+        upperCaseAnchorBar="false"
     >
-        <customHeader>
-            <!-- your own header toolbar (like sap.m.OverflowToolbar) belongs here-->
-            <OverflowToolbar
-                id="overflowToolbar"
-                width="100%"
-            >
-                <Title
-                    id="otTitle"
-                    text="I'm a Title"
-                />
-                <ToolbarSpacer id="toolbarSpacer" />
-                <Button
-                    id="btnPressMe"
-                    text="Press me"
-                />
-                <ToolbarSeparator id="toolbarSeperator" />
-                <Button
-                    id="btnDntPressMe"
-                    text="Don't Press me"
-                    type="Negative"
-                />
-                <Button
-                    id="btnSettings"
-                    icon="sap-icon://settings"
-                />
-            </OverflowToolbar>
-        </customHeader>
-
-        <content>
-            <!-- The UI Componentes regarding the content of the page belongs here -->
-            <f:SimpleForm
-                id="simpleForm"
-                editable="true"
-                labelSpanXL="3"
-                labelSpanL="3"
-                labelSpanM="3"
-                labelSpanS="12"
-                adjustLabelSpan="false"
-                emptySpanXL="0"
-                emptySpanL="0"
-                emptySpanM="0"
-                emptySpanS="0"
-                columnsXL="1"
-                columnsL="1"
-                columnsM="1"
-                singleContainerFullSize="false"
-                title="Simple Form"
-            >
-                <core:Title
-                    id="GeneralInfo"
-                    text="General Information"
-                />
-                <Label
-                    id="labelBookName"
-                    text="Book name"
-                />
-                <Input
-                    id="inputBookName"
-                    placeholder="Book name"
-                />
-                <Label
-                    id="labelISBN"
-                    text="ISBN"
-                />
-                <Input
-                    id="inputISBN"
-                    placeholder="ISBN"
-                />
-                <Label
-                    id="labelAuthor"
-                    text="Author"
-                />
-                <Input
-                    id="inputFirstName"
-                    placeholder="First name"
-                >
-                    <layoutData>
-                        <l:GridData
-                            id="gridDataFirstName"
-                            span="XL2 L2 M2 S12"
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle id="objPageHeaderTitle">
+                <uxap:breadcrumbs>
+                    <Breadcrumbs
+                        id="breadcrumbs"
+                        currentLocationText="New Book"
+                    >
+                        <Link
+                            id="link1"
+                            text="Books"
                         />
-                    </layoutData>
-                </Input>
-                <Input
-                    id="inputLastName"
-                    placeholder="Last name"
-                >
-                    <layoutData>
-                        <l:GridData
-                            id="gridDataLastName"
-                            span="XL2 L2 M2 S12"
-                        />
-                    </layoutData>
-                </Input>
-                <core:Title
-                    id="titlePI"
-                    text="Purchasing Information"
-                />
-                <Label
-                    id="labelPrice"
-                    text="Price"
-                />
-                <Input
-                    id="inputPrice"
-                    placeholder="Price"
-                    type="Number"
-                    description="€"
-                />
-                <Label
-                    id="labelPurdate"
-                    text="Purchasing Date"
-                />
-                <DatePicker id="Purdate" />
+                    </Breadcrumbs>
+                </uxap:breadcrumbs>
+                <uxap:expandedHeading>
+                    <Title
+                        id="expandedHeading"
+                        text="Your new Book"
+                        wrapping="true"
+                    />
+                </uxap:expandedHeading>
+                <uxap:snappedHeading>
+                    <Title
+                        id="snappedHeading"
+                        text="Your snapped Book"
+                        wrapping="true"
+                    />
+                </uxap:snappedHeading>
+                <uxap:expandedContent>
+                    <Text
+                        id="expandedContent"
+                        text="Add a Book"
+                    />
+                </uxap:expandedContent>
+                <uxap:snappedContent>
+                    <Text
+                        id="snappedContent"
+                        text="Add a snapped Book"
+                    />
+                </uxap:snappedContent>
+                <uxap:snappedTitleOnMobile>
+                    <Title
+                        id="snappedMobileTitle"
+                        text="Add a Book"
+                    />
+                </uxap:snappedTitleOnMobile>
+                <uxap:actions>
+                    <Button
+                        id="btnSearch"
+                        text="Search on Rheinwerk"
+                    />
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
 
-                <!-- Example sap.m.ProgressIndicator -->
-                <core:Title
-                    id="progIndicatorTitle"
-                    text="Example sap.m.ProgressIndicator"
+        <uxap:headerContent>
+            <FlexBox
+                id="flexBox"
+                wrap="Wrap"
+            >
+                <Avatar
+                    id="avatar"
+                    class="sapUiSmallMargin"
+                    src="sap-icon://add-coursebook"
+                    displaySize="L"
                 />
-                <ProgressIndicator
-                    id="progIndicator"
-                    percentValue="45"
-                    displayValue="45 Percent"
-                    state="Warning"
-                />
+            </FlexBox>
+        </uxap:headerContent>
 
-                <!-- Example sap.m.IconTabBar -->
-                <core:Title
-                    id="IconTabBarTitle"
-                    text="Example sap.m.IconTabBar"
-                />
-                <IconTabBar id="iconTabBar">
-                    <items>
-                        <IconTabFilter
-                            id="itb_first"
-                            text="First"
-                            icon="sap-icon://bookmark"
-                            iconColor="Neutral"
-                        >
+        <uxap:sections>
+            <uxap:ObjectPageSection
+                id="objPageSection"
+                titleUppercase="false"
+                title="I'm a section"
+            >
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection
+                        id="objPS_SubSection"
+                        title="I'm a subsection"
+                    >
+                        <uxap:blocks>
                             <Text
-                                id="itb_first_text"
-                                text="I'm in the first Tab"
+                                id="objPSSS_text"
+                                text="I'm a text"
                             />
-                        </IconTabFilter>
-                        <IconTabSeparator id="itb_separator" />
-                        <IconTabFilter
-                            id="itb_second"
-                            text="Second"
-                            icon="sap-icon://account"
-                            iconColor="Critical"
-                        >
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                    <uxap:ObjectPageSubSection
+                        id="objPS_SubSection2"
+                        title="I'm a subsectiontoo"
+                    >
+                        <uxap:blocks>
                             <Text
-                                id="itb_second_text"
-                                text="I'm in the second Tab"
+                                id="objPSSS_text2"
+                                text="I'm a text too"
                             />
-                        </IconTabFilter>
-                        <IconTabSeparator id="itb_separator2" />
-                        <IconTabFilter
-                            id="itb_third"
-                            text="Third"
-                            icon="sap-icon://work-history"
-                            iconColor="Positive"
-                        >
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection
+                id="objPageSection2"
+                titleUppercase="false"
+                title="I'm a second section"
+            >
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection
+                        id="objPS_SubSection3"
+                        title="I'm a subsection"
+                    >
+                        <uxap:blocks>
                             <Text
-                                id="itb_third_text"
-                                text="I'm in the third Tab"
+                                id="objPSSS_text3"
+                                text="I'm a text"
                             />
-                        </IconTabFilter>
-                    </items>
-                </IconTabBar>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                    <uxap:ObjectPageSubSection
+                        id="objPS_SubSection4"
+                        title="I'm a subsection too"
+                    >
+                        <uxap:blocks>
+                            <Text
+                                id="objPSSS_text4"
+                                text="I'm a text too"
+                            />
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
 
-                <!-- sap.m.StandardListItem example -->
-                <core:Title
-                    id="booksListTitle"
-                    text="Example sap.m.StandardListItem"
-                />
-                <List
-                    id="booksList1"
-                    items="{/books}"
-                    headerText="Books"
-                >
-                    <items>
-                        <ObjectListItem
-                            id="bookItem1"
-                            title="{name}"
-                            number="{price}"
-                            numberUnit="{priceUnit}"
-                        >
-                            <firstStatus>
-                                <ObjectStatus
-                                    id="bookItemStatus1"
-                                    text="{= ${inStock} ? 'In Stock' : 'Not in Stock'}"
-                                    state="{= ${inStock} ? 'Success' : 'Error'}"
-                                />
-                            </firstStatus>
-                            <ObjectAttribute
-                                id="bookItemAuthor1"
-                                title="Author"
-                                text="{author}"
-                            />
-                            <ObjectAttribute
-                                id="bookItemYear1"
-                                title="Release Year"
-                                text="{releaseYear}"
-                            />
-                        </ObjectListItem>
-                    </items>
-                </List>
-
-                <!-- sap.m.Table (responsive table) example -->
-                <core:Title
-                    id="booksTableTitle"
-                    text="Example sap.m.Table (responsive table)"
-                />
-                <Table
-                    id="booksTable"
-                    headerText="Books"
-                    items="{/books}"
-                >
-                    <columns>
-                        <Column id="bookColumnName">
-                            <Text
-                                id="bookColumnTextName"
-                                text="Name"
-                            />
-                        </Column>
-                        <Column id="bookColumnAuthor">
-                            <Text
-                                id="bookColumnTextAuthor"
-                                text="Author"
-                            />
-                        </Column>
-                        <Column
-                            id="bookColumnPrice"
-                            demandPopin="true"
-                            minScreenWidth="Desktop"
-                        >
-                            <Text
-                                id="bookColumnTextPrice"
-                                text="Price"
-                            />
-                        </Column>
-                        <Column id="bookColumnRelease">
-                            <Text
-                                id="bookColumnTextReleasee"
-                                text="Release"
-                            />
-                        </Column>
-                        <Column id="bookColumnAvailability">
-                            <Text
-                                id="bookColumnTextAvailability"
-                                text="Availability"
-                            />
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem id="booksColumnItem">
-                            <cells>
-                                <ObjectIdentifier
-                                    id="booksColumnItemName"
-                                    title="{name}"
-                                />
-                                <Text
-                                    id="booksColumnItemAuthor"
-                                    text="{author}"
-                                />
-                                <ObjectNumber
-                                    id="booksColumnItemPrice"
-                                    number="{price}"
-                                    unit="{priceUnit}"
-                                />
-                                <Text
-                                    id="booksColumnItemYear"
-                                    text="{releaseYear}"
-                                />
-                                <ObjectStatus
-                                    id="booksColumnItemAvailability"
-                                    text="{= ${inStock} ? 'In Stock' : 'Not in Stock'}"
-                                    state="{= ${inStock} ? 'Success' : 'Error' }"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-
-                <!-- sap.ui.table.Table (grid table) example -->
-                <core:Title
-                    id="booksUITableTitle"
-                    text="Example sap.ui.table.Table (grid table)"
-                />
-                <table:Table
-                    id="booksUITable"
-                    rows="{/books}"
-                >
-                    <table:extension>
-                        <OverflowToolbar
-                            id="booksOverflowToolbar"
-                            style="Clear"
-                        >
-                            <Title
-                                id="booksOTTitle"
-                                text="Books"
-                            />
-                        </OverflowToolbar>
-                    </table:extension>
-                    <table:columns>
-                        <table:Column
-                            id="booksUITableColumnName"
-                            width="20rem"
-                        >
-                            <Label
-                                id="booksUITableNameLabel"
-                                text="Name"
-                            />
-                            <table:template>
-                                <ObjectIdentifier
-                                    id="booksUITableName"
-                                    title="{name}"
-                                />
-                            </table:template>
-                        </table:Column>
-                        <table:Column
-                            id="booksUITableColumnAuthor"
-                            width="20rem"
-                        >
-                            <Label
-                                id="booksUITableLabelAuthor"
-                                text="Author"
-                            />
-                            <table:template>
-                                <Text
-                                    id="booksUITableAuthor"
-                                    text="{author}"
-                                />
-                            </table:template>
-                        </table:Column>
-                        <table:Column
-                            id="booksUITableColumnPrice"
-                            width="10rem"
-                        >
-                            <Label
-                                id="booksUITableLabelPrice"
-                                text="Price"
-                            />
-                            <table:template>
-                                <ObjectNumber
-                                    id="booksUITablePrice"
-                                    number="{price}"
-                                    unit="{priceUnit}"
-                                />
-                            </table:template>
-                        </table:Column>
-                        <table:Column
-                            id="booksUITableColumnRelease"
-                            width="10rem"
-                        >
-                            <Label
-                                id="booksUITableLabelRelease"
-                                text="Release"
-                            />
-                            <table:template>
-                                <Text
-                                    id="booksUITableRelease"
-                                    text="{releaseYear}"
-                                />
-                            </table:template>
-                        </table:Column>
-                        <table:Column
-                            id="booksUITableColumnAvailability"
-                            width="20rem"
-                        >
-                            <Label
-                                id="booksUITableLabelAvailability"
-                                text="Availability"
-                            />
-                            <table:template>
-                                <ObjectStatus
-                                    id="booksUITableAvailability"
-                                    text="{= ${inStock} ? 'In Stock' : 'Not in Stock'}"
-                                    state="{= ${inStock} ? 'Success' : 'Error'}"
-                                />
-                            </table:template>
-                        </table:Column>
-                    </table:columns>
-                </table:Table>
-
-                <!-- PDF Viewer sap.m.pdfViewer ?! -->
-                <core:Title
-                    id="pdfViewerTitle"
-                    text="Example PDF Viewer sap.m.pdfViewer ?!"
-                />
-                <PDFViewer
-                    id="pdfViewer"
-                    title="Sample PDF"
-                    source="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-                />
-            </f:SimpleForm>
-        </content>
-
-        <footer>
-            <!-- your footer showing some information or buttons in an toolbar belongs here -->
-            <OverflowToolbar id="footerToolbar">
-                <ToolbarSpacer id="footerToolbarSpacer" />
-                <Button
-                    id="saveButton"
+        <uxap:footer>
+            <OverflowToolbar id="footerOverflowToolbar">
+                <ToolbarSpacer id="footerOTToolbarSpacer"/>
+                <Button id="btnSave"
                     text="Save"
                     type="Accept"
-                    icon="sap-icon://Save"
-                    press="onSavePressed"
                 />
-                <Button
-                    id="cancelButton"
+                <Button id="btnCancel"
                     text="Cancel"
                     type="Reject"
-                    icon="sap-icon://Cancel"
-                    press="onCancelPressed"
                 />
             </OverflowToolbar>
-        </footer>
-    </Page>
+        </uxap:footer>
+    </uxap:ObjectPageLayout>
 </mvc:View>
