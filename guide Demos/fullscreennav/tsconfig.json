@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    // "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "rootDir": "./webapp",
+    "outDir": "./dist",
+    // "baseUrl": "./",
+    "paths": {
+      "brasmar/teste/fullscreennav/*": [
+        "./webapp/*"
+      ],
+      "unit/*": [
+        "./webapp/test/unit/*"
+      ],
+      "integration/*": [
+        "./webapp/test/integration/*"
+      ]
+    },
+    "types": ["./node_modules/@sapui5/types", "@types/qunit"]
+    // "typeRoots": [
+    //   "./node_modules/@types",
+    //   "./node_modules/@sapui5/types"
+    // ]
+  },
+  "include": [
+    "./webapp/**/*"
+  ]
+}

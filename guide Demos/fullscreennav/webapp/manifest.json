@@ -1,0 +1,157 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "brasmar.teste.fullscreennav",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.4",
+      "toolsId": "b8d23c83-ca03-4975-b282-ef4e4dab7004"
+    },
+    "dataSources": {
+      "IWBEP_TEA_TEST_ANNOTATION_FILE": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FIWBEP%2FTEA_TEST_ANNOTATION_FILE',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/IWBEP_TEA_TEST_ANNOTATION_FILE.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/iwfnd/RMTSAMPLEFLIGHT/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "IWBEP_TEA_TEST_ANNOTATION_FILE"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.23",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "brasmar.teste.fullscreennav.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "brasmar.teste.fullscreennav.view",
+        "async": true,
+        "viewPath": "brasmar.teste.fullscreennav.view",
+        "bypassed": {
+          "target": "NotFound"
+        }
+      },
+      "routes": [
+        {
+          "name": "RouteMain",
+          "pattern": "",
+          "target": [
+            "TargetMain"
+          ]
+        },
+        {
+          "name": "Detail",
+          "pattern": "detail/{path}}",
+          "target": [
+            "Detail"
+          ]
+        },
+        {
+          "name": "NotFound",
+          "pattern": "notFound",
+          "target": [
+            "NotFound"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetMain": {
+          "id": "Main",
+          "name": "Main",
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false
+        },
+        "Detail": {
+          "id": "Detail",
+          "name": "Detail",
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false
+        },
+        "NotFound": {
+          "id": "NotFound",
+          "name": "NotFound",
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "brasmar.teste.fullscreennav.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

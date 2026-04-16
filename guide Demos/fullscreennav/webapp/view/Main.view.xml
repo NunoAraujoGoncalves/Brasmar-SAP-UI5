@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="brasmar.teste.fullscreennav.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
+            <List
+                id="carrierList"
+                headerText="Carrier"
+                items="{/CarrierCollection}"
+            >
+                <StandardListItem
+                    id="listItemTemplate"
+                    title="{CARRNAME}"
+                    description="{carrid}"
+                    icon="/img/{carrid}.png"
+                    type="Navigation"
+                    press="onNavToDetail"
+                />
+            </List>
+        </content>
+    </Page>
+</mvc:View>
