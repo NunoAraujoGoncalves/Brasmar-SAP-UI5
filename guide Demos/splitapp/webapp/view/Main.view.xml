@@ -1,0 +1,185 @@
+<mvc:View
+    controllerName="brasmar.teste.splitapp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+>
+    <!-- <Page id="page" title="{i18n>title}">
+    </Page> -->
+
+    <SplitApp
+        id="splitAppContainer"
+        initialDetail="detail"
+        initialMaster="listPage"
+    >
+        <masterPages>
+            <Page
+                id="listPage"
+                title="Carrier"
+                backgroundDesign="List"
+            >
+                <customHeader>
+                    <Toolbar id="toolbarMaster">
+                        <Title
+                            id="titleCarrier"
+                            text="Carrier"
+                        />
+                        <ToolbarSpacer id="toolbarSpacerMaster" />
+                        <Button
+                            id="buttonRefresh"
+                            icon="sap-icon://refresh"
+                            type="Transparent"
+                            press="onRefreshList"
+                        />
+                    </Toolbar>
+                </customHeader>
+                <!-- List belongs here -->
+                <content>
+                    <List
+                        id="carrierList"
+                        headerText="Carrier"
+                        items="{ path: '/CarrierCollection', events: { dataReceived: '.onDataReceived' }}"
+                        mode="SingleSelectMaster"
+                        selectionChange="onNavToDetail"
+                    >
+                        <StandardListItem
+                            id="listItemTemplate"
+                            title="{CARRNAME}"
+                            description="{carrid}"
+                            icon="/img/{carrid}.png"
+                        />
+                    </List>
+                </content>
+            </Page>
+        </masterPages>
+        <detailPages>
+            <Page
+                id="detail"
+                title="Details"
+                backgroundDesign="Solid"
+            >
+                <!-- SimpleForm belongs here -->
+                <content>
+                    <f:SimpleForm
+                        id="detail_simpleform"
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="3"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        labelSpanS="12"
+                        emptySpanXL="4"
+                        emptySpanL="4"
+                        emptySpanM="4"
+                        emptySpanS="0"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1"
+                    >
+                        <f:content>
+                            <Label
+                                id="labelLogo"
+                                labelFor="avatarLogo"
+                                text="Logo"
+                            />
+                            <Avatar
+                                id="avatarLogo"
+                                src="/img/{carrid}.png"
+                                displaySize="S"
+                                displayShape="Square"
+                                showBorder="true"
+                            />
+                            <Label
+                                id="labelCarrid"
+                                labelFor="textCarrid"
+                                text="ID"
+                            />
+                            <Text
+                                id="textCarrid"
+                                text="{carrid}"
+                            />
+                            <Label
+                                id="labelCarrname"
+                                labelFor="textCarrname"
+                                text="Name"
+                            />
+                            <Text
+                                id="textCarrname"
+                                text="{CARRNAME}"
+                            />
+                            <Label
+                                id="labelWebsite"
+                                labelFor="linkWebsite"
+                                text="Website"
+                            />
+                            <Link
+                                id="linkWebsite"
+                                text="{URL}"
+                            />
+                            <Label
+                                id="labelCurr"
+                                labelFor="textCurr"
+                                text="Currency"
+                            />
+                            <Text
+                                id="textCurr"
+                                text="{CURRCODE}"
+                            />
+                        </f:content>
+                    </f:SimpleForm>
+
+                    <Table
+                        id="tableFlights"
+                        headerText="Flights"
+                        items="{ path: 'carrierFlights', 
+                                 sorter: { path: 'fldate', descending: true } }"
+                        alternateRowColors="true"
+                        growing="true"
+                        growingThreshold="200"
+                    >
+                        <columns>
+                            <Column id="columnConn">
+                                <Label
+                                    id="columnLabelConn"
+                                    text="Connection"
+                                />
+                            </Column>
+                            <Column id="columnFldate">
+                                <Label
+                                    id="columnLabelFldate"
+                                    text="Flight date"
+                                />
+                            </Column>
+                            <Column id="columnSeatsAv">
+                                <Label
+                                    id="columnLabelSeatsAv"
+                                    text="Seats available"
+                                />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="columnListItemTemplate">
+                                <cells>
+                                    <ObjectIdentifier
+                                        id="connid"
+                                        title="{connid}"
+                                    />
+                                    <ObjectIdentifier
+                                        id="fldate"
+                                        title="{ path: 'fldate', type: 'sap.ca.ui.model.type.Date'}"
+                                    />
+                                    <ObjectStatus
+                                        id="main_objectstatus_seatsavtemplate"
+                                        text="{=${SEATSMAX}-${SEATSOCC}}"
+                                        state="{parts: ['SEATSMAX', 'SEATSOCC'], formatter: '.stateAvSeats'}"
+                                        icon="{parts: ['SEATSMAX', 'SEATSOCC'], formatter: '.iconAvSeats'}"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </content>
+            </Page>
+        </detailPages>
+    </SplitApp>
+</mvc:View>
