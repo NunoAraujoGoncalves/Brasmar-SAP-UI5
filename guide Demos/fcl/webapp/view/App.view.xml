@@ -1,0 +1,9 @@
+<mvc:View controllerName="brasmar.teste.fcl.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    height="100%">
+    <f:FlexibleColumnLayout id="fcl" layout="{ui>/layout}"></f:FlexibleColumnLayout>
+</mvc:View>

@@ -1,0 +1,37 @@
+<mvc:View
+    controllerName="brasmar.teste.fcl.controller.Carrier"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    displayBlock="true"
+    xmlns:uxap="sap.uxap"
+>
+    <f:DynamicPage id="dynamicPageId">
+        <f:title>
+            <f:DynamicPageTitle id="dynamicPageTitle">
+                <f:heading>
+                    <Title
+                        id="dynamicPageTitleText"
+                        text="Carrier"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <List
+                id="carrierList"
+                headerText="Carrier"
+                items="{/CarrierCollection}"
+                mode="SingleSelectMaster"
+                selectionChange="onNavToDetail"
+            >
+                <StandardListItem
+                    id="listItemTemplate"
+                    title="{CARRNAME}"
+                    description="{carrid}"
+                    icon="/img/{carrid}.png"
+                />
+            </List>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

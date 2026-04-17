@@ -1,0 +1,155 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "brasmar.teste.fcl",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.4",
+      "toolsId": "efd208ad-a43d-45c4-862d-444e4dfa2b1b"
+    },
+    "dataSources": {
+      "IWBEP_TEA_TEST_ANNOTATION_FILE": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FIWBEP%2FTEA_TEST_ANNOTATION_FILE',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/IWBEP_TEA_TEST_ANNOTATION_FILE.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/iwfnd/RMTSAMPLEFLIGHT/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "IWBEP_TEA_TEST_ANNOTATION_FILE"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.23",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "brasmar.teste.fcl.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "path": "brasmar.teste.fcl.view",
+        "viewPath": "brasmar.teste.fcl.view",
+        "controlId": "fcl",
+        "transition": "slide"
+      },
+      "routes": [
+        {
+          "name": "RouteCarrier",
+          "pattern": ":?query:",
+          "target": [
+            "TargetCarrier"
+          ]
+        },
+        {
+          "name": "RouteCarrierDetails",
+          "pattern": "carrier/{path}/:?query:",
+          "target": [
+            "TargetCarrier",
+            "TargetCarrierDetails"
+          ]
+        },
+        {
+          "name": "RouteFlightDetails",
+          "pattern": "carrier/{path}/flight/{path2}/:?query:",
+          "target": [
+            "TargetCarrier",
+            "TargetCarrierDetails",
+            "TargetFlightDetails"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetCarrier": {
+          "viewType": "XML",
+          "viewId": "Carrier",
+          "viewName": "Carrier",
+          "controlAggregation": "beginColumnPages",
+          "clearControlAggregation": true
+        },
+        "TargetCarrierDetails": {
+          "viewType": "XML",
+          "viewId": "CarrierDetails",
+          "viewName": "CarrierDetails",
+          "controlAggregation": "midColumnPages",
+          "clearControlAggregation": true
+        },
+        "TargetFlightDetails": {
+          "viewType": "XML",
+          "viewId": "FlightDetails",
+          "viewName": "FlightDetails",
+          "controlAggregation": "endColumnPages",
+          "clearControlAggregation": true
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "brasmar.teste.fcl.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Thu Apr 16 2026 14:44:37 GMT+0100 (Western European Summer Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "https://apps4dq-01.vigent.pt:44300/sap/opu/odata/iwfnd/RMTSAMPLEFLIGHT",
+    "appName": "fcl",
+    "appTitle": "Flexible Column Layout",
+    "appDescription": "An app with the flexible column layout ",
+    "appNamespace": "brasmar.teste",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.23",
+    "enableEslint": false,
+    "enableTypeScript": true,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.20.4",
+    "template": "Basic V2",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}
