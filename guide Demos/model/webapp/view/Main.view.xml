@@ -1,0 +1,76 @@
+<mvc:View
+    xmlns:f2="sap.f"
+    controllerName="brasmar.teste.model.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:fb="sap.ui.comp.filterbar"
+>
+    <f2:DynamicPage
+        id="page"
+        title="{i18n>title}"
+    >
+        <f2:header>
+            <f2:DynamicPageHeader id="pageHeader">
+                <f2:content>
+                    <fb:FilterBar
+                        id="filterbar"
+                        search=".onSearch"
+                        clear=".onClear"
+                        showClearOnFB="true"
+                        showFilterConfiguration="false"
+                    >
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                id="fbItemSkillLevel"
+                                label="Skill level"
+                                name="Skill level"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <Select
+                                        id="selectSkillLevel"
+                                        forceSelection="false"
+                                        resetOnMissingKey="true"
+                                    >
+                                        <core:Item
+                                            id="selectOne"
+                                            key="1"
+                                            text="1"
+                                        />
+                                        <core:Item
+                                            id="selectTwo"
+                                            key="2"
+                                            text="2"
+                                        />
+                                        <core:Item
+                                            id="selectThree"
+                                            key="3"
+                                            text="3"
+                                        />
+                                    </Select>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f2:content>
+            </f2:DynamicPageHeader>
+        </f2:header>
+        <f2:content>
+            <List
+                id="detail_list"
+                headerText="Hobbies"
+                items="{/hobbies}"
+            >
+                <items>
+                    <StandardListItem
+                        id="detail_listitem"
+                        title="{name}"
+                        info="Skill level: {skillLevel}"
+                    />
+                </items>
+            </List>
+        </f2:content>
+    </f2:DynamicPage>
+</mvc:View>

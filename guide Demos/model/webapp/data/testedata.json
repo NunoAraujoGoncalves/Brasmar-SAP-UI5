@@ -1,0 +1,18 @@
+{
+    "firstname": "John",
+    "lastname": "Doe",
+    "hobbies": [
+        {
+            "skillLevel": 1,
+            "name": "Football"
+        },
+        {
+            "skillLevel": 2,
+            "name": "Tennis"
+        },
+        {
+            "skillLevel": 2,
+            "name": "Swimming"
+        }
+    ]
+}

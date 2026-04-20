@@ -640,6 +640,134 @@
             "env": {
                 "FIORI_TOOLS_URL_PARAMS": "sap-client=300&sap-ui-xx-viewCache=false"
             }
+        },
+        {
+            "name": "Start carrierflights",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/carrierflights",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-client=300&sap-ui-xx-viewCache=false"
+            }
+        },
+        {
+            "name": "Start carrierflights Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/carrierflights",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-client=300&sap-ui-xx-viewCache=false"
+            }
+        },
+        {
+            "name": "Start carrierflights Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/carrierflights",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-client=300&sap-ui-xx-viewCache=false"
+            }
+        },
+        {
+            "name": "Start model",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/model",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+            }
+        },
+        {
+            "name": "Start model Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/model",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flp.html#app-preview"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+            }
         }
     ]
 }
