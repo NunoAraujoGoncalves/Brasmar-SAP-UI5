@@ -1,7 +1,7 @@
 {
-  "_version": "1.82.0",
+  "_version": "1.60.0",
   "sap.app": {
-    "id": "project1",
+    "id": "brasmar.bm01.controloqualidade3",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -11,16 +11,25 @@
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
-      "id": "@sap/generator-fiori:basic",
+      "id": "@sap/generator-fiori:fpm",
       "version": "1.20.4",
-      "toolsId": "3d5f209c-53ae-4d76-a699-fc2a9ca0deb3"
+      "toolsId": "69c235de-99f4-4bda-920d-5d36a17d8f4d"
     },
     "dataSources": {
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
       "mainService": {
         "uri": "/sap/opu/odata4/sap/zui_tabcq_o4/srvd/sap/zui_tabcq_o4/0001/",
         "type": "OData",
         "settings": {
-          "annotations": [],
+          "annotations": [
+            "annotation"
+          ],
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "4.0"
         }
@@ -49,7 +58,9 @@
       "minUI5Version": "1.120.23",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.fe.core": {},
+        "sap.fe.macros": {}
       }
     },
     "contentDensities": {
@@ -60,10 +71,10 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "project1.i18n.i18n"
+          "bundleName": "brasmar.bm01.controloqualidade3.i18n.i18n"
         }
       },
-      "mainOdata": {
+      "": {
         "dataSource": "mainService",
         "preload": true,
         "settings": {
@@ -71,48 +82,43 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
       }
     },
     "resources": {
-      "css": [
-        {
-          "uri": "css/style.css"
-        }
-      ]
+      "css": []
     },
     "routing": {
-      "config": {
-        "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "transition": "slide",
-        "type": "View",
-        "viewType": "XML",
-        "path": "project1.view",
-        "async": true,
-        "viewPath": "project1.view"
-      },
+      "config": {},
       "routes": [
         {
-          "name": "RouteMain",
+          "name": "CQCabMain",
           "pattern": ":?query:",
-          "target": [
-            "TargetMain"
-          ]
+          "target": "CQCabMain"
         }
       ],
       "targets": {
-        "TargetMain": {
-          "id": "Main1",
-          "name": "Main1"
+        "CQCabMain": {
+          "type": "Component",
+          "id": "CQCabMain",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/CQCab",
+              "viewName": "brasmar.bm01.controloqualidade3.ext.main.Main"
+            }
+          }
         }
       }
-    },
-    "rootView": {
-      "viewName": "project1.view.App",
-      "type": "XML",
-      "id": "App",
-      "async": true
+    }
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
     }
   }
 }

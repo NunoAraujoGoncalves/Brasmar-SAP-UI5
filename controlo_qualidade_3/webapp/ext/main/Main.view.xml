@@ -1,0 +1,63 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    controllerName="brasmar.bm01.controloqualidade3.ext.main.Main"
+>
+    <Page id="Main">
+        <IconTabBar id="mainIconTabBar" select=".onFilterSelect">
+            <items>
+                <IconTabFilter
+                    id="mainFilterPendentes"
+                    icon="sap-icon://compare"
+                    iconColor="Critical"
+                    text="{i18n>cqPendentes}"
+                    key="pendentes"
+                />
+                <IconTabFilter
+                    id="mainFilterConcluidos"
+                    icon="sap-icon://begin"
+                    iconColor="Positive"
+                    text="{i18n>cqConcluidos}"
+                    key="concluidos"
+                />
+                <IconTabFilter
+                    id="mainFilterTodos"
+                    icon="sap-icon://inventory"
+                    iconColor="Negative"
+                    text="{i18n>cqTodos}"
+                    key="all"
+                />
+            </items>
+            <content>
+                <Panel
+                    id="mainFilterPanel"
+                    
+                    expandable="true"
+                    headerText="{i18n>filterPanel}"
+                >
+                    <macros:FilterBar
+                        id="filterCQ"
+                        metaPath="@com.sap.vocabularies.UI.v1.SelectionFields"
+                    />
+                </Panel>
+                <Panel
+                    id="mainPanel"
+                    
+                >
+                    <!-- <VBox id="mainVbox"> -->
+                    <macros:Table
+                        id="tableCQ"
+                        metaPath="@com.sap.vocabularies.UI.v1.LineItem"
+                        filterBar="filterCQ"
+                        enableAutoColumnWidth="true"
+                    />
+                    <!-- </VBox> initialLoad="false" class="sapUiResponsiveMargin" width="auto" -->
+                </Panel>
+            </content>
+        </IconTabBar>
+    </Page>
+</mvc:View>
