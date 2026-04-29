@@ -60,7 +60,8 @@
         "sap.m": {},
         "sap.ui.core": {},
         "sap.fe.core": {},
-        "sap.fe.macros": {}
+        "sap.fe.macros": {},
+        "sap.fe.templates": {}
       }
     },
     "contentDensities": {
@@ -97,7 +98,17 @@
         {
           "name": "CQCabMain",
           "pattern": ":?query:",
-          "target": "CQCabMain"
+          "target": [
+            "CQCabMain"
+          ]
+        },
+        {
+          "name": "CQCabObjectPage",
+          "pattern": "CQCab({CQCabKey}):?query:",
+          "target": [
+            "CQCabMain",
+            "CQCabObjectPage"
+          ]
         }
       ],
       "targets": {
@@ -107,10 +118,36 @@
           "name": "sap.fe.core.fpm",
           "options": {
             "settings": {
-              "navigation": {},
+              "navigation": {
+                "CQCab": {
+                  "detail": {
+                    "route": "CQCabObjectPage"
+                  }
+                }
+              },
               "contextPath": "/CQCab",
               "viewName": "brasmar.bm01.controloqualidade3.ext.main.Main"
             }
+          }
+        },
+        "CQCabObjectPage": {
+          "type": "Component",
+          "id": "CQCabObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/CQCab"
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#brasmar.bm01.controloqualidade3::CQCabObjectPage": {
+            "controllerName": "brasmar.bm01.controloqualidade3.ext.controller.DetailCq"
           }
         }
       }
