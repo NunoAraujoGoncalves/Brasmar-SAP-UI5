@@ -64,8 +64,6 @@
             <Annotations Target="SAP__self.ZI_TABFTGRUPOPAISSHType/Grupopais">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Grupo Países"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Grupo de Países"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Grupopais">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -177,9 +175,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_TABFTGRUPOPAISSHType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

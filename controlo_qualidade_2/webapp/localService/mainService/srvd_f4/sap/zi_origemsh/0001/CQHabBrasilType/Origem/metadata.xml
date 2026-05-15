@@ -64,13 +64,10 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_origemshType/Origem">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Origem"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_origemshType/Gs1">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQHabBrasilType/Origem">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -185,9 +182,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_origemshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

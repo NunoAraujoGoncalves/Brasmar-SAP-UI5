@@ -64,9 +64,9 @@
             <Annotations Target="SAP__self.ZI_CQTIPDOCSHType/Value">
                 <Annotation Term="SAP__common.Text" Path="Text"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Valor inferior"/>
-                <Annotation Term="SAP__common.Heading" String="Valor fixo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Valores p/domínios: valor ind./limite inferior"/>
+                <Annotation Term="SAP__common.Label" String="Lower Value"/>
+                <Annotation Term="SAP__common.Heading" String="Fixed"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Tipodoc">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -180,8 +180,8 @@
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_CQTIPDOCSHType/Text">
-                <Annotation Term="SAP__common.Label" String="Descrição breve"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Texto breve para valores fixos"/>
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

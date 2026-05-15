@@ -67,23 +67,21 @@
                 <Annotation Term="SAP__common.Text" Path="Material_Text"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.Label" String="Material"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº do material"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material Number"/>
             </Annotations>
             <Annotations Target="SAP__self.C_MM_MatlBatchValueHelpType/Material_Text">
                 <Annotation Term="SAP__core.Computed"/>
-                <Annotation Term="SAP__common.Label" String="Texto breve material"/>
-                <Annotation Term="SAP__common.Heading" String="TxtBreveMaterial"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Texto breve de material"/>
+                <Annotation Term="SAP__common.Label" String="Material Description"/>
             </Annotations>
             <Annotations Target="SAP__self.C_MM_MatlBatchValueHelpType/Batch">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Lote"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Número do lote"/>
+                <Annotation Term="SAP__common.Label" String="Batch"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Batch Number"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Lote">
                 <Annotation Term="SAP__common.ValueListMapping">
                     <Record>
-                        <PropertyValue Property="Label" String="Entradas possíveis nº de lote de material"/>
+                        <PropertyValue Property="Label" String="Material Batch Value Help"/>
                         <PropertyValue Property="DistinctValuesSupported" Bool="true"/>
                         <PropertyValue Property="CollectionPath" String="C_MM_MatlBatchValueHelp"/>
                         <PropertyValue Property="Parameters">
@@ -105,7 +103,7 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="SAP__self.C_MM_MatlBatchValueHelpType">
-                <Annotation Term="SAP__common.Label" String="Entradas possíveis nº de lote de material"/>
+                <Annotation Term="SAP__common.Label" String="Material Batch Value Help"/>
                 <Annotation Term="SAP__UI.LineItem">
                     <Collection>
                         <Record Type="SAP__UI.DataField">

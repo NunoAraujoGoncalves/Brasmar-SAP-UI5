@@ -65,16 +65,15 @@
             <Annotations Target="SAP__self.ZI_DOMSHType/Value">
                 <Annotation Term="SAP__common.Text" Path="Text"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Valor inferior"/>
-                <Annotation Term="SAP__common.Heading" String="Valor fixo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Valores p/domínios: valor ind./limite inferior"/>
+                <Annotation Term="SAP__common.Label" String="Lower Value"/>
+                <Annotation Term="SAP__common.Heading" String="Fixed"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_DOMSHType/DomName">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Nome do domínio"/>
-                <Annotation Term="SAP__common.Heading" String="Domínio"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Denominação de um domínio"/>
+                <Annotation Term="SAP__common.Label" String="Domain name"/>
+                <Annotation Term="SAP__common.Heading" String="Domain"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQLinhasType/AbdomenOdor">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -192,8 +191,8 @@
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_DOMSHType/Text">
-                <Annotation Term="SAP__common.Label" String="Descrição breve"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Texto breve para valores fixos"/>
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

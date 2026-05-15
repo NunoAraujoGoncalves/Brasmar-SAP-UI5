@@ -64,14 +64,10 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_calibreshType/Calibre">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="UN Tam./Ca."/>
-                <Annotation Term="SAP__common.QuickInfo" String="UN T./C."/>
             </Annotations>
             <Annotations Target="SAP__self.zi_calibreshType/Gs1">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Calibre">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -186,9 +182,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_calibreshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

@@ -65,15 +65,15 @@
             <Annotations Target="SAP__self.ZI_UNITOFMEASURE_SHType/UnitOfMeasure">
                 <Annotation Term="SAP__common.IsUnit"/>
                 <Annotation Term="SAP__common.Text" Path="unitOfMeasureName"/>
-                <Annotation Term="SAP__common.Label" String="Unid.medida interna"/>
-                <Annotation Term="SAP__common.Heading" String="UM"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Unidade de medida"/>
+                <Annotation Term="SAP__common.Label" String="Internal UoM"/>
+                <Annotation Term="SAP__common.Heading" String="MU"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Unit of Measurement"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_UNITOFMEASURE_SHType/UnitOfMeasureISOCode">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código ISO"/>
+                <Annotation Term="SAP__common.Label" String="ISO Code"/>
                 <Annotation Term="SAP__common.Heading" String="ISO"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Cód.ISO unid.medida"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ISO Code for Unit of Measurement"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Cxuompeso">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -190,9 +190,9 @@
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_UNITOFMEASURE_SHType/unitOfMeasureName">
-                <Annotation Term="SAP__common.Label" String="Texto UM"/>
-                <Annotation Term="SAP__common.Heading" String="Texto para unidade de medida"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Texto relativo à unidade de medida (10 caracteres no máximo)"/>
+                <Annotation Term="SAP__common.Label" String="Meas. Unit Text"/>
+                <Annotation Term="SAP__common.Heading" String="Measurement Unit Text"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Unit of Measurement Text (Maximum 10 Characters)"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

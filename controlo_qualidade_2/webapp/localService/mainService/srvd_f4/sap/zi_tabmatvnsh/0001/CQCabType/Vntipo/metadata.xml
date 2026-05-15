@@ -63,8 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.ZI_TABMATVNSHType/Vntipo">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Tipo Tabela"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Tipo Tabela Nutricional"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Vntipo">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -176,9 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_TABMATVNSHType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

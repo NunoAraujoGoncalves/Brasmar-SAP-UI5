@@ -63,7 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.ZI_MARCASHType/Marca">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Marca"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Marca">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -175,9 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_MARCASHType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

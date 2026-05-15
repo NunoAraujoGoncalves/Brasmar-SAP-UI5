@@ -64,14 +64,10 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_tipocapturashType/Tipocaptura">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Tipos de Captura"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Tipos de Capturas"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_tipocapturashType/Gs1">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Tipocaptura">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -185,9 +181,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_tipocapturashType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

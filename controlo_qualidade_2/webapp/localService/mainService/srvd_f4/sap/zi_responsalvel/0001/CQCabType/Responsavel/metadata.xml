@@ -64,13 +64,13 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_responsalvelType/Werks">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Centro"/>
-                <Annotation Term="SAP__common.Heading" String="Cen."/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_responsalvelType/Responsavel">
                 <Annotation Term="SAP__common.Label" String="Responsável"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.QuickInfo" String="char255"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Char255"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Responsavel">
                 <Annotation Term="SAP__common.ValueListMapping">

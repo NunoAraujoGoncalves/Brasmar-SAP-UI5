@@ -64,9 +64,9 @@
             <Annotations Target="SAP__self.I_DraftAdministrativeUserVHType/UserID">
                 <Annotation Term="SAP__common.Text" Path="UserDescription"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Usuário"/>
-                <Annotation Term="SAP__common.Heading" String="Nome usuário"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome do usuário no mestre de usuários"/>
+                <Annotation Term="SAP__common.Label" String="User"/>
+                <Annotation Term="SAP__common.Heading" String="User Name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="User Name in User Master Record"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.I_DraftAdministrativeDataType/LastChangedByUser">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -180,8 +180,8 @@
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
             </Annotations>
             <Annotations Target="SAP__self.I_DraftAdministrativeUserVHType/UserDescription">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Descrição do usuário"/>
+                <Annotation Term="SAP__common.Label" String="Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="User Description"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

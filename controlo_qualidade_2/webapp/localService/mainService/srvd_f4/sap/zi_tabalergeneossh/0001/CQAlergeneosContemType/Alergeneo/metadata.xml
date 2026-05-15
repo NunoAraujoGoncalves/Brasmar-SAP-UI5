@@ -63,8 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_tabalergeneosshType/Alergeneo">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Alergéneo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Ficha Técnica - Alergéneo"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQAlergeneosContemType/Alergeneo">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -176,9 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_tabalergeneosshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

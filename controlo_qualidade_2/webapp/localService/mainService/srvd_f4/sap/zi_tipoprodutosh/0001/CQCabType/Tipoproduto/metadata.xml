@@ -63,7 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_tipoprodutoshType/Tipoproduto">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Tipo de Produto"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Tipoproduto">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -175,9 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_tipoprodutoshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

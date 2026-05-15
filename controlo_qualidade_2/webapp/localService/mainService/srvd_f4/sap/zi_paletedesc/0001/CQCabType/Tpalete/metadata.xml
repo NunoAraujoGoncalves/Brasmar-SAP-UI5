@@ -64,7 +64,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.ZI_PALETEDESCType/Tpalete">
                 <Annotation Term="SAP__common.Text" Path="LongDesc"/>
-                <Annotation Term="SAP__common.Label" String="Tipo Palete"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Tpalete">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -179,9 +178,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_PALETEDESCType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

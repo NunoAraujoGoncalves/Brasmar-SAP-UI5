@@ -78,13 +78,10 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_origemshType/Origem">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Origem"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_origemshType/Gs1">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/Gs1origem">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -108,8 +105,6 @@
                     </Record>
                 </Annotation>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_origemshType">
                 <Annotation Term="SAP__common.Label" String="Search Help para Material Origem"/>
@@ -147,30 +142,25 @@
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/Lifnr">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Fornecedor"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº conta do fornecedor"/>
+                <Annotation Term="SAP__common.Label" String="Supplier"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Account Number of Supplier"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/Ncv">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Nrº Controlo Vet."/>
-                <Annotation Term="SAP__common.Heading" String="Nrº Controlo Veterinário"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nrº Controlo Veterinário"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/Ncvestab">
                 <Annotation Term="SAP__common.Label" String="NCV Estab."/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="Texto"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Campo de texto comprimento 200"/>
+                <Annotation Term="SAP__common.Heading" String="Text"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Text field length 200"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/LifnrDesc">
                 <Annotation Term="SAP__common.Label" String="Nome Fornecedor"/>
-                <Annotation Term="SAP__common.Heading" String="Nome 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome 1"/>
+                <Annotation Term="SAP__common.Heading" String="Name 1"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name 1"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_NCVSHType/Gs1OrigemDesc">
                 <Annotation Term="SAP__common.Label" String="Origem"/>
-                <Annotation Term="SAP__common.Heading" String="Descrição"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Descrição"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Nexportador">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -294,9 +284,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_origemshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

@@ -138,142 +138,142 @@
             <Annotations Target="SAP__self.I_Supplier_VHType/Supplier">
                 <Annotation Term="SAP__common.Text" Path="BPSupplierName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Fornecedor"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº conta do fornecedor"/>
+                <Annotation Term="SAP__common.Label" String="Supplier"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Account Number of Supplier"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/SupplierName">
-                <Annotation Term="SAP__common.Label" String="Nome do fornecedor 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome do fornecedor"/>
-                <Annotation Term="SAP__common.Heading" String="Nome 1"/>
+                <Annotation Term="SAP__common.Label" String="Supplier Name1"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Supplier Name"/>
+                <Annotation Term="SAP__common.Heading" String="Name 1"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/BusinessPartnerName1">
-                <Annotation Term="SAP__common.Label" String="Parc.negócios nome 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Parc.negócios nome 1"/>
-                <Annotation Term="SAP__common.Heading" String="Nome"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Name1"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Name1"/>
+                <Annotation Term="SAP__common.Heading" String="Name"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/BPSupplierName">
-                <Annotation Term="SAP__common.Label" String="Nome do fornecedor parceiro de negócios"/>
-                <Annotation Term="SAP__common.Heading" String="Nome do fornecedor"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome do fornecedor"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Supplier Name"/>
+                <Annotation Term="SAP__common.Heading" String="Supplier Name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Supplier Name"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/AuthorizationGroup">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Autorização"/>
-                <Annotation Term="SAP__common.Heading" String="GrAu"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Grupo autorizações"/>
+                <Annotation Term="SAP__common.Label" String="Authorization"/>
+                <Annotation Term="SAP__common.Heading" String="AuGr"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Authorization Group"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/SupplierAccountGroup">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Grupo de contas"/>
-                <Annotation Term="SAP__common.Heading" String="Grupo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Grupo de contas do fornecedor"/>
+                <Annotation Term="SAP__common.Label" String="Account group"/>
+                <Annotation Term="SAP__common.Heading" String="Group"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Vendor account group"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/IsBusinessPurposeCompleted">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Objetivo concluído"/>
-                <Annotation Term="SAP__common.Heading" String="Código p/objetivo empresarial cumprido"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Código para objetivo empresarial cumprido"/>
+                <Annotation Term="SAP__common.Label" String="Purpose Completed"/>
+                <Annotation Term="SAP__common.Heading" String="Business Purpose Completed Flag"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Purpose Completed Flag"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/BusinessPartner">
-                <Annotation Term="SAP__common.Label" String="Parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="Parc.negócios"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº parceiro de negócios"/>
+                <Annotation Term="SAP__common.Heading" String="Business Partner"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Number"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/BusinessPartnerType">
-                <Annotation Term="SAP__common.Label" String="Tipo de parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Type"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="Tipo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Tipo de parceiro de negócios"/>
+                <Annotation Term="SAP__common.Heading" String="Type"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Type"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataControllerSet">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Def.contr.dds."/>
-                <Annotation Term="SAP__common.Heading" String="Código para definição do controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: código para definição do controlador de dados"/>
+                <Annotation Term="SAP__common.Label" String="Data Ctrlr. Set"/>
+                <Annotation Term="SAP__common.Heading" String="Data Controller Set Flag"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller Set Flag"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController1">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController2">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController3">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController4">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController5">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController6">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController7">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController8">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController9">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType/DataController10">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/PlantSupplier">
                 <Annotation Term="SAP__common.ValueListMapping">
                     <Record>
-                        <PropertyValue Property="Label" String="Fornecedor"/>
+                        <PropertyValue Property="Label" String="Supplier"/>
                         <PropertyValue Property="CollectionPath" String="I_Supplier_VH"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -301,12 +301,12 @@
                     </Record>
                 </Annotation>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Nº forn.centro"/>
-                <Annotation Term="SAP__common.Heading" String="Número fornecedor centro"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Número do fornecedor do centro"/>
+                <Annotation Term="SAP__common.Label" String="Sppl. No. Plnt"/>
+                <Annotation Term="SAP__common.Heading" String="Supplier Number Plant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Supplier Number of Plant"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Supplier_VHType">
-                <Annotation Term="SAP__common.Label" String="Fornecedor"/>
+                <Annotation Term="SAP__common.Label" String="Supplier"/>
             </Annotations>
             <Annotations Target="SAP__self.Container/I_Supplier_VH">
                 <Annotation Term="SAP__capabilities.SearchRestrictions">
@@ -342,19 +342,19 @@
             <Annotations Target="SAP__self.I_PlantType/Plant">
                 <Annotation Term="SAP__common.Text" Path="PlantName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Centro"/>
-                <Annotation Term="SAP__common.Heading" String="Cen."/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/ValuationArea">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Área de avaliação"/>
-                <Annotation Term="SAP__common.Heading" String="ÁrAv"/>
+                <Annotation Term="SAP__common.Label" String="Valuation Area"/>
+                <Annotation Term="SAP__common.Heading" String="ValA"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/PlantCustomer">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.ValueListMapping">
                     <Record>
-                        <PropertyValue Property="Label" String="Cliente"/>
+                        <PropertyValue Property="Label" String="Customer"/>
                         <PropertyValue Property="CollectionPath" String="I_Customer_VH"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -399,53 +399,55 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__common.Label" String="Nº cliente do centro"/>
-                <Annotation Term="SAP__common.Heading" String="NºCliCent."/>
+                <Annotation Term="SAP__common.Label" String="Customer No Plant"/>
+                <Annotation Term="SAP__common.Heading" String="CustNoPlnt"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Customer Number of Plant"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/FactoryCalendar">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Calendário fábrica"/>
+                <Annotation Term="SAP__common.Label" String="Factory Calendar"/>
                 <Annotation Term="SAP__common.Heading" String="Cal"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Chave do calendário de fábrica"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Factory calendar key"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/DefaultPurchasingOrganization">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Organização compras"/>
-                <Annotation Term="SAP__common.Heading" String="OrgC"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Organização de compras"/>
+                <Annotation Term="SAP__common.Label" String="Purch. Organization"/>
+                <Annotation Term="SAP__common.Heading" String="POrg"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchasing Organization"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/SalesOrganization">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Orgiz.vendas FatmInt"/>
-                <Annotation Term="SAP__common.Heading" String="OrgVFI"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Organização de vendas para faturamento interno"/>
+                <Annotation Term="SAP__common.Label" String="Sls Organization ICB"/>
+                <Annotation Term="SAP__common.Heading" String="SO ICB"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Sales Organization for Intercompany Billing"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/AddressID">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Endereço"/>
+                <Annotation Term="SAP__common.Label" String="Address"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/PlantCategory">
                 <Annotation Term="SAP__common.SAPObjectNodeTypeReference" String="PlantCategory"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Ctg.centro"/>
+                <Annotation Term="SAP__common.Label" String="Plant Cat."/>
                 <Annotation Term="SAP__common.Heading" String="C"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Plant category"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/DistributionChannel">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Canal distribuição"/>
-                <Annotation Term="SAP__common.Heading" String="CDFI"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Canal de distribuição para faturamento interno"/>
+                <Annotation Term="SAP__common.Label" String="Distrib.Channel"/>
+                <Annotation Term="SAP__common.Heading" String="DstCh"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Distribution Channel for Intercompany billing"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/Division">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Set.ativ.fat.interno"/>
-                <Annotation Term="SAP__common.Heading" String="SAFI"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Setor de atividade para faturamento interno"/>
+                <Annotation Term="SAP__common.Label" String="Interco. Billing Div"/>
+                <Annotation Term="SAP__common.Heading" String="Div."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Division for Intercompany Billing"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Centro">
                 <Annotation Term="SAP__common.ValueListMapping">
                     <Record>
-                        <PropertyValue Property="Label" String="Centro"/>
+                        <PropertyValue Property="Label" String="Plant"/>
                         <PropertyValue Property="CollectionPath" String="I_Plant"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -498,7 +500,7 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType">
-                <Annotation Term="SAP__common.Label" String="Centro"/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
                 <Annotation Term="SAP__common.SAPObjectNodeType">
                     <Record>
                         <PropertyValue Property="Name" String="Plant"/>
@@ -539,193 +541,193 @@
             <Annotations Target="SAP__self.I_Customer_VHType/Customer">
                 <Annotation Term="SAP__common.Text" Path="BPCustomerName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Cliente"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº cliente"/>
+                <Annotation Term="SAP__common.Label" String="Customer"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Customer Number"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/OrganizationBPName1">
-                <Annotation Term="SAP__common.Label" String="Nome de cliente 1"/>
-                <Annotation Term="SAP__common.Heading" String="Nome 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome 1"/>
+                <Annotation Term="SAP__common.Label" String="Customer Name 1"/>
+                <Annotation Term="SAP__common.Heading" String="Name 1"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name 1"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BusinessPartnerName1">
-                <Annotation Term="SAP__common.Label" String="Nome do parceiro de negócios 1"/>
-                <Annotation Term="SAP__common.Heading" String="Nome"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome 1"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Name 1"/>
+                <Annotation Term="SAP__common.Heading" String="Name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name 1"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/OrganizationBPName2">
-                <Annotation Term="SAP__common.Label" String="Nome do cliente 2"/>
-                <Annotation Term="SAP__common.Heading" String="Nome 2"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome 2"/>
+                <Annotation Term="SAP__common.Label" String="Customer Name 2"/>
+                <Annotation Term="SAP__common.Heading" String="Name 2"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name 2"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BusinessPartnerName2">
-                <Annotation Term="SAP__common.Label" String="Nome do parceiro de negócios 2"/>
-                <Annotation Term="SAP__common.Heading" String="Nome 2"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome 2"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Name 2"/>
+                <Annotation Term="SAP__common.Heading" String="Name 2"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name 2"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/Country">
-                <Annotation Term="SAP__common.Label" String="País/região"/>
+                <Annotation Term="SAP__common.Label" String="Country/Region"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="Chave do país/da região"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Chave do país/da região"/>
+                <Annotation Term="SAP__common.Heading" String="Country/Region Key"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Country/Region Key"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/CityName">
-                <Annotation Term="SAP__common.Label" String="Cidade"/>
-                <Annotation Term="SAP__common.Heading" String="Cidade"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Cidade"/>
+                <Annotation Term="SAP__common.Label" String="City"/>
+                <Annotation Term="SAP__common.Heading" String="City"/>
+                <Annotation Term="SAP__common.QuickInfo" String="City"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BPAddrCityName">
-                <Annotation Term="SAP__common.Label" String="Cidade do endereço do parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Address City"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Heading" String="Cidade"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Cidade"/>
+                <Annotation Term="SAP__common.Heading" String="City"/>
+                <Annotation Term="SAP__common.QuickInfo" String="City"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/StreetName">
-                <Annotation Term="SAP__common.Label" String="Rua"/>
-                <Annotation Term="SAP__common.Heading" String="Rua"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Rua e nº"/>
+                <Annotation Term="SAP__common.Label" String="Street"/>
+                <Annotation Term="SAP__common.Heading" String="Street"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Street and House Number"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BPAddrStreetName">
-                <Annotation Term="SAP__common.Label" String="Rua do endereço do parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Address Street"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Heading" String="Rua"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Rua"/>
+                <Annotation Term="SAP__common.Heading" String="Street"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Street"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/PostalCode">
-                <Annotation Term="SAP__common.Label" String="Código postal"/>
+                <Annotation Term="SAP__common.Label" String="Postal Code"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="CódigoPost"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Código postal"/>
+                <Annotation Term="SAP__common.Heading" String="PostalCode"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Postal Code"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/CustomerName">
-                <Annotation Term="SAP__common.Label" String="Nome do cliente"/>
-                <Annotation Term="SAP__common.Heading" String="Cliente"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome do cliente"/>
+                <Annotation Term="SAP__common.Label" String="Customer Name"/>
+                <Annotation Term="SAP__common.Heading" String="Customer"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name of Customer"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BPCustomerName">
-                <Annotation Term="SAP__common.Label" String="Nome do cliente do parceiro de negócios"/>
-                <Annotation Term="SAP__common.Heading" String="Cliente"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nome do cliente"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Customer Name"/>
+                <Annotation Term="SAP__common.Heading" String="Customer"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Customer Name"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/CustomerAccountGroup">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Grupo de contas"/>
-                <Annotation Term="SAP__common.Heading" String="Grupo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Grupo de contas do cliente"/>
+                <Annotation Term="SAP__common.Label" String="Account group"/>
+                <Annotation Term="SAP__common.Heading" String="Group"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Customer Account Group"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/AuthorizationGroup">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Autorização"/>
-                <Annotation Term="SAP__common.Heading" String="GrAu"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Grupo autorizações"/>
+                <Annotation Term="SAP__common.Label" String="Authorization"/>
+                <Annotation Term="SAP__common.Heading" String="AuGr"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Authorization Group"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/IsBusinessPurposeCompleted">
-                <Annotation Term="SAP__common.Label" String="Marcação objetivo concluído"/>
+                <Annotation Term="SAP__common.Label" String="Purpose Complete Flag"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Heading" String="Código p/objetivo empresarial cumprido"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Código para objetivo empresarial cumprido"/>
+                <Annotation Term="SAP__common.Heading" String="Business Purpose Completed Flag"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Purpose Completed Flag"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BusinessPartner">
-                <Annotation Term="SAP__common.Label" String="Parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Heading" String="Parc.negócios"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº parceiro de negócios"/>
+                <Annotation Term="SAP__common.Heading" String="Business Partner"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Number"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/BusinessPartnerType">
-                <Annotation Term="SAP__common.Label" String="Tipo de parceiro de negócios"/>
+                <Annotation Term="SAP__common.Label" String="Business Partner Type"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Heading" String="Tipo"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Tipo de parceiro de negócios"/>
+                <Annotation Term="SAP__common.Heading" String="Type"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Type"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataControllerSet">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Def.contr.dds."/>
-                <Annotation Term="SAP__common.Heading" String="Código para definição do controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: código para definição do controlador de dados"/>
+                <Annotation Term="SAP__common.Label" String="Data Ctrlr. Set"/>
+                <Annotation Term="SAP__common.Heading" String="Data Controller Set Flag"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller Set Flag"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController1">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController2">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController3">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController4">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController5">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController6">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController7">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController8">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController9">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/DataController10">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Controlador de dados"/>
-                <Annotation Term="SAP__common.QuickInfo" String="PN: controlador de dados (só utilização interna)"/>
+                <Annotation Term="SAP__common.Label" String="Data Controller"/>
+                <Annotation Term="SAP__common.QuickInfo" String="BP: Data Controller (Internal Use Only)"/>
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType">
-                <Annotation Term="SAP__common.Label" String="Cliente"/>
+                <Annotation Term="SAP__common.Label" String="Customer"/>
             </Annotations>
             <Annotations Target="SAP__self.Container/I_Customer_VH">
                 <Annotation Term="SAP__capabilities.SearchRestrictions">
@@ -818,21 +820,21 @@
             </Annotations>
             <Annotations Target="SAP__self.I_Customer_VHType/IsCompetitor">
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Concorrente"/>
+                <Annotation Term="SAP__common.Label" String="Competitors"/>
                 <Annotation Term="SAP__common.Heading" String="C"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Código: concorrente"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Indicator: Competitor"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/PlantName">
-                <Annotation Term="SAP__common.Label" String="Nome do centro"/>
+                <Annotation Term="SAP__common.Label" String="Plant Name"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/Language">
-                <Annotation Term="SAP__common.Label" String="Código de idioma"/>
-                <Annotation Term="SAP__common.Heading" String="Idioma"/>
+                <Annotation Term="SAP__common.Label" String="Language Key"/>
+                <Annotation Term="SAP__common.Heading" String="Language"/>
             </Annotations>
             <Annotations Target="SAP__self.I_PlantType/IsMarkedForArchiving">
-                <Annotation Term="SAP__common.Label" String="Marc.p/arquivmto."/>
-                <Annotation Term="SAP__common.Heading" String="MArq"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Marcação central para arquivamento para registro mestre"/>
+                <Annotation Term="SAP__common.Label" String="Archiving Flag"/>
+                <Annotation Term="SAP__common.Heading" String="ArMk"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Central archiving marker for master record"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

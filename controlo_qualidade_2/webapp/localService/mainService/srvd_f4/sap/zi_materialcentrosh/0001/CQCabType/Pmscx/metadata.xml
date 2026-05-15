@@ -67,18 +67,16 @@
                 <Annotation Term="SAP__common.Text" Path="Material_Text"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.Label" String="Material"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Nº do material"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material Number"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_materialcentroshType/Material_Text">
                 <Annotation Term="SAP__core.Computed"/>
-                <Annotation Term="SAP__common.Label" String="Texto breve material"/>
-                <Annotation Term="SAP__common.Heading" String="TxtBreveMaterial"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Texto breve de material"/>
+                <Annotation Term="SAP__common.Label" String="Material Description"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_materialcentroshType/Plant">
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Centro"/>
-                <Annotation Term="SAP__common.Heading" String="Cen."/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Pmscx">
                 <Annotation Term="SAP__common.ValueListMapping">

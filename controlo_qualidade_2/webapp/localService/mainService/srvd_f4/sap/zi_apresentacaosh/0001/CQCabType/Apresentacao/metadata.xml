@@ -64,15 +64,10 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_apresentacaoshType/Apresentacao">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Apres./ Emba. Prim."/>
-                <Annotation Term="SAP__common.Heading" String="Apresentação / Embalamento Primário"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Apresentação Produto"/>
             </Annotations>
             <Annotations Target="SAP__self.zi_apresentacaoshType/Gs1">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Código GS1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Codigos GS1"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Apresentacao">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -187,9 +182,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_apresentacaoshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

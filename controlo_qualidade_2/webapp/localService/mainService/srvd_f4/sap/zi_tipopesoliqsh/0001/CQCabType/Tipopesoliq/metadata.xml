@@ -63,8 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_tipopesoliqshType/Tipopesoliq">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Tipo Peso Liq."/>
-                <Annotation Term="SAP__common.QuickInfo" String="Tipo de Peso Liquido"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Tipopesoliq">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -176,10 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_tipopesoliqshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição Abreviada"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Descrição com 25 caracteres"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

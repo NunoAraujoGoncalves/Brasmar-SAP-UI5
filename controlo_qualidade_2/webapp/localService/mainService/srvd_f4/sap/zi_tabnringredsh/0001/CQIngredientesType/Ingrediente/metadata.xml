@@ -74,7 +74,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.ZI_TABNRPRODUTOSHType/Nrproduto">
                 <Annotation Term="SAP__common.Text" Path="Prdescricao"/>
-                <Annotation Term="SAP__common.Label" String="Nrº Produto"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_TABNRINGREDSHType/Nrproduto">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -95,7 +94,6 @@
                     </Record>
                 </Annotation>
                 <Annotation Term="SAP__common.Text" Path="Prdescricao"/>
-                <Annotation Term="SAP__common.Label" String="Nrº Produto"/>
             </Annotations>
             <Annotations Target="SAP__self.ZI_TABNRPRODUTOSHType">
                 <Annotation Term="SAP__common.Label" String="Search Help para Ingrediente Nr Produto"/>
@@ -134,7 +132,6 @@
             <Annotations Target="SAP__self.ZI_TABNRINGREDSHType/Ingrediente">
                 <Annotation Term="SAP__common.Text" Path="Igdescricao"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Nrº Ingrediente"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQIngredientesType/Ingrediente">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -253,15 +250,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_TABNRPRODUTOSHType/Prdescricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_TABNRINGREDSHType/Prdescricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZI_TABNRINGREDSHType/Igdescricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

@@ -63,9 +63,6 @@
             </EntityContainer>
             <Annotations Target="SAP__self.zi_idiomapadraoshType/Idiomapadrao">
                 <Annotation Term="SAP__common.Text" Path="Descricao"/>
-                <Annotation Term="SAP__common.Label" String="Idioma Padrão Mat"/>
-                <Annotation Term="SAP__common.Heading" String="Idioma Padrão Material"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Idioma Padrão Material"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.CQCabType/Zidiomapadrao">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -177,9 +174,6 @@
                 </Annotation>
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
-            </Annotations>
-            <Annotations Target="SAP__self.zi_idiomapadraoshType/Descricao">
-                <Annotation Term="SAP__common.Label" String="Descrição"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>
