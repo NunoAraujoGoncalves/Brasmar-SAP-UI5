@@ -133,8 +133,9 @@
                   "actions": {
                     "DataFieldForAction::com.sap.gateway.srvd.zui_tabcq_o4.v0001.Discard": {
                       "afterExecution": {
-                        "enableAutoScroll": true
-                      }
+                        "enableAutoScroll": false
+                      },
+                      "enableOnSelect": "multi"
                     }
                   }
                 }
@@ -190,6 +191,40 @@
                   "tableSettings": {
                     "selectionMode": "Multi",
                     "selectAll": true
+                  },
+                  "actions": {
+                    "DataFieldForAction::com.sap.gateway.srvd.zui_tabcq_o4.v0001.copy::com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasSemControloType": {
+                      "enableOnSelect": "multi"
+                    }
+                  }
+                },
+                "_linhas/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "enableFullScreen": true
+                  }
+                },
+                "@com.sap.vocabularies.UI.v1.FieldGroup#Leitura": {
+                  "actions": {
+                    "descodificacbCaixa2": {
+                      "press": ".extension.controloqualidade2.ext.controller.CQCabDetail.descodificaCaixaDialog",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>cbCaixa2}",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "DataFieldForAction::com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBUn"
+                      }
+                    },
+                    "descodificacbUnidade2": {
+                      "press": ".extension.controloqualidade2.ext.controller.CQCabDetail.descodificaUnidadeDialog",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>cbUnidade2}",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "descodificacbCaixa2"
+                      }
+                    }
                   }
                 }
               }
@@ -233,7 +268,7 @@
                   },
                   "actions": {
                     "balancaPesoUn": {
-                      "press": "controloqualidade2.ext.controller.BalancaPesoUn.multiplePesosUn",
+                      "press": ".extension.controloqualidade2.ext.controller.CQCabLinhaDetail.balancaPesoUn",
                       "visible": true,
                       "enabled": true,
                       "requiresSelection": false,
@@ -289,7 +324,14 @@
     },
     "extends": {
       "extensions": {
-        "sap.ui.controllerExtensions": {}
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#controloqualidade2::CQCabObjectPage": {
+            "controllerName": "controloqualidade2.ext.controller.CQCabDetail"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#controloqualidade2::CQCab__linhasObjectPage": {
+            "controllerName": "controloqualidade2.ext.controller.CQCabLinhaDetail"
+          }
+        }
       }
     }
   },

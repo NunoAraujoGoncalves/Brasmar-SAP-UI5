@@ -16,59 +16,56 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Centro"/>
                             <PropertyValue Property="Label" String="{@i18n>centro}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="ID"/>
                             <PropertyValue Property="Label" String="{@i18n>idControloQualidad}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Criticality" Path="EstadoCriticality"/>
                             <PropertyValue Property="Value" Path="Estado"/>
                             <PropertyValue Property="Label" String="{@i18n>status}"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>responsvel}"/>
-                            <PropertyValue Property="Value" Path="Responsavel"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipodoc"/>
-                            <PropertyValue Property="Label" String="{@i18n>cqTipoDocumento}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Documento"/>
-                            <PropertyValue Property="Label" String="{@i18n>cqDocumento}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
+                        </Record>                       
+                                               <Record Type="UI.DataField">
+                                                   <PropertyValue Property="Value" Path="Tipodoc"/>
+                                                   <PropertyValue Property="Label" String="{@i18n>cqTipoDocumento}"/>
+                                                   <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                               </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Material"/>
                             <PropertyValue Property="Label" String="{@i18n>material}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Lote"/>
                             <PropertyValue Property="Label" String="{@i18n>lote}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record> 
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nDaPalete}"/>
-                            <PropertyValue Property="Value" Path="NPalete"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
+                            <PropertyValue Property="Value" Path="Tipoprod"/>
+                            <PropertyValue Property="Label" String="{@i18n>cqTipoProduto}"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>                      
+                                               <Record Type="UI.DataField">
+                                                   <PropertyValue Property="Value" Path="Documento"/>
+                                                   <PropertyValue Property="Label" String="{@i18n>cqDocumento}"/>
+                                                   <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                               </Record>                       
+                                               <Record Type="UI.DataField">
+                                                   <PropertyValue Property="Value" Path="Supplier"/>
+                                               </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nDaCaixa}"/>
-                            <PropertyValue Property="Value" Path="NCaixa"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>amostraTestemunho}"/>
-                            <PropertyValue Property="Value" Path="ATestemunho"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
+                            <PropertyValue Property="Value" Path="Nexportador"/>
+                        </Record>                       
+                                               <Record Type="UI.DataField">
+                                                   <PropertyValue Property="Label" String="{@i18n>responsvel}"/>
+                                                   <PropertyValue Property="Value" Path="Responsavel"/>
+                                                   <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                                               </Record>
+                     
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="DtCongelacao"/>
                             <PropertyValue Property="Label" String="{@i18n>dataCongelao}"/>
@@ -80,377 +77,8 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipoprod"/>
-                            <PropertyValue Property="Label" String="{@i18n>cqTipoProduto}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>presenaDeParasitas}"/>
-                            <PropertyValue Property="Value" Path="Parasitas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>idControloParasitas}"/>
-                            <PropertyValue Property="Value" Path="IdParasitas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Vntipo"/>
-                            <PropertyValue Property="Label" String="{@i18n>tipoTabela}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Grupopais"/>
-                            <PropertyValue Property="Label" String="{@i18n>grupoPases}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>contentorSelado}"/>
-                            <PropertyValue Property="Value" Path="Contertorselado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>contentorAbertoNaAlfndega}"/>
-                            <PropertyValue Property="Value" Path="Contertoraberto"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>reportQualidade}"/>
-                            <PropertyValue Property="Value" Path="RepQual"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>loteDetails}"/>
-                            <PropertyValue Property="Value" Path="LinkLotes"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>detalhesCarregamento}"/>
-                            <PropertyValue Property="Value" Path="CarregaDet"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>selo}"/>
-                            <PropertyValue Property="Value" Path="Selo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>entreposto}"/>
-                            <PropertyValue Property="Value" Path="Entreposto"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>ncv}"/>
-                            <PropertyValue Property="Value" Path="Nexportador"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>temperaturaVeculo}"/>
-                            <PropertyValue Property="Value" Path="Tempveiculo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>temperaturaProduto}"/>
-                            <PropertyValue Property="Value" Path="Tempproduto"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>veculoHigienizado}"/>
-                            <PropertyValue Property="Value" Path="Veiculohigienizado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>prcozinhado}"/>
-                            <PropertyValue Property="Value" Path="Precozinhado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>idDataLogger}"/>
-                            <PropertyValue Property="Value" Path="Iddatalogger"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>dataLogger}"/>
-                            <PropertyValue Property="Value" Path="Datalogger"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>dataLoggerEstado}"/>
-                            <PropertyValue Property="Value" Path="Dataloggerestado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>noConformidade}"/>
-                            <PropertyValue Property="Value" Path="Nc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nomeTransportador}"/>
-                            <PropertyValue Property="Value" Path="NomeTransportador"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>matricula}"/>
-                            <PropertyValue Property="Value" Path="Matricula"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cmr}"/>
-                            <PropertyValue Property="Value" Path="Cmr"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>mmGtin}"/>
-                            <PropertyValue Property="Value" Path="MMGtin"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>ean}"/>
-                            <PropertyValue Property="Value" Path="Ean"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>gtin}"/>
-                            <PropertyValue Property="Value" Path="Gtin"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipoproduto"/>
-                            <PropertyValue Property="Label" String="{@i18n>tipoDeProduto}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>unidades}"/>
-                            <PropertyValue Property="Value" Path="Nembalporcaixa"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Apresentacao"/>
-                            <PropertyValue Property="Label" String="{@i18n>apresEmbaPrim}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>pmsCx}"/>
-                            <PropertyValue Property="Value" Path="Pmscx"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>calibreAproximado}"/>
-                            <PropertyValue Property="Value" Path="CalibreAprox"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Cxcomprimento"/>
-                            <PropertyValue Property="Label" String="{@i18n>comprimento}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Cxlargura"/>
-                            <PropertyValue Property="Label" String="{@i18n>largura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Cxaltura"/>
-                            <PropertyValue Property="Label" String="{@i18n>altura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cxPesoBruto}"/>
-                            <PropertyValue Property="Value" Path="Cxpesobruto"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cxPl}"/>
-                            <PropertyValue Property="Value" Path="Cxpesoliquido"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cxPle}"/>
-                            <PropertyValue Property="Value" Path="Cxpesoliquidoesc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>taraCaixa}"/>
-                            <PropertyValue Property="Value" Path="Cxtara"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Uncomprimento"/>
-                            <PropertyValue Property="Label" String="{@i18n>comprimento}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Unlargura"/>
-                            <PropertyValue Property="Label" String="{@i18n>largura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Unaltura"/>
-                            <PropertyValue Property="Label" String="{@i18n>altura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>unPesoBruto}"/>
-                            <PropertyValue Property="Value" Path="Unpesobruto"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>unPl}"/>
-                            <PropertyValue Property="Value" Path="Unpesoliquido"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>unPle}"/>
-                            <PropertyValue Property="Value" Path="Unpesoliquidoesc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>taraUn}"/>
-                            <PropertyValue Property="Value" Path="Untara"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Matcertificado"/>
-                            <PropertyValue Property="Label" String="{@i18n>certificado}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Mscaprov"/>
-                            <PropertyValue Property="Label" String="{@i18n>mscCertificado}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nViveiro}"/>
-                            <PropertyValue Property="Value" Path="NumViveiro"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>localDeAbate}"/>
-                            <PropertyValue Property="Value" Path="LocalAbate"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>dataDeAbate}"/>
-                            <PropertyValue Property="Value" Path="DataAbate"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>estVeterinrio}"/>
-                            <PropertyValue Property="Value" Path="Veterinario"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Ascaprov"/>
-                            <PropertyValue Property="Label" String="{@i18n>ascCertificado}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>codigoBarras}"/>
-                            <PropertyValue Property="Value" Path="CodigoBarras"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>mmEan}"/>
-                            <PropertyValue Property="Value" Path="MMEan"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Marca"/>
-                            <PropertyValue Property="Label" String="{@i18n>marca}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>halal}"/>
-                            <PropertyValue Property="Value" Path="CAlhalal"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Origem"/>
-                            <PropertyValue Property="Label" String="{@i18n>origem}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>pp}"/>
-                            <PropertyValue Property="Value" Path="PP"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Zonadecaptura"/>
-                            <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>semGlten}"/>
-                            <PropertyValue Property="Value" Path="SGluten"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Artepesca"/>
-                            <PropertyValue Property="Label" String="{@i18n>arteDePesca}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Zidiomapadrao"/>
-                            <PropertyValue Property="Label" String="{@i18n>idiomaPadroMat}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Nomecientifico"/>
-                            <PropertyValue Property="Label" String="{@i18n>nomeCientifico}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipospeso"/>
-                            <PropertyValue Property="Label" String="{@i18n>peso}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipopesoliq"/>
-                            <PropertyValue Property="Label" String="{@i18n>tipoPesoLiq}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Calibre"/>
-                            <PropertyValue Property="Label" String="{@i18n>unTamca}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Calibremin"/>
-                            <PropertyValue Property="Label" String="{@i18n>tamcalMnimo}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Calibreminmed"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Calibremax"/>
-                            <PropertyValue Property="Label" String="{@i18n>tamcalMximo}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Tipocaptura"/>
-                            <PropertyValue Property="Label" String="{@i18n>tiposDeCaptura}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Teorvidragem"/>
-                            <PropertyValue Property="Label" String="{@i18n>teorDeVidragem}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>vidragemM}"/>
-                            <PropertyValue Property="Value" Path="VidragemM"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Usercriacao"/>
                             <PropertyValue Property="Label" String="{@i18n>userCriao}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>arteDePesca2}"/>
-                            <PropertyValue Property="Value" Path="ArtePesca2"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="UI.DataField">
@@ -459,23 +87,8 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>arteDePesca3}"/>
-                            <PropertyValue Property="Value" Path="ArtePesca3"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Horacriacao"/>
                             <PropertyValue Property="Label" String="{@i18n>horaCriao}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>arteDePesca4}"/>
-                            <PropertyValue Property="Value" Path="ArtePesca4"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura2}"/>
-                            <PropertyValue Property="Value" Path="ZonaDeCaptura2"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="UI.DataField">
@@ -484,18 +97,8 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura3}"/>
-                            <PropertyValue Property="Value" Path="ZonaDeCaptura3"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Datamodific"/>
                             <PropertyValue Property="Label" String="{@i18n>modificadoEm}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura4}"/>
-                            <PropertyValue Property="Value" Path="ZonaDeCaptura4"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="UI.DataField">
@@ -517,15 +120,6 @@
                             <PropertyValue Property="Value" Path="Horafecho"/>
                             <PropertyValue Property="Label" String="{@i18n>horaFecho}"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Contentor"/>
-                            <PropertyValue Property="Label" String="{@i18n>contentor}"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.Discard"/>
-                            <PropertyValue Property="Label" String="{@i18n>discard}"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -572,11 +166,6 @@
                                                     <PropertyValue Property="Label" String="{@i18n>caractersticasLote}"/>
                                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#CarProd"/>
                                                 </Record>
-                                                <Record Type="UI.ReferenceFacet">
-                                                    <PropertyValue Property="Label" String="{@i18n>mestreMaterial}"/>
-                                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#MestreProd"/>
-                                                    <Annotation Term="UI.PartOfPreview" Bool="false"/>
-                                                </Record>
                                             </Collection>
                                         </PropertyValue>
                                     </Record>
@@ -612,10 +201,6 @@
                                                 <Record Type="UI.ReferenceFacet">
                                                     <PropertyValue Property="Label" String="{@i18n>tipoEmbalagem}"/>
                                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Tipo"/>
-                                                </Record>
-                                                <Record Type="UI.ReferenceFacet">
-                                                    <PropertyValue Property="Label" String="{@i18n>dadosMestre}"/>
-                                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#MMTipo"/>
                                                 </Record>
                                             </Collection>
                                         </PropertyValue>
@@ -747,12 +332,12 @@
                                     <PropertyValue Property="Label" String="{@i18n>material}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>relatrio}"/>
-                                    <PropertyValue Property="Value" Path="Attachment"/>
-                                </Record>
-                                <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Lote"/>
                                     <PropertyValue Property="Label" String="{@i18n>lote}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>relatrio}"/>
+                                    <PropertyValue Property="Value" Path="Attachment"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>responsvel}"/>
@@ -765,6 +350,14 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="DtVencimento"/>
                                     <PropertyValue Property="Label" String="{@i18n>dataDoVencimento}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="DtProducao"/>
+                                    <PropertyValue Property="Label" String="{@i18n>dtproducao}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="DtEmbalamento"/>
+                                    <PropertyValue Property="Label" String="{@i18n>dtembalamento}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>amostraTestemunho}"/>
@@ -785,6 +378,11 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>idControloParasitas}"/>
                                     <PropertyValue Property="Value" Path="IdParasitas"/>
+                                </Record>                               
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Linha"/>
+                                    <PropertyValue Property="Label" String="Linha"/>
+                                    <Annotation Term="UI.Hidden" Path="HideLinhaOP"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -843,30 +441,6 @@
                         <PropertyValue Property="Data">
                             <Collection>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Marca"/>
-                                    <PropertyValue Property="Label" String="{@i18n>marca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Origem"/>
-                                    <PropertyValue Property="Label" String="{@i18n>origem}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Zonadecaptura"/>
-                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Artepesca"/>
-                                    <PropertyValue Property="Label" String="{@i18n>arteDePesca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Zidiomapadrao"/>
-                                    <PropertyValue Property="Label" String="{@i18n>idiomaPadroMat}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Nomecientifico"/>
-                                    <PropertyValue Property="Label" String="{@i18n>nomeCientifico}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Tipospeso"/>
                                     <PropertyValue Property="Label" String="{@i18n>peso}"/>
                                 </Record>
@@ -875,31 +449,72 @@
                                     <PropertyValue Property="Label" String="{@i18n>tipoPesoLiq}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Calibre"/>
-                                    <PropertyValue Property="Label" String="{@i18n>unTamca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Calibremin"/>
-                                    <PropertyValue Property="Label" String="{@i18n>tamcalMnimo}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Calibreminmed"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Calibremax"/>
-                                    <PropertyValue Property="Label" String="{@i18n>tamcalMximo}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="Tipocaptura"/>
-                                    <PropertyValue Property="Label" String="{@i18n>tiposDeCaptura}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Teorvidragem"/>
                                     <PropertyValue Property="Label" String="{@i18n>teorDeVidragem}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>vidragemM}"/>
                                     <PropertyValue Property="Value" Path="VidragemM"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Nomecientifico"/>
+                                    <PropertyValue Property="Label" String="{@i18n>nomeCientifico}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Tipocaptura"/>
+                                    <PropertyValue Property="Label" String="{@i18n>tiposDeCaptura}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMMarca"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMmarca}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Marca"/>
+                                    <PropertyValue Property="Label" String="{@i18n>marca}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMOrigem"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMOrigem}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Origem"/>
+                                    <PropertyValue Property="Label" String="{@i18n>origem}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMIdiomapadrao"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMidiomaPadroMat}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Zidiomapadrao"/>
+                                    <PropertyValue Property="Label" String="{@i18n>idiomaPadroMat}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMZonadecaptura"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMzonaDeCaptura}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Zonadecaptura"/>
+                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura2}"/>
+                                    <PropertyValue Property="Value" Path="ZonaDeCaptura2"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura3}"/>
+                                    <PropertyValue Property="Value" Path="ZonaDeCaptura3"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura4}"/>
+                                    <PropertyValue Property="Value" Path="ZonaDeCaptura4"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMArtepesca"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMarteDePesca}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Artepesca"/>
+                                    <PropertyValue Property="Label" String="{@i18n>arteDePesca}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>arteDePesca2}"/>
@@ -914,17 +529,29 @@
                                     <PropertyValue Property="Value" Path="ArtePesca4"/>
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura2}"/>
-                                    <PropertyValue Property="Value" Path="ZonaDeCaptura2"/>
+                                    <PropertyValue Property="Value" Path="MMCalibre"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMunTamca}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura3}"/>
-                                    <PropertyValue Property="Value" Path="ZonaDeCaptura3"/>
+                                    <PropertyValue Property="Value" Path="Calibre"/>
+                                    <PropertyValue Property="Label" String="{@i18n>unTamca}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura4}"/>
-                                    <PropertyValue Property="Value" Path="ZonaDeCaptura4"/>
+                                    <PropertyValue Property="Value" Path="MMCalibremin"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMtamcalMnimo}"/>
                                 </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Calibremin"/>
+                                    <PropertyValue Property="Label" String="{@i18n>tamcalMnimo}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMCalibremax"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMtamcalMximo}"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Calibremax"/>
+                                    <PropertyValue Property="Label" String="{@i18n>tamcalMximo}"/>
+                                </Record>                                                            
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -933,26 +560,7 @@
                     <Record>
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMMarca"/>
-                                    <PropertyValue Property="Label" String="{@i18n>marca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMOrigem"/>
-                                    <PropertyValue Property="Label" String="{@i18n>origem}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMZonadecaptura"/>
-                                    <PropertyValue Property="Label" String="{@i18n>zonaDeCaptura}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMArtepesca"/>
-                                    <PropertyValue Property="Label" String="{@i18n>arteDePesca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMIdiomapadrao"/>
-                                    <PropertyValue Property="Label" String="{@i18n>idiomaPadroMat}"/>
-                                </Record>
+                                                              
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="MMNomecientifico"/>
                                     <PropertyValue Property="Label" String="{@i18n>nomeCientifico}"/>
@@ -965,21 +573,12 @@
                                     <PropertyValue Property="Value" Path="MMTipopesoliq"/>
                                     <PropertyValue Property="Label" String="{@i18n>tipoPesoLiq}"/>
                                 </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMCalibre"/>
-                                    <PropertyValue Property="Label" String="{@i18n>unTamca}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMCalibremin"/>
-                                    <PropertyValue Property="Label" String="{@i18n>tamcalMnimo}"/>
-                                </Record>
+                                
+                                
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="MMCalibreminmed"/>
                                 </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMCalibremax"/>
-                                    <PropertyValue Property="Label" String="{@i18n>tamcalMximo}"/>
-                                </Record>
+                                
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="MMTipocaptura"/>
                                     <PropertyValue Property="Label" String="{@i18n>tiposDeCaptura}"/>
@@ -1096,6 +695,18 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>codigoBarras}"/>
                                     <PropertyValue Property="Value" Path="CodigoBarras"/>
+                                </Record>                               
+                                                               <Record Type="UI.DataField">
+                                                                   <PropertyValue Property="Value" Path="CodigoBarrasUn"/>
+                                                                   <PropertyValue Property="Label" String="{@i18n>codigoBarrasUn}"/>
+                                                               </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>mmGtin}"/>
+                                    <PropertyValue Property="Value" Path="MMGtin"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>gtin}"/>
+                                    <PropertyValue Property="Value" Path="Gtin"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>mmEan}"/>
@@ -1104,14 +715,16 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>ean}"/>
                                     <PropertyValue Property="Value" Path="Ean"/>
+                                </Record>                                
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBCaixa"/>
+                                    <PropertyValue Property="Label" String="{@i18n>descodificacbcaixa}"/>
+                                    <Annotation Term="UI.Hidden"/>
                                 </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>mmGtin}"/>
-                                    <PropertyValue Property="Value" Path="MMGtin"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>gtin}"/>
-                                    <PropertyValue Property="Value" Path="Gtin"/>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBUn"/>
+                                    <PropertyValue Property="Label" String="{@i18n>descodificacbun}"/>
+                                    <Annotation Term="UI.Hidden"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -1126,17 +739,25 @@
                                     <PropertyValue Property="Label" String="{@i18n>tipoDeProduto}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>calibreAproximado}"/>
+                                    <PropertyValue Property="Value" Path="CalibreAprox"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>MMunidades}"/>
+                                    <PropertyValue Property="Value" Path="MMNembalporcaixa"/>
+                                </Record>
+                                <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>unidades}"/>
                                     <PropertyValue Property="Value" Path="Nembalporcaixa"/>
+                                </Record>     
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MMApresentacao"/>
+                                    <PropertyValue Property="Label" String="{@i18n>MMapresEmbaPrim}"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Apresentacao"/>
                                     <PropertyValue Property="Label" String="{@i18n>apresEmbaPrim}"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>calibreAproximado}"/>
-                                    <PropertyValue Property="Value" Path="CalibreAprox"/>
-                                </Record>
+                                </Record>                                
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -1149,14 +770,8 @@
                                     <PropertyValue Property="Value" Path="MMTipoproduto"/>
                                     <PropertyValue Property="Label" String="{@i18n>tipoDeProduto}"/>
                                 </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="{@i18n>unidades}"/>
-                                    <PropertyValue Property="Value" Path="MMNembalporcaixa"/>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="MMApresentacao"/>
-                                    <PropertyValue Property="Label" String="{@i18n>apresEmbaPrim}"/>
-                                </Record>
+                                
+                                
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -1172,14 +787,17 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Cxcomprimento"/>
                                     <PropertyValue Property="Label" String="{@i18n>comprimento}"/>
+                                    <Annotation Term="UI.Hidden" Path="HideCxDim"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Cxlargura"/>
                                     <PropertyValue Property="Label" String="{@i18n>largura}"/>
+                                    <Annotation Term="UI.Hidden" Path="HideCxDim"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Cxaltura"/>
                                     <PropertyValue Property="Label" String="{@i18n>altura}"/>
+                                    <Annotation Term="UI.Hidden"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>pesoBruto}"/>
@@ -1208,14 +826,17 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Uncomprimento"/>
                                     <PropertyValue Property="Label" String="{@i18n>comprimento}"/>
+                                    <Annotation Term="UI.Hidden" Path="HideUnDim"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Unlargura"/>
                                     <PropertyValue Property="Label" String="{@i18n>largura}"/>
+                                    <Annotation Term="UI.Hidden" Path="HideUnDim"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="Unaltura"/>
                                     <PropertyValue Property="Label" String="{@i18n>altura}"/>
+                                    <Annotation Term="UI.Hidden" Path="HideUnDim"/>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>pesoBruto}"/>
@@ -1379,42 +1000,136 @@
                     </Record>
                 </Annotation>
                 <Annotation Term="UI.Identification">
-                    <Collection>
+                    <Collection>                       
+<Record Type="UI.DataFieldForAction">
+<PropertyValue Property="Label" String="{@i18n>imprimir}"/>
+<PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.printCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+<PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+</Record>
+                        <!-- <Record Type="UI.DataFieldForActionGroup">
+	                        <PropertyValue Property="Label" String="{@i18n>statusmenu}" />
+	                        <PropertyValue Property="Actions"> 
+                            <Collection> -->
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="{@i18n>copiar}"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.copy2(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                                </Record>
+                            <!-- </Collection>
+    	                    </PropertyValue>
+                            </Record>     -->
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="{@i18n>concluirControlo}"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.concluirCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                                    <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive"/>
+                                </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="{@i18n>reabrirControlo}"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.reabrirCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                                    <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Negative"/>
+                                </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="{@i18n>aprovarControlo}"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.aprovarCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                                    <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive"/>
+                                </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="{@i18n>desaprovarControlo}"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.desaprovarCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                                    <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Negative"/>
+                                </Record>
                         <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>concluirControlo}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.concluirCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>reabrirControlo}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.reabrirCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Negative"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>aprovarControlo}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.aprovarCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>desaprovarControlo}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.desaprovarCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Negative"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>copiar}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.copy2(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="{@i18n>imprimir}"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.printCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.changeMat"/>
+                            <PropertyValue Property="Label" String="{@i18n>changemat}"/>
                         </Record>
                     </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>                        
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Controlo"/>
+                            <PropertyValue Property="ID" String="Controlo"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Controlo"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Produto"/>
+                            <PropertyValue Property="ID" String="Produto"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Produto"/>
+                        </Record>    
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Detalhe"/>
+                            <PropertyValue Property="ID" String="Detalhe"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Detalhe"/>
+                        </Record>      
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Controlo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Centro"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ID"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Estado"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Produto">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Material"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Lote"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Tipoprod"/>
+                                </Record>
+
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Detalhe">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Responsavel"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Tipodoc"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Documento"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="Lote">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="Lote"/>
+                        <PropertyValue Property="Title" String="Lote"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="Material">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="Material"/>
+                        <PropertyValue Property="Title" String="Material"/>
+                    </Record>
                 </Annotation>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Centro">
@@ -1538,394 +1253,35 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>amostraTestemunho}"/>
-                            <PropertyValue Property="Value" Path="ATestemunho"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="Material"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nDaCaixa}"/>
-                            <PropertyValue Property="Value" Path="NCaixa"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="LoteFornecedor"/>
+                            <PropertyValue Property="Label" String="{@i18n>lotefornecedor}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nDaPalete}"/>
-                            <PropertyValue Property="Value" Path="NPalete"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="UnSumPb"/>
+                            <PropertyValue Property="Label" String="{@i18n>unsumpb}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>acondicionamentoHigiene}"/>
-                            <PropertyValue Property="Value" Path="Acondhigiene"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="UnSumPl"/>
+                            <PropertyValue Property="Label" String="{@i18n>unsumpl}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>acondicionamentoIntegridade}"/>
-                            <PropertyValue Property="Value" Path="Acondintegre"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="UnSumPle"/>
+                            <PropertyValue Property="Label" String="{@i18n>unsumple}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>vestgiosCorposEstranhos}"/>
-                            <PropertyValue Property="Value" Path="Cestranho"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="UnMedPl"/>
+                            <PropertyValue Property="Label" String="{@i18n>unmedpl}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>vestgiosPragas}"/>
-                            <PropertyValue Property="Value" Path="Pragas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="UnMedPle"/>
+                            <PropertyValue Property="Label" String="{@i18n>unmedple}"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>sal}"/>
-                            <PropertyValue Property="Value" Path="Sal"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>conformidadeSal}"/>
-                            <PropertyValue Property="Value" Path="Salc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>hg}"/>
-                            <PropertyValue Property="Value" Path="Hg"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>eviscerado}"/>
-                            <PropertyValue Property="Value" Path="Eviscerado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>comPele}"/>
-                            <PropertyValue Property="Value" Path="Cpele"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>aparado}"/>
-                            <PropertyValue Property="Value" Path="Aparado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>semSangue}"/>
-                            <PropertyValue Property="Value" Path="Ssangue"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>semEspinha}"/>
-                            <PropertyValue Property="Value" Path="Sespinha"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>desidratado}"/>
-                            <PropertyValue Property="Value" Path="Desidratado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cristaisGelo}"/>
-                            <PropertyValue Property="Value" Path="Cristaisgelo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>presenaUnhas}"/>
-                            <PropertyValue Property="Value" Path="Presencaunhas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>pernasAmputadas}"/>
-                            <PropertyValue Property="Value" Path="Pamputadas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>nPernasAmputadas}"/>
-                            <PropertyValue Property="Value" Path="Npamputadas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>pele}"/>
-                            <PropertyValue Property="Value" Path="Pele"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>carne}"/>
-                            <PropertyValue Property="Value" Path="Carne"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>tentculos}"/>
-                            <PropertyValue Property="Value" Path="Tentaculo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>odor}"/>
-                            <PropertyValue Property="Value" Path="Odor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peasAbertasEmCongelado}"/>
-                            <PropertyValue Property="Value" Path="Pabertas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peasAbertas}"/>
-                            <PropertyValue Property="Value" Path="Ppabertas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>barbasExternas}"/>
-                            <PropertyValue Property="Value" Path="Bexternas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>barbasExternas1}"/>
-                            <PropertyValue Property="Value" Path="Pbexternas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Presença de Parasitas"/>
-                            <PropertyValue Property="Value" Path="Parasitas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="ID Controlo Parasitas"/>
-                            <PropertyValue Property="Value" Path="Idparasitas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>areia}"/>
-                            <PropertyValue Property="Value" Path="Areia"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Trote"/>
-                            <PropertyValue Property="Value" Path="Trote"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>humidade}"/>
-                            <PropertyValue Property="Value" Path="Humidade"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>conformidadeHumidade}"/>
-                            <PropertyValue Property="Value" Path="Humidadec"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Postas A"/>
-                            <PropertyValue Property="Value" Path="Postasa"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Postas B"/>
-                            <PropertyValue Property="Value" Path="Postasb"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Postas C"/>
-                            <PropertyValue Property="Value" Path="Postasc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Postas D"/>
-                            <PropertyValue Property="Value" Path="Postasd"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Postas E"/>
-                            <PropertyValue Property="Value" Path="Postase"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>queimadurasGelo}"/>
-                            <PropertyValue Property="Value" Path="Qgelo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>fendas}"/>
-                            <PropertyValue Property="Value" Path="Fendas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>amputaes}"/>
-                            <PropertyValue Property="Value" Path="Amputacoes"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>clavcula}"/>
-                            <PropertyValue Property="Value" Path="Clavicula"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>manchasFigado}"/>
-                            <PropertyValue Property="Value" Path="Mfigado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>manchasAvermelhadas}"/>
-                            <PropertyValue Property="Value" Path="Mvermelho"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>empoado}"/>
-                            <PropertyValue Property="Value" Path="Empoado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>ressoado}"/>
-                            <PropertyValue Property="Value" Path="Ressoado"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peleCor}"/>
-                            <PropertyValue Property="Value" Path="PeleCor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peleMuscosidade}"/>
-                            <PropertyValue Property="Value" Path="PeleMusc"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peleOdor}"/>
-                            <PropertyValue Property="Value" Path="PeleOdor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peleTextura}"/>
-                            <PropertyValue Property="Value" Path="PeleTextura"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>olhosCor}"/>
-                            <PropertyValue Property="Value" Path="OlhosCor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>olhosForma}"/>
-                            <PropertyValue Property="Value" Path="OlhosForma"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>guelrasCor}"/>
-                            <PropertyValue Property="Value" Path="GuelrasCor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>guelrasMuscosidade}"/>
-                            <PropertyValue Property="Value" Path="GuelrasMucosidade"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>guelrasOdor}"/>
-                            <PropertyValue Property="Value" Path="GuelrasOdor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>abdomenSangue}"/>
-                            <PropertyValue Property="Value" Path="AbdomenSange"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>abdomenOdor}"/>
-                            <PropertyValue Property="Value" Path="AbdomenOdor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>geloNasTinas}"/>
-                            <PropertyValue Property="Value" Path="GeloTina"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>estadoFsico}"/>
-                            <PropertyValue Property="Value" Path="EstadoFisico"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>apresentao}"/>
-                            <PropertyValue Property="Value" Path="Apresentacao"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>corte}"/>
-                            <PropertyValue Property="Value" Path="Corte"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>correspondeEspcie}"/>
-                            <PropertyValue Property="Value" Path="Especie"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>peleasaBranca}"/>
-                            <PropertyValue Property="Value" Path="PeleAsa"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cor}"/>
-                            <PropertyValue Property="Value" Path="Cor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>texturaconsistncia}"/>
-                            <PropertyValue Property="Value" Path="Textura"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>limpezaSames}"/>
-                            <PropertyValue Property="Value" Path="Limpeza"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>eviscerao}"/>
-                            <PropertyValue Property="Value" Path="Evisceracao"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>migas}"/>
-                            <PropertyValue Property="Value" Path="Migas"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>perdaDePeso}"/>
-                            <PropertyValue Property="Value" Path="PerdaPeso"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>caixasComGelo}"/>
-                            <PropertyValue Property="Value" Path="CxGelo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>filmeAderente}"/>
-                            <PropertyValue Property="Value" Path="FilmeAderente"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>cumpreRoteiro}"/>
-                            <PropertyValue Property="Value" Path="CumpreRoteiro"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>vidragemUniforme}"/>
-                            <PropertyValue Property="Value" Path="VidragemUnif"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>misturaHomognea}"/>
-                            <PropertyValue Property="Value" Path="MistHomo"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>resduos}"/>
-                            <PropertyValue Property="Value" Path="Residuos"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>sabor}"/>
-                            <PropertyValue Property="Value" Path="Sabor"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="Índice Qualidade"/>
-                            <PropertyValue Property="Value" Path="Indicequal"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            <PropertyValue Property="Value" Path="MedVidragem"/>
+                            <PropertyValue Property="Label" String="{@i18n>medvidragem}"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -2640,7 +1996,7 @@
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="Copiar"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.copy(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasSemControloType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/ChangeSet"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -2760,6 +2116,83 @@
             </Annotations>
             <Annotations Target="SAP__self.CQIngredientesType/Ingrediente">
                 <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="SAP__self.descodificaCBCaixa(SAP__self.CQCabType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetProperties">
+                            <Collection>
+                                <String>_it/Gtin</String>
+                                <String>_it/CodigoBarras</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.descodificaCBUn(SAP__self.CQCabType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetProperties">
+                            <Collection>
+                                <String>_it/Ean</String>
+                                <String>_it/CodigoBarrasUn</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP__self.copy2(SAP__self.CQCabType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_it/_semControlo</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>            
+            <Annotations Target="SAP__self.changeMat(SAP__self.CQCabType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetProperties">
+                            <Collection>
+                                <String>_it/Material</String>
+                                <String>_it/Nomecientifico</String>
+                                <String>_it/Tipospeso</String>
+                                <String>_it/Tipopesoliq</String>
+                                <String>_it/Tipocaptura</String>
+                                <String>_it/Teorvidragem</String>
+                                <String>_it/VidragemM</String>
+                                <String>_it/Tipoproduto</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.convertUom(SAP__self.CQLinhasType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_it/_PesosCX</NavigationPropertyPath>
+                                <NavigationPropertyPath>_it/_PesosUn</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.convertUomCalibre(SAP__self.CQLinhasType)">
+                <Annotation Term="Common.SideEffects">
+                    <Record Type="Common.SideEffectsType">
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_it/_Calibres</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
             </Annotations>
         </Schema>
     </edmx:DataServices>
