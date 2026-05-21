@@ -227,6 +227,11 @@
                     }
                   }
                 }
+              },
+              "content": {
+                "header": {
+                  "anchorBarVisible": true
+                }
               }
             }
           }
@@ -305,6 +310,15 @@
                   "tableSettings": {
                     "creationMode": {
                       "name": "InlineCreationRows"
+                    }
+                  },
+                  "actions": {
+                    "calibrePesos": {
+                      "press": ".extension.controloqualidade2.ext.controller.CQCabLinhaDetail.calibrePesos",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "{i18n>balanca}"
                     }
                   }
                 },

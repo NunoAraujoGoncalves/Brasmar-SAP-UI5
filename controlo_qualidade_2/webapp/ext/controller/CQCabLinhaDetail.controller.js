@@ -19,7 +19,8 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 				// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 				var oModel = this.base.getExtensionAPI().getModel();
 				var oPesosModel = new JSONModel({
-					"PesosCollection": []
+					"PesosCollection": [],
+					"CalibresCollection": []
 				})
 				this.getView().setModel(oPesosModel, "pesoUn");
 				this._iTimer = null; //Timer para Pesos	
@@ -62,9 +63,34 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			this.balancaDialog.open();
 		},
 
+
+		calibrePesos: async function (oEvent) {
+			this._oCalibresTable = this._findPesosUnTable("_Calibres");
+			if (this._oCalibresTable) {
+				this._oCalibresBinding = this._oCalibresTable.getBinding("items");
+			}
+
+			if (!this.balancaCalibresDialog) {
+				this.balancaCalibresDialog = await Fragment.load({
+					id: this.getView().getId(),
+					name: "controloqualidade2.ext.fragment.BalancaCalibres",
+					controller: this
+				});
+				this.getView().addDependent(this.balancaCalibresDialog);
+			}
+			this.balancaCalibresDialog.open();
+		},
+
+
 		onPressCloseDialog: function (oEvent) {
 			this.balancaDialog.close();
 		},
+
+
+		onPressCalibreCloseDialog: function (oEvent) {
+			this.balancaCalibresDialog.close();
+		},
+
 
 		onPressOkayDialog: async function (oEvent) {
 			var oModel = this.getView().getModel("pesoUn");
@@ -74,6 +100,15 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			oModel.setProperty("/PesosCollection", []);
 			this.balancaDialog.close();
 		},
+
+
+		onPressCalibreOkayDialog: async function (oEvent) {
+			var oModel = this.getView().getModel("pesoUn");
+			await this.createCalibresFromDialog();
+			oModel.setProperty("/CalibresCollection", []);
+			this.balancaCalibresDialog.close();
+		},
+
 
 		createPesosUnFromDialog: function () {
 			var oModel = this.getView().getModel("pesoUn"),
@@ -90,15 +125,42 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			};
 		},
 
+
+		createCalibresFromDialog: function () {
+			var oModel = this.getView().getModel("pesoUn"),
+				oData = oModel.getProperty("/CalibresCollection") || [],
+				oPesosUn = this._oCalibresBinding;
+
+			// Passa pesos da balança para o json
+			if (oData.length > 0) {
+				oData.forEach(element => {
+					console.log(element);
+					oPesosUn.create({ Medicao: element.Medicao }).created();
+				});
+			};
+		},
+
+
 		onPressUnStart: function (oEvent) {
 			this.getView().byId("unPesoEnd").setEnabled(true);
 			this.getView().byId("unPesoStart").setEnabled(false);
 			this.getView().byId("unPesoOkay").setEnabled(false);
 			this.getView().byId("unPesoClose").setEnabled(false);
 			this.getView().byId("unPesoDelete").setEnabled(false);
-			this.addLinesPeso();
+			this.addLinesPeso("/PesosCollection");
 			// MessageToast.show("Start!");
 		},
+
+
+		onPressCalibreStart: function (oEvent) {
+			this.getView().byId("calibreEnd").setEnabled(true);
+			this.getView().byId("calibreStart").setEnabled(false);
+			this.getView().byId("calibreOkay").setEnabled(false);
+			this.getView().byId("calibreClose").setEnabled(false);
+			this.getView().byId("calibreDelete").setEnabled(false);
+			this.addLinesPeso("/CalibresCollection");
+		},
+
 
 		onPressUnEnd: function (oEvent) {
 			if (this._iTimer) {
@@ -113,21 +175,44 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			MessageToast.show("End!");
 		},
 
-		addLinesPeso: function () {
+
+		onPressCalibreEnd: function (oEvent) {
+			if (this._iTimer) {
+				clearInterval(this._iTimer);
+				this._iTimer = null;
+			}
+			this.getView().byId("calibreEnd").setEnabled(false);
+			this.getView().byId("calibreStart").setEnabled(true);
+			this.getView().byId("calibreOkay").setEnabled(true);
+			this.getView().byId("calibreClose").setEnabled(true);
+			this.getView().byId("calibreDelete").setEnabled(true);
+			MessageToast.show("End!");
+		},
+
+
+		addLinesPeso: function (oCollection) {
 			var oModel = this.getView().getModel("pesoUn");
 			var pesoTeste = 200;
 			if (this._iTimer) { return; }
 
 			this._iTimer = setInterval(function () {
-				var oData = oModel.getProperty("/PesosCollection") || [];
-				oData.push({
-					PB: parseFloat(pesoTeste).toFixed(3),
-					Uom: "G"
-				});
-				oModel.setProperty("/PesosCollection", oData);
+				var oData = oModel.getProperty(oCollection) || [];
+				if (oCollection === '/PesosCollection') {
+					oData.push({
+						PB: parseFloat(pesoTeste).toFixed(3),
+						Uom: "G"
+					});
+				} else if (oCollection === '/CalibresCollection') {
+					oData.push({
+						Medicao: parseFloat(pesoTeste).toFixed(3),
+						Uom: "G"
+					});
+				}
+				oModel.setProperty(oCollection, oData);
 				pesoTeste += 105;
 			}, 1000);
 		},
+
 
 		onPressDelete: function (oEvent) {
 			var oTable = this.getView().byId("unPesoTable"),
@@ -149,6 +234,30 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			});
 
 			oModel.setProperty("/PesosCollection", oData);
+			oTable.removeSelections(true);
+		},
+
+
+		onPressCalibreDelete: function (oEvent) {
+			var oTable = this.getView().byId("calibreTable"),
+				aSelectedContexts = oTable.getSelectedContexts(),
+				oModel = this.getView().getModel("pesoUn"),
+				oData = oModel.getProperty("/CalibresCollection") || [];
+
+			if (!aSelectedContexts.length) { return; }
+
+			//Buscar indexes selecionados, de baixo para cima para apagar direito
+			var aIndexes = aSelectedContexts.map(function (oContext) {
+				return parseInt(oContext.getPath().split("/").pop(), 10);
+			}).sort(function (a, b) {
+				return b - a;
+			});
+
+			aIndexes.forEach(function (iIndex) {
+				oData.splice(iIndex, 1);
+			});
+
+			oModel.setProperty("/CalibresCollection", oData);
 			oTable.removeSelections(true);
 		}
 	});
