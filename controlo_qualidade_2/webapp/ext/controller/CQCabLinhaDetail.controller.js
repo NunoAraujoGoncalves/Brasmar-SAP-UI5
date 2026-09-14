@@ -3,8 +3,9 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 	"sap/m/MessageToast",
 	"sap/m/Dialog",
 	"sap/ui/core/Fragment",
-	'sap/ui/model/json/JSONModel'
-], function (ControllerExtension, MessageToast, Dialog, Fragment, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"controloqualidade2/ext/util/BalancaClass"
+], function (ControllerExtension, MessageToast, Dialog, Fragment, JSONModel, BalancaClass) {
 	'use strict';
 
 	return ControllerExtension.extend('controloqualidade2.ext.controller.CQCabLinhaDetail', {
@@ -117,6 +118,7 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 				oPesosUn = this._oPesosUnBinding; // oModelV4.bindList("_PesosUn", this.tableContext);
 
 			// Passa pesos da balança para o json
+			this.oTimer = false;
 			if (oData.length > 0) {
 				oData.forEach(element => {
 					console.log(element);
@@ -140,13 +142,14 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			};
 		},
 
-
+		oTimer: Boolean,
 		onPressUnStart: function (oEvent) {
 			this.getView().byId("unPesoEnd").setEnabled(true);
 			this.getView().byId("unPesoStart").setEnabled(false);
 			this.getView().byId("unPesoOkay").setEnabled(false);
 			this.getView().byId("unPesoClose").setEnabled(false);
 			this.getView().byId("unPesoDelete").setEnabled(false);
+			this.oTimer = true;
 			this.addLinesPeso("/PesosCollection");
 			// MessageToast.show("Start!");
 		},
@@ -158,11 +161,13 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			this.getView().byId("calibreOkay").setEnabled(false);
 			this.getView().byId("calibreClose").setEnabled(false);
 			this.getView().byId("calibreDelete").setEnabled(false);
+			this.oTimer = true;			
 			this.addLinesPeso("/CalibresCollection");
 		},
 
 
 		onPressUnEnd: function (oEvent) {
+			this.oTimer = false;
 			if (this._iTimer) {
 				clearInterval(this._iTimer);
 				this._iTimer = null;
@@ -172,11 +177,13 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 			this.getView().byId("unPesoOkay").setEnabled(true);
 			this.getView().byId("unPesoClose").setEnabled(true);
 			this.getView().byId("unPesoDelete").setEnabled(true);
+			BalancaClass.closePort();
 			MessageToast.show("End!");
 		},
 
 
 		onPressCalibreEnd: function (oEvent) {
+			this.oTimer = false;
 			if (this._iTimer) {
 				clearInterval(this._iTimer);
 				this._iTimer = null;
@@ -190,27 +197,47 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension',
 		},
 
 
-		addLinesPeso: function (oCollection) {
+		addLinesPeso: async function (oCollection) {
 			var oModel = this.getView().getModel("pesoUn");
-			var pesoTeste = 200;
-			if (this._iTimer) { return; }
+			
+			if (!this.oTimer) { return; }
+			while (this.oTimer) {
+				var oData = oModel.getProperty(oCollection) || [],
+				    oPeso = await BalancaClass.getSinglePeso();
 
-			this._iTimer = setInterval(function () {
-				var oData = oModel.getProperty(oCollection) || [];
 				if (oCollection === '/PesosCollection') {
 					oData.push({
-						PB: parseFloat(pesoTeste).toFixed(3),
+						PB: parseFloat(oPeso).toFixed(3),
 						Uom: "G"
 					});
 				} else if (oCollection === '/CalibresCollection') {
 					oData.push({
-						Medicao: parseFloat(pesoTeste).toFixed(3),
+						Medicao: parseFloat(oPeso).toFixed(3),
 						Uom: "G"
 					});
 				}
 				oModel.setProperty(oCollection, oData);
-				pesoTeste += 105;
-			}, 1000);
+			}
+
+			// var pesoTeste = 200;
+			// if (this._iTimer) { return; }
+
+			// this._iTimer = setInterval(function () {
+			// 	var oData = oModel.getProperty(oCollection) || [];
+			// 	if (oCollection === '/PesosCollection') {
+			// 		oData.push({
+			// 			PB: parseFloat(BalancaClass.getSinglePeso()).toFixed(3),
+			// 			Uom: "G"
+			// 		});
+			// 	} else if (oCollection === '/CalibresCollection') {
+			// 		oData.push({
+			// 			Medicao: parseFloat(pesoTeste).toFixed(3),
+			// 			Uom: "G"
+			// 		});
+			// 	}
+			// 	oModel.setProperty(oCollection, oData);
+			// 	pesoTeste += 105;
+			// }, 1000);
 		},
 
 

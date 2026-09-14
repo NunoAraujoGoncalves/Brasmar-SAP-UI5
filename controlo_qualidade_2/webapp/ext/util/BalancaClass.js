@@ -2,7 +2,9 @@ sap.ui.define([
     "sap/m/MessageToast"
 ], function (MessageToast) {
     "use strict";
-
+    var port2;
+    var reader2;
+    var inputDone;
     return {
 
         getSinglePeso: async function () {
@@ -12,6 +14,7 @@ sap.ui.define([
             }
 
             var port = await this.getPort();
+            this.port2 = port;
             try {
                 await port.open({
                     baudRate: 9600,
@@ -27,6 +30,7 @@ sap.ui.define([
             const textDecoder = new TextDecoderStream();
             const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
             const reader = textDecoder.readable.pipeThrough(new TransformStream(new this.FloatTransformer())).getReader();
+            console.log(port);
 
             // Listen to data coming from the serial device.
             let result = '';
@@ -39,26 +43,41 @@ sap.ui.define([
                     reader.releaseLock();
                     break;
                 }
-                // console.log("Value: " + value);
+                console.log("Value: " + value);
                 result = this.balancaStrToFloat(value);
-                third = second;
-                second = first;
-                first = result;
+                // third = second;
+                // second = first;
+                // first = result;
                 // console.log("First: " + first + " ,second: " 
                 //     + second + " , third: " + third
                 // )
-                if (result && ( first === second ) && ( second === third ))  {
+                if (result) { // && ( first === second ) && ( second === third ))  {
                     reader.cancel();
                 }
                 // }
             }
             reader.cancel();
             await readableStreamClosed.catch(() => { /* Ignore the error */ });
+            reader.releaseLock();
+            console.log(port);
+            this.reader2 = reader;
+            this.inputDone = readableStreamClosed; 
             return result;
+        },
+
+        closePort: async function () {
+            // var port = await this.getPort();
+            console.log(this.port2);
+            console.log(this.reader2);
+            console.log(this.inputDone);
+            this.reader2 = null;
+            this.inputDone = null;
+            this.port2.close();
         },
 
         getPort: async function () {
             var ports = await navigator.serial.getPorts();
+            // console.log(ports);
             if (ports) {
                 return ports[0];
             } else {
@@ -115,9 +134,9 @@ sap.ui.define([
                 this.chunks += chunk;
                 const regex = /\+.*\.\d{3}/;
                 const floatString = this.chunks.match(regex);
-                // console.log(this.chunks);
-                // console.log(controller);
-                // console.log(floatString);
+                //console.log(this.chunks);
+                //console.log(controller);
+                //console.log(floatString);
                 let match;
                 //Apaga todos os registos iguais de chunks
                 if (floatString) {

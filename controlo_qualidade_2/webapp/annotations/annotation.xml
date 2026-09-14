@@ -1813,7 +1813,11 @@
                                     <PropertyValue Property="Label" String="{@i18n>converterUm}"/>
                                     <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.convertUom(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType)"/>
                                     <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
-                                </Record>
+                                </Record>                               
+                                                               <Record Type="UI.DataField">
+                                                                   <PropertyValue Property="Value" Path="UnSumPb"/>
+                                                                   <PropertyValue Property="Label" String="{i18n>unsumpb}"/>
+                                                               </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>somaPl}"/>
                                     <PropertyValue Property="Value" Path="UnSumPl"/>
@@ -1835,6 +1839,10 @@
                                     <PropertyValue Property="Value" Path="CxMinPl"/>
                                 </Record>
                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>medPl}"/>
+                                    <PropertyValue Property="Value" Path="UnMedPl"/>
+                                </Record>
+                                <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>mxPl}"/>
                                     <PropertyValue Property="Value" Path="CxMaxPl"/>
                                 </Record>
@@ -1842,6 +1850,10 @@
                                     <PropertyValue Property="Label" String="{@i18n>mnPle}"/>
                                     <PropertyValue Property="Value" Path="CxMinPle"/>
                                 </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="{@i18n>medPle}"/>
+                                    <PropertyValue Property="Value" Path="UnMedPle"/>
+                                </Record>                                
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="{@i18n>mxPle}"/>
                                     <PropertyValue Property="Value" Path="CxMaxPle"/>

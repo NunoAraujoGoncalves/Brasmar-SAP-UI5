@@ -809,6 +809,8 @@
                 <Property Name="Lote" Type="Edm.String" Nullable="false" MaxLength="10"/>
                 <Property Name="Tipoprod" Type="Edm.String" Nullable="false" MaxLength="4"/>
                 <Property Name="TipoprodDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="Matcertificado" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="MatcertificadoDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="Tpalete" Type="Edm.Int16" Nullable="false"/>
                 <Property Name="TpaleteDesc" Type="Edm.String" Nullable="false" MaxLength="303"/>
                 <Property Name="Vntipo" Type="Edm.Int16" Nullable="false"/>
@@ -886,8 +888,6 @@
                 <Property Name="Unuomtara" Type="Edm.String" Nullable="false" MaxLength="3"/>
                 <Property Name="CodigoBarras" Type="Edm.String" Nullable="false"/>
                 <Property Name="CodigoBarrasUn" Type="Edm.String" Nullable="false"/>
-                <Property Name="Matcertificado" Type="Edm.String" Nullable="false" MaxLength="4"/>
-                <Property Name="MatcertificadoDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="Mscaprov" Type="Edm.String" Nullable="false" MaxLength="13"/>
                 <Property Name="Ascaprov" Type="Edm.String" Nullable="false" MaxLength="13"/>
                 <Property Name="Marca" Type="Edm.Int16" Nullable="false"/>
@@ -6412,25 +6412,6 @@
                         <PropertyValue Property="Title" String="Material"/>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
                         <Record Type="SAP__UI.CollectionFacet">
@@ -6556,6 +6537,25 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -7597,6 +7597,22 @@
                 <Annotation Term="SAP__common.Label" String="Short Description"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/Matcertificado">
+                <Annotation Term="SAP__common.Text" Path="MatcertificadoDesc"/>
+                <Annotation Term="SAP__common.ValueListForValidation" String=""/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_martcertificadosh/0001;ps='srvd-zui_tabcq_o4-0001';va='com.sap.gateway.srvd.zui_tabcq_o4.v0001.et-ztabcq_c.matcertificado'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/MatcertificadoDesc">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/Tpalete">
                 <Annotation Term="SAP__common.Text" Path="TpaleteDesc"/>
                 <Annotation Term="SAP__common.ValueListReferences">
@@ -7958,22 +7974,6 @@
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/CodigoBarrasUn">
                 <Annotation Term="SAP__core.Computed"/>
-            </Annotations>
-            <Annotations Target="SAP__self.CQCabType/Matcertificado">
-                <Annotation Term="SAP__common.Text" Path="MatcertificadoDesc"/>
-                <Annotation Term="SAP__common.ValueListForValidation" String=""/>
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Collection>
-                        <String>../../../../srvd_f4/sap/zi_domsh/0001;ps='srvd-zui_tabcq_o4-0001';va='com.sap.gateway.srvd.zui_tabcq_o4.v0001.et-ztabcq_c.matcertificado'/$metadata</String>
-                    </Collection>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <Annotations Target="SAP__self.CQCabType/MatcertificadoDesc">
-                <Annotation Term="SAP__core.Computed"/>
-                <Annotation Term="SAP__common.Label" String="Short Description"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Mscaprov">
                 <Annotation Term="SAP__common.IsUpperCase"/>
@@ -9246,31 +9246,6 @@
                         <PropertyValue Property="Title" String="CQ Tipo Produto"/>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
                         <Record Type="SAP__UI.CollectionFacet">
@@ -9476,6 +9451,31 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
                         </Record>
                     </Collection>
                 </Annotation>
