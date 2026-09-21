@@ -24,7 +24,7 @@ export default class Main extends Controller {
     }
 
     private async onFilterSelect(oEvent: Event) {
-        let oFilterSelect = (this.getView()?.byId("filterCQ") as FilterBar),
+        let oFilterSelect = (this.getView()?.byId("filterCQ1") as FilterBar),
             sKey = (oEvent as any).getParameter("key");
 
         // oModel = (this.getView()?.getModel() as ODataModel),
