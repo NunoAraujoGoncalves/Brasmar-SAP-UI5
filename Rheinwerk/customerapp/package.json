@@ -8,15 +8,15 @@
     "sapui5"
   ],
   "main": "webapp/index.html",
-  "dependencies": {},
   "devDependencies": {
-    "@ui5/cli": "^4.0.33",
-    "@sap/ux-ui5-tooling": "1",
     "@sap-ux/eslint-plugin-fiori-tools": "^9.0.0",
-    "eslint": "^9",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.4.17",
+    "@sap/ux-ui5-tooling": "1",
     "@sapui5/types": "~1.120.0",
-    "ui5-tooling-transpile": "^3.10.0",
-    "typescript": "^5.9.3"
+    "@ui5/cli": "^4.0.33",
+    "eslint": "^9",
+    "typescript": "^5.9.3",
+    "ui5-tooling-transpile": "^3.10.0"
   },
   "scripts": {
     "start": "fiori run --open \"/test/flpSandbox.html?sap-ui-xx-viewCache=false#comsappresscustomerapp-display\"",
@@ -31,7 +31,8 @@
     "start-noflp": "fiori run --open \"/index.html?sap-ui-xx-viewCache=false\"",
     "int-test": "fiori run --open \"test/integration/opaTests.qunit.html\"",
     "start-variants-management": "fiori run --open \"/preview.html?sap-ui-xx-viewCache=false&fiori-tools-rta-mode=true&sap-ui-rta-skip-flex-validation=true#comsappresscustomerapp-display\"",
-    "unit-test": "fiori run --open \"test/unit/unitTests.qunit.html\""
+    "unit-test": "fiori run --open \"test/unit/unitTests.qunit.html\"",
+    "start-mock": "fiori run --config ./ui5-mock.yaml --open \"/test/flpSandbox.html?sap-ui-xx-viewCache=false#comsappresscustomerapp-display\""
   },
   "sapuxLayer": "CUSTOMER_BASE"
 }

@@ -1,5 +1,5 @@
 /*global QUnit*/
-import Controller from "com/sappress/customerapp/controller/Main.controller";
+import Controller from "com/sappress/customerapp/controller/Customer.controller";
 
 QUnit.module("Main Controller");
 

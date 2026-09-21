@@ -1,0 +1,21 @@
+<mvc:View controllerName="com.sappress.customerapp.controller.Customer"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <Page id="customer_page" title="{i18n>customer.page.title}" showNavButton="true" navButtonPress="onNavBackPress">
+        <headerContent>
+            <Button id="customer_button_edit" text="Edit" press="onEditPress"/>
+        </headerContent>
+        <content>
+
+        </content>
+        <footer>
+            <Toolbar id="customer_toolbar_footer">
+                <ToolbarSpacer id="customer_toolbar_spacer"/>
+                <Button id="app_save_button" text="{i18n>button.save}" type="Accept"
+                press="onSavePressed" visible="{= ${editModel>/editmode}}" />
+                <Button id="app_cancel_button" text="{i18n>button.cancel}" type="Reject"
+                press="onCancelPressed" visible="{= ${editModel>/editmode}}" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

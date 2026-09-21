@@ -1,0 +1,116 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:s="sap.f.semantic"
+    xmlns="sap.m"
+>
+    <f:SimpleForm
+        title="{Firstname} {Lastname}"
+        id="edit_simpleform"
+        editable="true"
+    >
+        <Label
+            id="edit_label_customerid"
+            text="{i18n>customer.customerid}"
+            labelFor="edit_input_customerid"
+        />
+        <Input
+            id="edit_input_customerid"
+            value="{Customerid}"
+        />
+
+        <Label
+            id="edit_label_firstname"
+            text="{i18n>customer.firstname}"
+            labelFor="edit_input_firstname"
+        />
+        <Input
+            id="edit_input_firstname"
+            value="{Firstname}"
+        />
+
+        <Label
+            id="edit_label_lastname"
+            text="{i18n>acustomer.lastname}"
+            labelFor="edit_input_lastname"
+        />
+        <Input
+            id="edit_input_lastname"
+            value="{Lastname}"
+        />
+
+        <Label
+            id="edit_label_title"
+            text="{i18n>customer.title}"
+            labelFor="edit_input_title"
+        />
+        <Input
+            id="edit_input_title"
+            value="{Title}"
+        />
+
+        <Label
+            id="edit_label_gender"
+            text="{i18n>customer.gender}"
+            labelFor="edit_select_gender"
+        />
+        <Select
+            id="edit_select_gender"
+            selectedKey="{Gender}"
+            items="{genderModel>/genders}"
+        >
+            <items>
+                <core:Item
+                    id="edit_select_item"
+                    key="{genderModel>key}"
+                    text="{path: 'genderModel>key', formatter: '.genderFormatter'}"
+                />
+            </items>
+        </Select>
+
+        <Label
+            id="edit_label_email"
+            text="{i18n>customer.email}"
+            labelFor="edit_input_email"
+        />
+        <Input
+            id="edit_input_email"
+            type="Email"
+            value="{Email}"
+        />
+
+        <Label
+            id="edit_label_phone"
+            text="{i18n>customer.phone}"
+            labelFor="edit_input_phone"
+        />
+        <Input
+            id="edit_input_phone"
+            type="Tel"
+            value="{Phone}"
+        />
+
+        <Label
+            id="edit_label_website"
+            text="{i18n>customer.website}"
+            labelFor="edit_input_website"
+        />
+        <Input
+            id="edit_input_website"
+            value="{Website}"
+        />
+
+        <Label
+            id="edit_label_birthdate"
+            text="{i18n>customer.birthdate}"
+            labelFor="edit_input_birthdate"
+        />
+        <DatePicker
+            id="edit_input_birthdate"
+            dateValue="{Birthdate}"
+        />
+    </f:SimpleForm>
+</core:FragmentDefinition>

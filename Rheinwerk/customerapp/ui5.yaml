@@ -15,6 +15,11 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+        backend:
+          - path: /sap/opu/odata/sap/C_CUSTOMER_OP_SRV
+            url: https://sapappdev01.brasmargroup.com:44400
+            client: '100'
+            authenticationType: basic
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -46,3 +51,7 @@ builder:
         debug: true
         transformModulesToUI5:
           overridesToOverride: true
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
