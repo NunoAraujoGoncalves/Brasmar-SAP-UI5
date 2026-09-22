@@ -52,7 +52,7 @@
                     <macros:Table
                         id="tableCQ"
                         metaPath="@com.sap.vocabularies.UI.v1.LineItem"
-                        filterBar="filterCQ"
+                        filterBar="filterCQ1"
                         enableAutoColumnWidth="true"
                     />
                     <!-- </VBox> initialLoad="false" class="sapUiResponsiveMargin" width="auto" -->

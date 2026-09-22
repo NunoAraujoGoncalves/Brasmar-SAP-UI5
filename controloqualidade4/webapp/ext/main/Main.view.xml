@@ -1,0 +1,93 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:f="sap.f"
+    controllerName="brasmar.bm01.controloqualidade4.ext.main.Main"
+>
+    <Page id="main_pageId">
+        <IconTabBar
+            id="main_IconTabBar"
+            expanded="false"
+            select=".onFilterSelect"
+        >
+            <items>
+                <IconTabFilter
+                    id="main_IconTabBar_todos"
+                    icon="sap-icon://inventory"
+                    iconColor="Neutral"
+                    text="{i18n>main.todos}"                    
+                    key="all"
+                    count="{/CQCab/$count}"
+                />
+                <IconTabSeparator
+                    id="main_IconTabBar_separator1"
+                    icon=""
+                />
+                <IconTabFilter
+                    id="main_IconTabBar_pendentes"
+                    icon="sap-icon://compare"
+                    iconColor="Critical"
+                    text="{i18n>main.pendentes}"
+                    key="pendentes"
+                    count="{
+                           path: '/CQCab/$count',
+                           parameters: { $filter: 'Estado eq \'A\'' } }"
+                />
+                <IconTabSeparator
+                    id="main_IconTabBar_separator2"
+                    icon="sap-icon://vertical-grip"
+                />
+                <IconTabFilter
+                    id="main_IconTabBar_concluidos"
+                    icon="sap-icon://begin"
+                    iconColor="Negative"
+                    text="{i18n>main.concluidos}"
+                    key="concluidos"
+                    count="{
+                           path: '/CQCab/$count',
+                           parameters: { $filter: 'Estado eq \'B\'' } }"
+                />
+                <IconTabSeparator
+                    id="main_IconTabBar_separator3"
+                    icon="sap-icon://vertical-grip"
+                />
+                <IconTabFilter
+                    id="main_IconTabBar_aprovados"
+                    icon="sap-icon://checklist-item"
+                    iconColor="Positive"
+                    text="{i18n>main.aprovados}"
+                    key="aprovados"
+                    count="{
+                           path: '/CQCab/$count',
+                           parameters: { $filter: 'Estado eq \'X\'' } }"
+                />
+            </items>
+            <content>
+                <Panel
+                    id="main_filter_panel"
+                    expandable="true"
+                    headerText="{i18n>main.filtros}"
+                >
+                    <macros:FilterBar
+                        id="main_filter"
+                        metaPath="@com.sap.vocabularies.UI.v1.SelectionFields"
+                    />
+                </Panel>
+                <Panel id="main_tabela_panel">
+                    <!-- <VBox id="mainVbox"> -->
+                    <macros:Table
+                        id="main_table"
+                        metaPath="@com.sap.vocabularies.UI.v1.LineItem"
+                        filterBar="main_filter"
+                        enableAutoColumnWidth="true"
+                        type="ResponsiveTable"
+                    />
+                    <!-- </VBox> initialLoad="false" class="sapUiResponsiveMargin" width="auto" -->
+                </Panel>
+            </content>
+        </IconTabBar>
+    </Page>
+</mvc:View>
