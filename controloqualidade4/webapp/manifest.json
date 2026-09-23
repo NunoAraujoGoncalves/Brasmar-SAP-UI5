@@ -55,7 +55,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.23",
+      "minUI5Version": "1.120.2",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -101,6 +101,11 @@
           "name": "CQCabMain",
           "pattern": ":?query:",
           "target": "CQCabMain"
+        },
+        {
+          "name": "CQCabCQDetailPage",
+          "pattern": "CQCab({CQCabKey}):?query:",
+          "target": "CQCabCQDetailPage"
         }
       ],
       "targets": {
@@ -110,9 +115,27 @@
           "name": "sap.fe.core.fpm",
           "options": {
             "settings": {
-              "navigation": {},
+              "navigation": {
+                "CQCab": {
+                  "detail": {
+                    "route": "CQCabCQDetailPage"
+                  }
+                }
+              },
               "contextPath": "/CQCab",
               "viewName": "brasmar.bm01.controloqualidade4.ext.main.Main"
+            }
+          }
+        },
+        "CQCabCQDetailPage": {
+          "type": "Component",
+          "id": "CQCabCQDetailPage",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/CQCab",
+              "viewName": "brasmar.bm01.controloqualidade4.ext.view.CQDetail"
             }
           }
         }
