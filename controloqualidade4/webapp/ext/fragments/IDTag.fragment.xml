@@ -6,7 +6,7 @@
     <Popover id="idtag_popover" placement="Right" showHeader="false" contentWidth="990px">
         <!-- <f:Card id="idtag_card" width="100%">
             <f:header>
- 
+  
             </f:header>
             <f:content> -->
         <FlexBox id="idtag_card_flexBox" wrap="Wrap" alignContent="Start" alignItems="Start" width="100%">

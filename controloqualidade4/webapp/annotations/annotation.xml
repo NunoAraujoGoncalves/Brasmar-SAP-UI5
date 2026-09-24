@@ -476,6 +476,13 @@
                         </Record>
                     </Collection>
                 </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="formMacro">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection/>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
             </Annotations>
         </Schema>
     </edmx:DataServices>
