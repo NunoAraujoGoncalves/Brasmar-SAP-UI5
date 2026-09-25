@@ -7,7 +7,7 @@
     xmlns:f="sap.f"
     xmlns:layout="sap.ui.layout"
     xmlns:l="sap.ui.layout.form" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQDetail">
-    <f:DynamicPage id="CQDetail_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding">
+    <f:DynamicPage id="CQDetail_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false">
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle id="CQDetail_dynamicPage_title">
@@ -83,434 +83,473 @@
 
         <!-- Conteudo -->
         <f:content>
-            <IconTabBar id="CQDetail_sections_tabBar">
+            <IconTabBar id="CQDetail_sections_tabBar" stretchContentHeight="true">
                 <items>
-                    <IconTabFilter id="CQDetail_section_dadosProduto" text="{i18n>cqDetail.dadosProduto.title}">
 
-                        <VBox id="CQDetail_section_dadosProduto_vbox">
-                            <Title id="CQDetail_subSection_material_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.dadosProduto.subsection.material.title}"/>
-                            <l:Form id="CQDetail_subSection_material" editable="false">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_material_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
-                                    <!-- <l:ResponsiveGridLayout id="CQDetail_subSection_material_layout" backgroundDesign="Translucent" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="6" columnsL="3" columnsM="2" singleContainerFullSize="false">
+                    <IconTabFilter id="CQDetail_section_dadosProduto" text="{i18n>cqDetail.dadosProduto.title}">
+                        <ScrollContainer id="CQDetail_section_scroll_dadosProduto" vertical="true" height="100%">
+                            <VBox id="CQDetail_section_dadosProduto_vbox">
+                                <Title id="CQDetail_subSection_material_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.dadosProduto.subsection.material.title}"/>
+                                <l:Form id="CQDetail_subSection_material" editable="false">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_material_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
+                                        <!-- <l:ResponsiveGridLayout id="CQDetail_subSection_material_layout" backgroundDesign="Translucent" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="6" columnsL="3" columnsM="2" singleContainerFullSize="false">
                                     </l:ResponsiveGridLayout> -->
-                                </l:layout>
-                                <!-- <l:formContainers> -->
-                                <l:FormContainer id="CQDetail_subSection_material_container">
-                                    <!-- <l:formElements> -->
-                                    <l:FormElement id="CQDetail_subSection_material_material_label" label="{i18n>cqDetail.dadosProduto.ss.material.material}">
-                                        <Text id="CQDetail_subSection_material_material" text="{parts:[ 'Material', 'MaterialDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <!-- <l:FormElement id="CQDetail_subSection_material_materialDesc_label" label="{i18n>cqDetail.dadosProduto.ss.material.MaterialDesc}">
+                                    </l:layout>
+                                    <!-- <l:formContainers> -->
+                                    <l:FormContainer id="CQDetail_subSection_material_container">
+                                        <!-- <l:formElements> -->
+                                        <l:FormElement id="CQDetail_subSection_material_material_label" label="{i18n>cqDetail.dadosProduto.ss.material.material}">
+                                            <Text id="CQDetail_subSection_material_material" text="{parts:[ 'Material', 'MaterialDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <!-- <l:FormElement id="CQDetail_subSection_material_materialDesc_label" label="{i18n>cqDetail.dadosProduto.ss.material.MaterialDesc}">
                                                 <Text id="CQDetail_subSection_material_materialdesc" emptyIndicatorMode="On" text="{MaterialDesc}"></Text>
                                             </l:FormElement> -->
-                                    <l:FormElement id="CQDetail_subSection_material_Lote_label" label="{i18n>cqDetail.dadosProduto.ss.material.Lote}">
-                                        <Text id="CQDetail_subSection_material_Lote" emptyIndicatorMode="On" text="{Lote}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_Attachment_label" label="{i18n>cqDetail.dadosProduto.ss.material.Attachment}">
-                                        <Link id="CQDetail_subSection_material_Attachment" text="{Filename}" target="_blank" href="{Attachment}"></Link>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_Responsavel_label" label="{i18n>cqDetail.dadosProduto.ss.material.Responsavel}">
-                                        <Text id="CQDetail_subSection_material_Responsavel" emptyIndicatorMode="On" text="{Responsavel}"></Text>
-                                    </l:FormElement>
-                                    <!-- <l:FormElement id="CQDetail_subSection_material_Tipoprod_label" label="{i18n>cqDetail.dadosProduto.ss.material.Tipoprod}">
+                                        <l:FormElement id="CQDetail_subSection_material_Lote_label" label="{i18n>cqDetail.dadosProduto.ss.material.Lote}">
+                                            <Text id="CQDetail_subSection_material_Lote" emptyIndicatorMode="On" text="{Lote}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_Attachment_label" label="{i18n>cqDetail.dadosProduto.ss.material.Attachment}">
+                                            <Link id="CQDetail_subSection_material_Attachment" text="{Filename}" target="_blank" href="{Attachment}"></Link>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_Responsavel_label" label="{i18n>cqDetail.dadosProduto.ss.material.Responsavel}">
+                                            <Text id="CQDetail_subSection_material_Responsavel" emptyIndicatorMode="On" text="{Responsavel}"></Text>
+                                        </l:FormElement>
+                                        <!-- <l:FormElement id="CQDetail_subSection_material_Tipoprod_label" label="{i18n>cqDetail.dadosProduto.ss.material.Tipoprod}">
                                                 <Text id="CQDetail_subSection_material_Tipoprod" emptyIndicatorMode="On" text="{parts:[ 'Tipoprod', 'TipoprodDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
                                             </l:FormElement> -->
-                                    <l:FormElement id="CQDetail_subSection_material_DtCongelacao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtCongelacao}">
-                                        <Text id="CQDetail_subSection_material_DtCongelacao" emptyIndicatorMode="On" text="{DtCongelacao}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_DtVencimento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtVencimento}">
-                                        <Text id="CQDetail_subSection_material_DtVencimento" emptyIndicatorMode="On" text="{DtVencimento}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_DtProducao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtProducao}">
-                                        <Text id="CQDetail_subSection_material_DtProducao" emptyIndicatorMode="On" text="{DtProducao}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_DtEmbalamento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtEmbalamento}">
-                                        <Text id="CQDetail_subSection_material_DtEmbalamento" emptyIndicatorMode="On" text="{DtEmbalamento}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_ATestemunho_label" label="{i18n>cqDetail.dadosProduto.ss.material.ATestemunho}">
-                                        <Text id="CQDetail_subSection_material_ATestemunho" emptyIndicatorMode="On" text="{ATestemunho}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_NCaixa_label" label="{i18n>cqDetail.dadosProduto.ss.material.NCaixa}">
-                                        <Text id="CQDetail_subSection_material_NCaixa" emptyIndicatorMode="On" text="{NCaixa}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_NPalete_label" label="{i18n>cqDetail.dadosProduto.ss.material.NPalete}">
-                                        <Text id="CQDetail_subSection_material_NPalete" emptyIndicatorMode="On" text="{NPalete}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_material_Linha_label" label="{i18n>cqDetail.dadosProduto.ss.material.Linha}" visible="{path: 'HideLinhaOP', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetail_subSection_material_Linha" emptyIndicatorMode="On" text="{Linha}"></Text>
-                                    </l:FormElement>
-                                    <!-- </l:formElements> -->
-                                </l:FormContainer>
-                                <!-- </l:formContainers> -->
+                                        <l:FormElement id="CQDetail_subSection_material_DtCongelacao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtCongelacao}">
+                                            <Text id="CQDetail_subSection_material_DtCongelacao" emptyIndicatorMode="On" text="{DtCongelacao}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_DtVencimento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtVencimento}">
+                                            <Text id="CQDetail_subSection_material_DtVencimento" emptyIndicatorMode="On" text="{DtVencimento}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_DtProducao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtProducao}">
+                                            <Text id="CQDetail_subSection_material_DtProducao" emptyIndicatorMode="On" text="{DtProducao}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_DtEmbalamento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtEmbalamento}">
+                                            <Text id="CQDetail_subSection_material_DtEmbalamento" emptyIndicatorMode="On" text="{DtEmbalamento}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_ATestemunho_label" label="{i18n>cqDetail.dadosProduto.ss.material.ATestemunho}">
+                                            <Text id="CQDetail_subSection_material_ATestemunho" emptyIndicatorMode="On" text="{ATestemunho}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_NCaixa_label" label="{i18n>cqDetail.dadosProduto.ss.material.NCaixa}">
+                                            <Text id="CQDetail_subSection_material_NCaixa" emptyIndicatorMode="On" text="{NCaixa}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_NPalete_label" label="{i18n>cqDetail.dadosProduto.ss.material.NPalete}">
+                                            <Text id="CQDetail_subSection_material_NPalete" emptyIndicatorMode="On" text="{NPalete}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_material_Linha_label" label="{i18n>cqDetail.dadosProduto.ss.material.Linha}" visible="{path: 'HideLinhaOP', formatter: '.formatter.hideFormatter'}">
+                                            <Text id="CQDetail_subSection_material_Linha" emptyIndicatorMode="On" text="{Linha}"></Text>
+                                        </l:FormElement>
+                                        <!-- </l:formElements> -->
+                                    </l:FormContainer>
+                                    <!-- </l:formContainers> -->
 
-                            </l:Form>
+                                </l:Form>
 
-                            <Title id="CQDetail_subSection_certificacao_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.certificacao.title}"/>
-                            <l:Form id="CQDetail_subSection_certificacao" editable="false">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_certificacao_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
-                                </l:layout>
-                                <l:FormContainer id="CQDetail_subSection_certificacao_container">
-                                    <l:FormElement id="CQDetail_subSection_certificacao_certificado_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.certificado}">
-                                        <Text id="CQDetail_subSection_certificacao_certificado" emptyIndicatorMode="On" text="{parts:[ 'Matcertificado', 'MatcertificadoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_Mscaprov_label" visible="{path: 'HideMSCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Mscaprov}">
-                                        <Text id="CQDetail_subSection_certificacao_Mscaprov" emptyIndicatorMode="On" text="{Mscaprov}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_Ascaprov_label" visible="{path: 'HideASCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Ascaprov}">
-                                        <Text id="CQDetail_subSection_certificacao_Ascaprov" emptyIndicatorMode="On" text="{Ascaprov}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_Veterinario_label" visible="{path: 'HideVeterinario', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Veterinario}">
-                                        <Text id="CQDetail_subSection_certificacao_Veterinario" emptyIndicatorMode="On" text="{Veterinario}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_DataAbate_label" visible="{path: 'HideDataAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.DataAbate}">
-                                        <Text id="CQDetail_subSection_certificacao_DataAbate" emptyIndicatorMode="On" text="{DataAbate}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_LocalAbate_label" visible="{path: 'HideLocalAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.LocalAbate}">
-                                        <Text id="CQDetail_subSection_certificacao_LocalAbate" emptyIndicatorMode="On" text="{LocalAbate}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_NumViveiro_label" visible="{path: 'HideNumViviero', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.NumViveiro}">
-                                        <Text id="CQDetail_subSection_certificacao_NumViveiro" emptyIndicatorMode="On" text="{NumViveiro}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_CAlhalal_label" visible="{path: 'HideHalal', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.CAlhalal}">
-                                        <Text id="CQDetail_subSection_certificacao_CAlhalal" emptyIndicatorMode="On" text="{CAlhalal}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_PP_label" visible="{path: 'HidePP', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.PP}">
-                                        <Text id="CQDetail_subSection_certificacao_PP" emptyIndicatorMode="On" text="{PP}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_certificacao_SGluten_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.SGluten}">
-                                        <Text id="CQDetail_subSection_certificacao_SGluten" emptyIndicatorMode="On" text="{SGluten}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
-                            </l:Form>
+                                <Title id="CQDetail_subSection_certificacao_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.certificacao.title}"/>
+                                <l:Form id="CQDetail_subSection_certificacao" editable="false">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_certificacao_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
+                                    </l:layout>
+                                    <l:FormContainer id="CQDetail_subSection_certificacao_container">
+                                        <l:FormElement id="CQDetail_subSection_certificacao_certificado_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.certificado}">
+                                            <Text id="CQDetail_subSection_certificacao_certificado" emptyIndicatorMode="On" text="{parts:[ 'Matcertificado', 'MatcertificadoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_Mscaprov_label" visible="{path: 'HideMSCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Mscaprov}">
+                                            <Text id="CQDetail_subSection_certificacao_Mscaprov" emptyIndicatorMode="On" text="{Mscaprov}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_Ascaprov_label" visible="{path: 'HideASCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Ascaprov}">
+                                            <Text id="CQDetail_subSection_certificacao_Ascaprov" emptyIndicatorMode="On" text="{Ascaprov}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_Veterinario_label" visible="{path: 'HideVeterinario', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Veterinario}">
+                                            <Text id="CQDetail_subSection_certificacao_Veterinario" emptyIndicatorMode="On" text="{Veterinario}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_DataAbate_label" visible="{path: 'HideDataAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.DataAbate}">
+                                            <Text id="CQDetail_subSection_certificacao_DataAbate" emptyIndicatorMode="On" text="{DataAbate}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_LocalAbate_label" visible="{path: 'HideLocalAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.LocalAbate}">
+                                            <Text id="CQDetail_subSection_certificacao_LocalAbate" emptyIndicatorMode="On" text="{LocalAbate}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_NumViveiro_label" visible="{path: 'HideNumViviero', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.NumViveiro}">
+                                            <Text id="CQDetail_subSection_certificacao_NumViveiro" emptyIndicatorMode="On" text="{NumViveiro}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_CAlhalal_label" visible="{path: 'HideHalal', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.CAlhalal}">
+                                            <Text id="CQDetail_subSection_certificacao_CAlhalal" emptyIndicatorMode="On" text="{CAlhalal}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_PP_label" visible="{path: 'HidePP', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.PP}">
+                                            <Text id="CQDetail_subSection_certificacao_PP" emptyIndicatorMode="On" text="{PP}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_certificacao_SGluten_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.SGluten}">
+                                            <Text id="CQDetail_subSection_certificacao_SGluten" emptyIndicatorMode="On" text="{SGluten}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
+                                </l:Form>
 
-                            <Title id="CQDetail_subSection_lote_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.lote.title}"/>
-                            <l:Form id="CQDetail_subSection_lote" editable="false">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_lote_layout" columnsM="2" columnsL="3" columnsXL="5"></l:ColumnLayout>
-                                </l:layout>
+                                <Title id="CQDetail_subSection_lote_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.lote.title}"/>
+                                <l:Form id="CQDetail_subSection_lote" editable="false">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_lote_layout" columnsM="2" columnsL="3" columnsXL="5"></l:ColumnLayout>
+                                    </l:layout>
 
-                                <l:FormContainer id="CQDetail_subSection_lote_container">
-                                    <l:FormElement id="CQDetail_subSection_lote_Tipospeso_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipospeso}">
-                                        <Text id="CQDetail_subSection_lote_Tipospeso" emptyIndicatorMode="On" text="{parts:[ 'Tipospeso', 'TipospesoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Tipopesoliq_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipopesoliq}">
-                                        <Text id="CQDetail_subSection_lote_Tipopesoliq" emptyIndicatorMode="On" text="{Tipopesoliq}{parts:[ 'Tipopesoliq', 'TipopesoliqDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
-                                        <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{Teorvidragem}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
-                                        <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{VidragemM}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Nomecientifico_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Nomecientifico}">
-                                        <Text id="CQDetail_subSection_lote_Nomecientifico" emptyIndicatorMode="On" text="{parts:[ 'Nomecientifico', 'NomecientificoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Tipocaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipocaptura}">
-                                        <Text id="CQDetail_subSection_lote_Tipocaptura" emptyIndicatorMode="On" text="{parts:[ 'Tipocaptura', 'TipocapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
+                                    <l:FormContainer id="CQDetail_subSection_lote_container">
+                                        <l:FormElement id="CQDetail_subSection_lote_Tipospeso_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipospeso}">
+                                            <Text id="CQDetail_subSection_lote_Tipospeso" emptyIndicatorMode="On" text="{parts:[ 'Tipospeso', 'TipospesoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Tipopesoliq_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipopesoliq}">
+                                            <Text id="CQDetail_subSection_lote_Tipopesoliq" emptyIndicatorMode="On" text="{Tipopesoliq}{parts:[ 'Tipopesoliq', 'TipopesoliqDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
+                                            <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{Teorvidragem}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
+                                            <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{VidragemM}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Nomecientifico_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Nomecientifico}">
+                                            <Text id="CQDetail_subSection_lote_Nomecientifico" emptyIndicatorMode="On" text="{parts:[ 'Nomecientifico', 'NomecientificoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Tipocaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipocaptura}">
+                                            <Text id="CQDetail_subSection_lote_Tipocaptura" emptyIndicatorMode="On" text="{parts:[ 'Tipocaptura', 'TipocapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
 
-                                </l:FormContainer>
-                                <l:FormContainer id="CQDetail_subSection_lote_container2">
+                                    </l:FormContainer>
+                                    <l:FormContainer id="CQDetail_subSection_lote_container2">
 
-                                    <l:FormElement id="CQDetail_subSection_lote_MMMarca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMMarca}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMMarca" class="sapUiNoMargin" icon="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMMarca', 'MMMarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Marca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Marca}">
-                                        <Text id="CQDetail_subSection_lote_Marca" emptyIndicatorMode="On" text="{parts:[ 'Marca', 'MarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_MMOrigem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMOrigem}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMOrigem" class="sapUiNoMargin" icon="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMOrigem', 'MMOrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Origem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Origem}">
-                                        <Text id="CQDetail_subSection_lote_Origem" emptyIndicatorMode="On" text="{parts:[ 'Origem', 'OrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_MMIdiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMIdiomapadrao}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMIdiomapadrao" class="sapUiNoMargin" icon="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMIdiomapadrao', 'MMIdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Zidiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zidiomapadrao}">
-                                        <Text id="CQDetail_subSection__lote_Zidiomapadrao" emptyIndicatorMode="On" text="{parts:[ 'Zidiomapadrao', 'IdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMMarca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMMarca}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMMarca" class="sapUiNoMargin" icon="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMMarca', 'MMMarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Marca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Marca}">
+                                            <Text id="CQDetail_subSection_lote_Marca" emptyIndicatorMode="On" text="{parts:[ 'Marca', 'MarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMOrigem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMOrigem}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMOrigem" class="sapUiNoMargin" icon="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMOrigem', 'MMOrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Origem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Origem}">
+                                            <Text id="CQDetail_subSection_lote_Origem" emptyIndicatorMode="On" text="{parts:[ 'Origem', 'OrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMIdiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMIdiomapadrao}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMIdiomapadrao" class="sapUiNoMargin" icon="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMIdiomapadrao', 'MMIdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Zidiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zidiomapadrao}">
+                                            <Text id="CQDetail_subSection__lote_Zidiomapadrao" emptyIndicatorMode="On" text="{parts:[ 'Zidiomapadrao', 'IdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
 
-                                </l:FormContainer>
-                                <l:FormContainer id="CQDetail_subSection_lote_container3">
+                                    </l:FormContainer>
+                                    <l:FormContainer id="CQDetail_subSection_lote_container3">
 
-                                    <l:FormElement id="CQDetail_subSection_lote_MMZonadecaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMZonadecaptura}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMZonadecaptura" class="sapUiNoMargin" icon="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMZonadecaptura', 'MMZonadecapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Zonadecaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zonadecaptura}">
-                                        <Text id="CQDetail_subSection_lote_Zonadecaptura" emptyIndicatorMode="On" text="{parts:[ 'Zonadecaptura', 'ZonacapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura2}">
-                                        <Text id="CQDetail_subSection_lote_ZonaDeCaptura2" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura2', 'ZonaCapturaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura3}">
-                                        <Text id="CQDetail_subSection_lote_ZonaDeCaptura3" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura3', 'ZonaCapturaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura4}">
-                                        <Text id="CQDetail_subSection_lote_ZonaDeCaptura4" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura4', 'ZonaCapturaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMZonadecaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMZonadecaptura}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMZonadecaptura" class="sapUiNoMargin" icon="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMZonadecaptura', 'MMZonadecapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Zonadecaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zonadecaptura}">
+                                            <Text id="CQDetail_subSection_lote_Zonadecaptura" emptyIndicatorMode="On" text="{parts:[ 'Zonadecaptura', 'ZonacapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura2}">
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura2" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura2', 'ZonaCapturaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura3}">
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura3" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura3', 'ZonaCapturaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura4}">
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura4" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura4', 'ZonaCapturaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
 
-                                </l:FormContainer>
-                                <l:FormContainer id="CQDetail_subSection_lote_container4">
+                                    </l:FormContainer>
+                                    <l:FormContainer id="CQDetail_subSection_lote_container4">
 
-                                    <l:FormElement id="CQDetail_subSection_lote_MMArtepesca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMArtepesca}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMArtepesca" class="sapUiNoMargin" icon="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMArtepesca', 'MMArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Artepesca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Artepesca}">
-                                        <Text id="CQDetail_subSection_lote_Artepesca" emptyIndicatorMode="On" text="{parts:[ 'Artepesca', 'ArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ArtePesca2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca2}">
-                                        <Text id="CQDetail_subSection_lote_ArtePesca2" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca2', 'ArtePescaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ArtePesca3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca3}">
-                                        <Text id="CQDetail_subSection_lote_ArtePesca3" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca3', 'ArtePescaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_ArtePesca4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca4}">
-                                        <Text id="CQDetail_subSection_lote_ArtePesca4" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca4', 'ArtePescaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMArtepesca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMArtepesca}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMArtepesca" class="sapUiNoMargin" icon="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMArtepesca', 'MMArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Artepesca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Artepesca}">
+                                            <Text id="CQDetail_subSection_lote_Artepesca" emptyIndicatorMode="On" text="{parts:[ 'Artepesca', 'ArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ArtePesca2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca2}">
+                                            <Text id="CQDetail_subSection_lote_ArtePesca2" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca2', 'ArtePescaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ArtePesca3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca3}">
+                                            <Text id="CQDetail_subSection_lote_ArtePesca3" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca3', 'ArtePescaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_ArtePesca4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca4}">
+                                            <Text id="CQDetail_subSection_lote_ArtePesca4" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca4', 'ArtePescaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
 
-                                </l:FormContainer>
-                                <l:FormContainer id="CQDetail_subSection_lote_container5">
+                                    </l:FormContainer>
+                                    <l:FormContainer id="CQDetail_subSection_lote_container5">
 
-                                    <l:FormElement id="CQDetail_subSection_lote_MMCalibre_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibre}">
-                                        <ObjectStatus id="CQDetail_subSection_lote_MMCalibre" class="sapUiNoMargin" icon="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailStatusFormatter'}" text="{MMCalibreDesc}">
-                                        </ObjectStatus>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Calibre_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibre}">
-                                        <Text id="CQDetail_subSection_lote_Calibre" emptyIndicatorMode="On" text="{CalibreDesc}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_MMCalibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremin}">
-                                        <Text id="CQDetail_subSection_lote_MMCalibremin" emptyIndicatorMode="On" text="{MMCalibremin}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Calibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremin}">
-                                        <Text id="CQDetail_subSection_lote_Calibremin" emptyIndicatorMode="On" text="{Calibremin}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_MMCalibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremax}">
-                                        <Text id="CQDetail_subSection_lote_MMCalibremax" emptyIndicatorMode="On" text="{MMCalibremax}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_lote_Calibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremax}">
-                                        <Text id="CQDetail_subSection_lote_Calibremax" emptyIndicatorMode="On" text="{Calibremax}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
-                            </l:Form>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMCalibre_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibre}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMCalibre" class="sapUiNoMargin" icon="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailStatusFormatter'}" text="{MMCalibreDesc}">
+                                            </ObjectStatus>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Calibre_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibre}">
+                                            <Text id="CQDetail_subSection_lote_Calibre" emptyIndicatorMode="On" text="{CalibreDesc}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMCalibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremin}">
+                                            <Text id="CQDetail_subSection_lote_MMCalibremin" emptyIndicatorMode="On" text="{MMCalibremin}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Calibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremin}">
+                                            <Text id="CQDetail_subSection_lote_Calibremin" emptyIndicatorMode="On" text="{Calibremin}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_MMCalibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremax}">
+                                            <Text id="CQDetail_subSection_lote_MMCalibremax" emptyIndicatorMode="On" text="{MMCalibremax}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_lote_Calibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremax}">
+                                            <Text id="CQDetail_subSection_lote_Calibremax" emptyIndicatorMode="On" text="{Calibremax}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
+                                </l:Form>
 
-                            <Title id="CQDetail_subSection_documento_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.documento.title}"/>
-                            <l:Form id="CQDetail_subSection_documento" visible="{path: 'HideDadosDoc', formatter: '.formatter.hideFormatter'}" editable="false">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_documento_layout" columnsM="2" columnsL="3" columnsXL="5"></l:ColumnLayout>
-                                </l:layout>
+                                <Title id="CQDetail_subSection_documento_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.documento.title}"/>
+                                <l:Form id="CQDetail_subSection_documento" visible="{path: 'HideDadosDoc', formatter: '.formatter.hideFormatter'}" editable="false">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_documento_layout" columnsM="2" columnsL="3" columnsXL="5"></l:ColumnLayout>
+                                    </l:layout>
 
-                                <l:FormContainer id="CQDetail_subSection_documento_container">
-                                    <l:FormElement id="CQDetail_subSection_documento_Documento_label" label="{i18n>cqDetail.dadosProduto.ss.documento.Documento}">
-                                        <Text id="CQDetail_subSection_documento_Documento" emptyIndicatorMode="On" text="{Documento}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Supplier_label" visible="{path: 'HideSupplier', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Supplier}">
-                                        <Text id="CQDetail_subSection_documento_Supplier" emptyIndicatorMode="On" text="{Supplier}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Contentor_label" visible="{path: 'HideContentor', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contentor}">
-                                        <Text id="CQDetail_subSection_documento_Contentor" emptyIndicatorMode="On" text="{Contentor}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Contertorselado_label" visible="{path: 'HideContentorSelado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertorselado}">
-                                        <Switch id="CQDetail_subSection_documento_Contertorselado" state="{Contertorselado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Contertoraberto_label" visible="{path: 'HideAberto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertoraberto}">
-                                        <Switch id="CQDetail_subSection_documento_Contertoraberto" state="{Contertoraberto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_RepQual_label" visible="{path: 'HideRepQual', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.RepQual}">
-                                        <Text id="CQDetail_subSection_documento_RepQual" emptyIndicatorMode="On" text="{RepQual}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_LinkLotes_label" visible="{path: 'HideLinkLotes', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.LinkLotes}">
-                                        <Text id="CQDetail_subSection_documento_LinkLotes" emptyIndicatorMode="On" text="{LinkLotes}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_CarregaDet_label" visible="{path: 'HideCarregaDet', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.CarregaDet}">
-                                        <Switch id="CQDetail_subSection_documento_CarregaDet" state="{CarregaDet}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Selo_label" visible="{path: 'HideSelo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Selo}">
-                                        <Text id="CQDetail_subSection_documento_Selo" emptyIndicatorMode="On" text="{Selo}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Entreposto_label" visible="{path: 'HideEntreposto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Entreposto}">
-                                        <Switch id="CQDetail_subSection_documento_Entreposto" state="{Entreposto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Nexportador_label" visible="{path: 'HideNexportador', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nexportador}">
-                                        <Text id="CQDetail_subSection_documento_Nexportador" emptyIndicatorMode="On" text="{Nexportador}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Tempveiculo_label" visible="{path: 'HideTempVeiculo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempveiculo}">
-                                        <Text id="CQDetail_subSection_documento_Tempveiculo" emptyIndicatorMode="On" text="{Tempveiculo}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Tempproduto_label" visible="{path: 'HideTempProduto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempproduto}">
-                                        <Text id="CQDetail_subSection_documento_Tempproduto" emptyIndicatorMode="On" text="{Tempproduto}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Veiculohigienizado_label" visible="{path: 'HideVeiculoHigienizado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Veiculohigienizado}">
-                                        <Switch id="CQDetail_subSection_documento_Veiculohigienizado" state="{Veiculohigienizado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Precozinhado_label" visible="{path: 'HidePreCozinhado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Precozinhado}">
-                                        <Switch id="CQDetail_subSection_documento_Precozinhado" state="{Precozinhado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Datalogger_label" visible="{path: 'HideDatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Datalogger}">
-                                        <Switch id="CQDetail_subSection_documento_Datalogger" state="{Datalogger}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Dataloggerestado_label" visible="{path: 'HideDataloggerEstado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Dataloggerestado}">
-                                        <Text id="CQDetail_subSection_documento_Dataloggerestado" emptyIndicatorMode="On" text="{Dataloggerestado}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Iddatalogger_label" visible="{path: 'HideIDdatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Iddatalogger}">
-                                        <Text id="CQDetail_subSection_documento_Iddatalogger" emptyIndicatorMode="On" text="{Iddatalogger}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Nc_label" visible="{path: 'HideNC', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nc}">
-                                        <Text id="CQDetail_subSection_documento_Nc" emptyIndicatorMode="On" text="{Nc}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Cmr_label" visible="{path: 'HideCMR', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Cmr}">
-                                        <Switch id="CQDetail_subSection_documento_Cmro" state="{Cmr}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_Matricula_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Matricula}">
-                                        <Text id="CQDetail_subSection_documento_Matricula" emptyIndicatorMode="On" text="{Matricula}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_documento_NomeTransportador_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.NomeTransportador}">
-                                        <Text id="CQDetail_subSection_documento_NomeTransportador" emptyIndicatorMode="On" text="{NomeTransportador}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
-                            </l:Form>
+                                    <l:FormContainer id="CQDetail_subSection_documento_container">
+                                        <l:FormElement id="CQDetail_subSection_documento_Documento_label" label="{i18n>cqDetail.dadosProduto.ss.documento.Documento}">
+                                            <Text id="CQDetail_subSection_documento_Documento" emptyIndicatorMode="On" text="{Documento}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Supplier_label" visible="{path: 'HideSupplier', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Supplier}">
+                                            <Text id="CQDetail_subSection_documento_Supplier" emptyIndicatorMode="On" text="{Supplier}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Contentor_label" visible="{path: 'HideContentor', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contentor}">
+                                            <Text id="CQDetail_subSection_documento_Contentor" emptyIndicatorMode="On" text="{Contentor}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Contertorselado_label" visible="{path: 'HideContentorSelado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertorselado}">
+                                            <Switch id="CQDetail_subSection_documento_Contertorselado" state="{Contertorselado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Contertoraberto_label" visible="{path: 'HideAberto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertoraberto}">
+                                            <Switch id="CQDetail_subSection_documento_Contertoraberto" state="{Contertoraberto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_RepQual_label" visible="{path: 'HideRepQual', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.RepQual}">
+                                            <Text id="CQDetail_subSection_documento_RepQual" emptyIndicatorMode="On" text="{RepQual}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_LinkLotes_label" visible="{path: 'HideLinkLotes', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.LinkLotes}">
+                                            <Text id="CQDetail_subSection_documento_LinkLotes" emptyIndicatorMode="On" text="{LinkLotes}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_CarregaDet_label" visible="{path: 'HideCarregaDet', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.CarregaDet}">
+                                            <Switch id="CQDetail_subSection_documento_CarregaDet" state="{CarregaDet}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Selo_label" visible="{path: 'HideSelo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Selo}">
+                                            <Text id="CQDetail_subSection_documento_Selo" emptyIndicatorMode="On" text="{Selo}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Entreposto_label" visible="{path: 'HideEntreposto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Entreposto}">
+                                            <Switch id="CQDetail_subSection_documento_Entreposto" state="{Entreposto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Nexportador_label" visible="{path: 'HideNexportador', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nexportador}">
+                                            <Text id="CQDetail_subSection_documento_Nexportador" emptyIndicatorMode="On" text="{Nexportador}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Tempveiculo_label" visible="{path: 'HideTempVeiculo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempveiculo}">
+                                            <Text id="CQDetail_subSection_documento_Tempveiculo" emptyIndicatorMode="On" text="{Tempveiculo}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Tempproduto_label" visible="{path: 'HideTempProduto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempproduto}">
+                                            <Text id="CQDetail_subSection_documento_Tempproduto" emptyIndicatorMode="On" text="{Tempproduto}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Veiculohigienizado_label" visible="{path: 'HideVeiculoHigienizado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Veiculohigienizado}">
+                                            <Switch id="CQDetail_subSection_documento_Veiculohigienizado" state="{Veiculohigienizado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Precozinhado_label" visible="{path: 'HidePreCozinhado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Precozinhado}">
+                                            <Switch id="CQDetail_subSection_documento_Precozinhado" state="{Precozinhado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Datalogger_label" visible="{path: 'HideDatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Datalogger}">
+                                            <Switch id="CQDetail_subSection_documento_Datalogger" state="{Datalogger}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Dataloggerestado_label" visible="{path: 'HideDataloggerEstado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Dataloggerestado}">
+                                            <Text id="CQDetail_subSection_documento_Dataloggerestado" emptyIndicatorMode="On" text="{Dataloggerestado}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Iddatalogger_label" visible="{path: 'HideIDdatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Iddatalogger}">
+                                            <Text id="CQDetail_subSection_documento_Iddatalogger" emptyIndicatorMode="On" text="{Iddatalogger}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Nc_label" visible="{path: 'HideNC', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nc}">
+                                            <Text id="CQDetail_subSection_documento_Nc" emptyIndicatorMode="On" text="{Nc}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Cmr_label" visible="{path: 'HideCMR', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Cmr}">
+                                            <Switch id="CQDetail_subSection_documento_Cmro" state="{Cmr}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_Matricula_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Matricula}">
+                                            <Text id="CQDetail_subSection_documento_Matricula" emptyIndicatorMode="On" text="{Matricula}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_documento_NomeTransportador_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.NomeTransportador}">
+                                            <Text id="CQDetail_subSection_documento_NomeTransportador" emptyIndicatorMode="On" text="{NomeTransportador}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
+                                </l:Form>
 
 
-                            <Title id="CQDetail_subSection_embalagem_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.embalagem.title}"/>
-                            <l:Form id="CQDetail_subSection_embalagem" editable="false">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_embalagem_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
-                                </l:layout>
-                                <l:FormContainer id="CQDetail_subSection_embalagem_leitura_container">
-                                    <l:title>
-                                        <core:Title id="CQDetail_subSection_embalagem_leitura_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.leitura.title}"></core:Title>
-                                    </l:title>
+                                <Title id="CQDetail_subSection_embalagem_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.embalagem.title}"/>
+                                <l:Form id="CQDetail_subSection_embalagem" editable="false">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_embalagem_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
+                                    </l:layout>
+                                    <l:FormContainer id="CQDetail_subSection_embalagem_leitura_container">
+                                        <l:title>
+                                            <core:Title id="CQDetail_subSection_embalagem_leitura_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.leitura.title}"></core:Title>
+                                        </l:title>
 
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_CodigoBarras_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.CodigoBarras}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_CodigoBarras" emptyIndicatorMode="On" text="{CodigoBarras}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_CodigoBarrasUn_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.CodigoBarrasUn}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_CodigoBarrasUn" emptyIndicatorMode="On" text="{CodigoBarrasUn}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_MMGtin_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.MMGtin}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_MMGtin" emptyIndicatorMode="On" text="{MMGtin}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_Gtin_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.Gtin}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_Gtin" emptyIndicatorMode="On" text="{Gtin}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_MMEan_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.MMEan}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_MMEan" emptyIndicatorMode="On" text="{MMEan}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_leitura_Ean_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.Ean}">
-                                        <Text id="CQDetail_subSection_embalagem_leitura_Ean" emptyIndicatorMode="On" text="{Ean}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_CodigoBarras_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.CodigoBarras}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_CodigoBarras" emptyIndicatorMode="On" text="{CodigoBarras}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_CodigoBarrasUn_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.CodigoBarrasUn}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_CodigoBarrasUn" emptyIndicatorMode="On" text="{CodigoBarrasUn}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_MMGtin_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.MMGtin}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_MMGtin" emptyIndicatorMode="On" text="{MMGtin}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_Gtin_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.Gtin}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_Gtin" emptyIndicatorMode="On" text="{Gtin}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_MMEan_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.MMEan}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_MMEan" emptyIndicatorMode="On" text="{MMEan}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_leitura_Ean_label" label="{i18n>cqDetail.dadosProduto.subsection.leitura.Ean}">
+                                            <Text id="CQDetail_subSection_embalagem_leitura_Ean" emptyIndicatorMode="On" text="{Ean}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
 
-                                <l:FormContainer id="CQDetail_subSection_embalagem_tipo_container">
-                                    <l:title>
-                                        <core:Title id="CQDetail_subSection_embalagem_tipo_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.tipo.title}"></core:Title>
-                                    </l:title>
+                                    <l:FormContainer id="CQDetail_subSection_embalagem_tipo_container">
+                                        <l:title>
+                                            <core:Title id="CQDetail_subSection_embalagem_tipo_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.tipo.title}"></core:Title>
+                                        </l:title>
 
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_Tipoproduto_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Tipoproduto}">
-                                        <Text id="CQDetail_subSection_embalagem_tipo_Tipoproduto" emptyIndicatorMode="On" text="{parts:[ 'Tipoproduto', 'TipoprodutoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_CalibreAprox_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.CalibreAprox}">
-                                        <Switch id="CQDetail_subSection_embalagem_tipo_CalibreAprox" state="{CalibreAprox}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMNembalporcaixa}">
-                                        <Text id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa" emptyIndicatorMode="On" text="{MMNembalporcaixa}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Nembalporcaixa}">
-                                        <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMApresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMApresentacao}">
-                                        <Text id="CQDetail_subSection_embalagem_tipo_MMApresentacao" emptyIndicatorMode="On" text="{parts:[ 'MMApresentacao', 'MMApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_embalagem_tipo_Apresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Apresentacao}">
-                                        <Text id="CQDetail_subSection_embalagem_tipo_Apresentacao" emptyIndicatorMode="On" text="{parts:[ 'Apresentacao', 'ApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
-                            </l:Form>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_Tipoproduto_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Tipoproduto}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Tipoproduto" emptyIndicatorMode="On" text="{parts:[ 'Tipoproduto', 'TipoprodutoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_CalibreAprox_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.CalibreAprox}">
+                                            <Switch id="CQDetail_subSection_embalagem_tipo_CalibreAprox" state="{CalibreAprox}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"></Switch>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMNembalporcaixa}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa" emptyIndicatorMode="On" text="{MMNembalporcaixa}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Nembalporcaixa}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMApresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMApresentacao}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_MMApresentacao" emptyIndicatorMode="On" text="{parts:[ 'MMApresentacao', 'MMApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_Apresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Apresentacao}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Apresentacao" emptyIndicatorMode="On" text="{parts:[ 'Apresentacao', 'ApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
+                                </l:Form>
 
-                            <l:Form id="CQDetail_subSection_dimensoes" editable="false" class="sapUiTinyMarginTop">
-                                <l:layout>
-                                    <l:ColumnLayout id="CQDetail_subSection_dimensoes_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
-                                </l:layout>
+                                <l:Form id="CQDetail_subSection_dimensoes" editable="false" class="sapUiTinyMarginTop">
+                                    <l:layout>
+                                        <l:ColumnLayout id="CQDetail_subSection_dimensoes_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
+                                    </l:layout>
 
-                                <l:FormContainer id="CQDetail_subSection_dimensoes_cx_container">
-                                    <l:title>
-                                        <core:Title id="CQDetail_subSection_dimensoes_cx_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.title}"></core:Title>
-                                    </l:title>
+                                    <l:FormContainer id="CQDetail_subSection_dimensoes_cx_container">
+                                        <l:title>
+                                            <core:Title id="CQDetail_subSection_dimensoes_cx_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.title}"></core:Title>
+                                        </l:title>
 
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Pmscx_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Pmscx}">
-                                        <Text id="CQDetail_subSection_dimensoes_cx_Pmscx" emptyIndicatorMode="On" text="{Pmscx}"></Text>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Pmscx_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Pmscx}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Pmscx" emptyIndicatorMode="On" text="{Pmscx}"></Text>
+                                        </l:FormElement>
 
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxcomprimento_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxcomprimento}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxcomprimento" emptyIndicatorMode="On" number="{Cxcomprimento}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxlargura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxlargura}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxlargura" emptyIndicatorMode="On" number="{Cxlargura}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxaltura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxaltura}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxaltura" emptyIndicatorMode="On" number="{Cxaltura}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxcomprimento_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxcomprimento}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxcomprimento" emptyIndicatorMode="On" number="{Cxcomprimento}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxlargura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxlargura}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxlargura" emptyIndicatorMode="On" number="{Cxlargura}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxaltura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxaltura}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxaltura" emptyIndicatorMode="On" number="{Cxaltura}" unit="{Cxuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
 
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesobruto}">
-                                        <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Cxpesobruto', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquido}">
-                                        <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquido', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquidoesc}">
-                                        <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquidoesc', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxtara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxtara}">
-                                        <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{parts:[ 'Cxtara', 'Cxuomtara' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesobruto}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Cxpesobruto', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquido}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquido', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquidoesc}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquidoesc', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxtara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxtara}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{parts:[ 'Cxtara', 'Cxuomtara' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
 
-                                <l:FormContainer id="CQDetail_subSection_dimensoes_un_container">
-                                    <l:title>
-                                        <core:Title id="CQDetail_subSection_dimensoes_un_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.title}"></core:Title>
-                                    </l:title>
+                                    <l:FormContainer id="CQDetail_subSection_dimensoes_un_container">
+                                        <l:title>
+                                            <core:Title id="CQDetail_subSection_dimensoes_un_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.title}"></core:Title>
+                                        </l:title>
 
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Uncomprimento_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Uncomprimento}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_un_Uncomprimento" emptyIndicatorMode="On" number="{Uncomprimento}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Unlargura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unlargura}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unlargura" emptyIndicatorMode="On" number="{Unlargura}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Unaltura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unaltura}">
-                                        <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unaltura" emptyIndicatorMode="On" number="{Unaltura}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
-                                    </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Uncomprimento_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Uncomprimento}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Uncomprimento" emptyIndicatorMode="On" number="{Uncomprimento}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Unlargura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unlargura}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unlargura" emptyIndicatorMode="On" number="{Unlargura}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Unaltura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unaltura}">
+                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unaltura" emptyIndicatorMode="On" number="{Unaltura}" unit="{Unuomdim}" emphasized="false"></ObjectNumber>
+                                        </l:FormElement>
 
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesobruto}">
-                                        <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Unpesobruto', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquido}">
-                                        <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquido', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquidoesc}">
-                                        <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquidoesc', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                    <l:FormElement id="CQDetail_subSection_dimensoes_un_Untara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Untara}">
-                                        <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{parts:[ 'Untara', 'Unuomtara' ], formatter:'.formatter.qtdFormatter'}"></Text>
-                                    </l:FormElement>
-                                </l:FormContainer>
-                            </l:Form>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesobruto}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Unpesobruto', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquido}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquido', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquidoesc}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquidoesc', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_dimensoes_un_Untara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Untara}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{parts:[ 'Untara', 'Unuomtara' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </l:FormElement>
+                                    </l:FormContainer>
+                                </l:Form>
 
-                        </VBox>
+                            </VBox>
+                        </ScrollContainer>
                     </IconTabFilter>
 
                     <IconTabSeparator id="CQDetail_sections_tabBar_sep1"></IconTabSeparator>
                     <IconTabFilter id="CQDetail_section_ft" text="{i18n>cqDetail.ft.title}">
-                        <VBox id="CQDetail_section_ft_vbox">
-                            <Title id="CQDetail_subSection_Ingredientes_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.ft.subsection.Ingredientes.title}"/>
+                        <ScrollContainer id="CQDetail_section_scroll_ft" vertical="true" height="100%">
+                            <VBox id="CQDetail_section_ft_vbox">
+                                <Title id="CQDetail_subSection_Ingredientes_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.ft.subsection.Ingredientes.title}"/>
+                                <layout:Grid id="CQDetail_section_ft_grid1" defaultSpan="XL12 L12 M12 S12">
+                                    <macros:Table id="CQDetail_Ingredientes_table" header="{i18n>cqDetail.ft.subsection.Ingredientes.table.title}" metaPath="_ingredientes/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                </layout:Grid>
 
-                        </VBox>
+                                <Title id="CQDetail_subSection_alergenios_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.ft.subsection.alergenios.title}"/>
+                                <layout:Grid id="CQDetail_section_ft_grid2" defaultSpan="XL12 L12 M12 S12">
+                                    <HBox id="CQDetail_subSection_alergenios">
+                                        <VBox id="tes1" class="sapUiTinyMarginEnd">
+                                            <macros:Table id="CQDetail_alergenios_contem_table" header="{i18n>cqDetail.ft.subsection.alergenios.contem.title}" metaPath="_alegerneosContem/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                        </VBox>
+                                        <macros:Table id="CQDetail_alergenios_podeConter_table" header="{i18n>cqDetail.ft.subsection.alergenios.podeConter.title}" metaPath="_alegerneosPodeConter/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                    </HBox>
+                                </layout:Grid>
+
+                                <Title id="CQDetail_subSection_nutricionais_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.ft.subsection.Nutricionais.title}"></Title>
+                                <layout:Grid id="CQDetail_section_ft_grid3" defaultSpan="XL12 L12 M12 S12">
+                                    <layout:Grid id="CQDetail_subSection_nutricionais_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
+                                        <l:Form id="CQDetail_subSection_nutricionais_form" editable="false" class="sapUiTinyMarginBottom">
+                                            <l:layout>
+                                                <l:ColumnLayout id="CQDetail_subSection_nutricionais_form_layout" columnsM="2" columnsL="3" columnsXL="6"></l:ColumnLayout>
+                                            </l:layout>
+
+                                            <l:FormContainer id="CQDetail_subSection_nutricionais_container">
+                                                <l:FormElement id="CQDetail_subSection_nutricionais_Vntipo_label" label="{i18n>cqDetail.ft.subsection.Nutricionais.Vntipo}">
+                                                    <Text id="CQDetail_subSection_nutricionais_Vntipo" emptyIndicatorMode="On" text="{parts:[ 'Vntipo', 'VntipoDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                                </l:FormElement>
+
+                                                <l:FormElement id="CQDetail_subSection_nutricionais_Grupopais_label" label="{i18n>cqDetail.ft.subsection.Nutricionais.Grupopais}">
+                                                    <Text id="CQDetail_subSection_nutricionais_Grupopais" emptyIndicatorMode="On" text="{parts:[ 'Grupopais', 'GrupopaisDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                                </l:FormElement>
+                                            </l:FormContainer>
+                                        </l:Form>
+                                        <macros:Table id="CQDetail_nutricionais_table" header="{i18n>cqDetail.ft.subsection.nutricionais.table.title}" metaPath="_nutricionais/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                    </layout:Grid>
+                                </layout:Grid>
+
+                            </VBox>
+                        </ScrollContainer>
                     </IconTabFilter>
 
 
