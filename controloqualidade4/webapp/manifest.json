@@ -60,7 +60,8 @@
         "sap.m": {},
         "sap.ui.core": {},
         "sap.fe.core": {},
-        "sap.fe.macros": {}
+        "sap.fe.macros": {},
+        "sap.fe.templates": {}
       }
     },
     "contentDensities": {
@@ -111,6 +112,11 @@
           "name": "CQCabCQDetailPage",
           "pattern": "CQCab({CQCabKey}):?query:",
           "target": "CQCabCQDetailPage"
+        },
+        {
+          "name": "CQLinhasCQLinhaDetailPage",
+          "pattern": "CQCab({CQCabKey})/_linhas({_linhasKey}):?query:",
+          "target": "CQLinhasCQLinhaDetailPage"
         }
       ],
       "targets": {
@@ -138,9 +144,27 @@
           "name": "sap.fe.core.fpm",
           "options": {
             "settings": {
-              "navigation": {},
+              "navigation": {
+                "_linhas": {
+                  "detail": {
+                    "route": "CQLinhasCQLinhaDetailPage"
+                  }
+                }
+              },
               "contextPath": "/CQCab",
               "viewName": "brasmar.bm01.controloqualidade4.ext.view.CQDetail"
+            }
+          }
+        },
+        "CQLinhasCQLinhaDetailPage": {
+          "type": "Component",
+          "id": "CQLinhasCQLinhaDetailPage",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/CQCab/_linhas",
+              "viewName": "brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail"
             }
           }
         }

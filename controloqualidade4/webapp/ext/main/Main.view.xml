@@ -29,7 +29,7 @@
                 <IconTabFilter
                     id="main_IconTabBar_pendentes"
                     icon="sap-icon://compare"
-                    iconColor="Critical"
+                    iconColor="Negative"
                     text="{i18n>main.pendentes}"
                     key="pendentes"
                     count="{
@@ -43,7 +43,7 @@
                 <IconTabFilter
                     id="main_IconTabBar_concluidos"
                     icon="sap-icon://begin"
-                    iconColor="Negative"
+                    iconColor="Critical"
                     text="{i18n>main.concluidos}"
                     key="concluidos"
                     count="{

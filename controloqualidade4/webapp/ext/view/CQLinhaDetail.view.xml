@@ -1,0 +1,610 @@
+<mvc:View xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail"
+    xmlns:f="sap.f">
+    <f:DynamicPage id="CQDetailLinha_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false">
+        <f:title>
+            <f:DynamicPageTitle id="CQDetailLinha_dynamicPage_Title">
+                <f:heading>
+                    <Title id="CQDetailLinha_dynamicPage_TitleText" text="{
+                            parts:[
+                                {path: 'i18n>CQLinhaDetail.Title'},
+                                {path: 'Linha'}], formatter: '.formatter.detailLineFormatter'}"></Title>
+                </f:heading>
+                <f:actions>
+                    <Button id="CQDetailLinha_dynamicPage_Edit" text="{i18n>CQLinhaDetail.btn.Edit}" type="Emphasized"></Button>
+                    <Button id="CQDetailLinha_dynamicPage_Calcular" text="{i18n>CQLinhaDetail.btn.Calcular}" type="Default" icon="sap-icon://simulate"></Button>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+
+
+        <f:header>
+            <f:DynamicPageHeader id="CQDetailLinha_dynamicPage_Header" pinnable="true">
+
+
+                <FlexBox id="CQDetailLinha_dynamicPageHeader_flexBox" wrap="Wrap" alignContent="Start" alignItems="Start" width="100%">
+                    <VBox id="CQDetailLinha_dynamicPageHeader_vertical_controlo" displayInline="true" class="sapUiSmallMargin">
+                        <Title id="CQDetailLinha_dynamicPageHeader_vertical_controlo_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.header.controlo}"/>
+                        <HBox id="CQDetailLinha_hbox0" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_centro" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.centro}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_centro" emptyIndicatorMode="On" renderWhitespace="true" text="{Centro}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox1" renderType="Bare" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_id" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.id}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_id" emptyIndicatorMode="On" renderWhitespace="true" text="{Id}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox2" renderType="Bare" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_status" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.status}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_status" emptyIndicatorMode="On" renderWhitespace="true" text="{parts:[ '_CabCQ/Estado', '_CabCQ/EstadoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                        </HBox>
+                    </VBox>
+                    <VBox id="CQDetailLinha_dynamicPageHeader_vertical_produto" displayInline="true" class="sapUiSmallMargin">
+                        <Title id="CQDetailLinha_dynamicPageHeader_vertical_produto_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.header.produto}"/>
+                        <HBox id="CQDetailLinha_hbox3" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_material" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.material}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_material" emptyIndicatorMode="On" renderWhitespace="true" text="{Material}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox4" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_desc" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.matDesc}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_desc" emptyIndicatorMode="On" renderWhitespace="true" text="{MaterialDesc}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox5" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_lote" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.lote}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_lote" emptyIndicatorMode="On" renderWhitespace="true" text="{Lote}"/>
+                        </HBox>
+                    </VBox>
+                    <VBox id="CQDetailLinha_dynamicPageHeader_vertical_detalhe" displayInline="true" class="sapUiSmallMargin">
+                        <Title id="CQDetailLinha_dynamicPageHeader_vertical_detalhe_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.header.detalhe}"/>
+                        <HBox id="CQDetailLinha_hbox6" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_tipoDoc" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.tipoDoc}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_tipoDoc" emptyIndicatorMode="On" renderWhitespace="true" text="{parts:[ '_CabCQ/Tipodoc', '_CabCQ/TipodocDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox7" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_document" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.documento}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_document" emptyIndicatorMode="On" renderWhitespace="true" text="{_CabCQ/Documento}"/>
+                        </HBox>
+                        <HBox id="CQDetailLinha_hbox8" renderType="Bare" class="sapUiTinyMarginBottom">
+                            <Label id="CQDetailLinha_dynamicPageHeader_label_tipoProd" wrapping="true" class="sapUiTinyMarginEnd" text="{i18n>cqDetail.header.tipoProd}"/>
+                            <Text id="CQDetailLinha_dynamicPageHeader_text_tipoProd" emptyIndicatorMode="On" renderWhitespace="true" text="{parts:[ '_CabCQ/Tipoprod', '_CabCQ/TipoprodDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                        </HBox>
+                    </VBox>
+                </FlexBox>
+
+
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <IconTabBar id="CQDetailLinha_sections_tabBar" stretchContentHeight="true" select=".onFilterSelect">
+                <items>
+                    <IconTabFilter id="CQDetailLinha_filter_amostra" text="{i18n>CQLinhaDetail.toolbar.btn.Amostra}" key="Amostra"></IconTabFilter>
+                    <IconTabSeparator id="CQDetailLinha_filter_seperator1"></IconTabSeparator>
+                    <IconTabFilter id="CQDetailLinha_filter_PerdaPeso" text="{i18n>CQLinhaDetail.toolbar.btn.PerdaPeso}" key="PerdaPeso"></IconTabFilter>
+                    <IconTabSeparator id="CQDetailLinha_filter_seperator2"></IconTabSeparator>
+                    <IconTabFilter id="CQDetailLinha_filter_Peso" text="{i18n>CQLinhaDetail.toolbar.btn.Pesos}" key="Pesos">
+                        <items>
+                            <IconTabFilter id="CQDetailLinha_filter_PesoCx" text="{i18n>CQLinhaDetail.toolbar.btn.PesoCX}" key="PesoCx"></IconTabFilter>
+                            <IconTabFilter id="CQDetailLinha_filter_PesoUn" text="{i18n>CQLinhaDetail.toolbar.btn.PesoUn}" key="PesoUn"></IconTabFilter>
+                        </items>
+                    </IconTabFilter>
+                    <IconTabSeparator id="CQDetailLinha_filter_seperator3"></IconTabSeparator>
+                    <IconTabFilter id="CQDetailLinha_filter_Vidragens" text="{i18n>CQLinhaDetail.toolbar.btn.Vidragens}" key="Vidragens"></IconTabFilter>
+                    <IconTabSeparator id="CQDetailLinha_filter_seperator4"></IconTabSeparator>
+                    <IconTabFilter id="CQDetailLinha_filter_Calibres" text="{i18n>CQLinhaDetail.toolbar.btn.Calibres}" key="Calibres"></IconTabFilter>
+
+                    <IconTabSeparator id="CQDetailLinha_filter_seperator5" visible="{path: 'HideTemperaturas', formatter: '.formatter.hideFormatter'}"></IconTabSeparator>
+                    <IconTabFilter id="CQDetailLinha_filter_Temperaturas" key="Temperaturas" visible="{path: 'HideTemperaturas', formatter: '.formatter.hideFormatter'}" text="{i18n>CQLinhaDetail.toolbar.btn.Temperaturas}"></IconTabFilter>
+                </items>
+
+                <content>
+                    <ScrollContainer id="CQDetailLinha_Content_scroll" vertical="true" height="100%">
+                        <VBox id="CQDetailLinha_Content_vbox" class="sapUiTinyMarginEnd">
+                            <Title id="CQDetailLinha_amostra_title" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>CQLinhaDetail.amostra.title}"></Title>
+                            <form:Form id="CQDetailLinha_amostra" editable="false">
+                                <form:layout>
+                                    <form:ColumnLayout id="CQDetailLinha_amostra_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                </form:layout>
+
+                                <form:FormContainer id="CQDetailLinha_amostra_container">
+                                    <form:FormElement id="CQDetailLinha_amostra_LoteFornecedor_label" label="{i18n>CQLinhaDetail.amostra.LoteFornecedor}">
+                                        <Text id="CQDetailLinha_amostra_LoteFornecedor" emptyIndicatorMode="On" text="{LoteFornecedor}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Acondhigiene_label" label="{i18n>CQLinhaDetail.amostra.Acondhigiene}" visible="{path: 'HideAcondhigiene', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Acondhigiene" emptyIndicatorMode="On" text="{AcondhigieneDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Acondintegre_label" label="{i18n>CQLinhaDetail.amostra.Acondintegre}" visible="{path: 'HideAcondintegre', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Acondintegre" emptyIndicatorMode="On" text="{AcondintegreDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Cestranho_label" label="{i18n>CQLinhaDetail.amostra.Cestranho}" visible="{path: 'HideCestranho', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Cestranho" emptyIndicatorMode="On" text="{CestranhoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Pragas_label" label="{i18n>CQLinhaDetail.amostra.Pragas}" visible="{path: 'HidePragas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Pragas" emptyIndicatorMode="On" text="{PragasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Sal_label" label="{i18n>CQLinhaDetail.amostra.Sal}" visible="{path: 'HideSal', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Sal" emptyIndicatorMode="On" text="{Sal}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Salc_label" label="{i18n>CQLinhaDetail.amostra.Salc}" visible="{path: 'HideSalc', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Salc" emptyIndicatorMode="On" text="{SalcDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Hg_label" label="{i18n>CQLinhaDetail.amostra.Hg}" visible="{path: 'HideHg', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Hg" emptyIndicatorMode="On" text="{HgDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Eviscerado_label" label="{i18n>CQLinhaDetail.amostra.Eviscerado}" visible="{path: 'HideEviscerado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Eviscerado" emptyIndicatorMode="On" text="{EvisceradoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Cpele_label" label="{i18n>CQLinhaDetail.amostra.Cpele}" visible="{path: 'HideCpele', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Cpele" emptyIndicatorMode="On" text="{CpeleDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Aparado_label" label="{i18n>CQLinhaDetail.amostra.Aparado}" visible="{path: 'HideAparado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Aparado" emptyIndicatorMode="On" text="{AparadoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Ssangue_label" label="{i18n>CQLinhaDetail.amostra.Ssangue}" visible="{path: 'HideSsangue', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Ssangue" emptyIndicatorMode="On" text="{SsangueDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Sespinha_label" label="{i18n>CQLinhaDetail.amostra.Sespinha}" visible="{path: 'HideSespinha', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Sespinha" emptyIndicatorMode="On" text="{SespinhaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Desidratado_label" label="{i18n>CQLinhaDetail.amostra.Desidratado}" visible="{path: 'HideDesidratado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Desidratado" emptyIndicatorMode="On" text="{DesidratadoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Cristaisgelo_label" label="{i18n>CQLinhaDetail.amostra.Cristaisgelo}" visible="{path: 'HideCristaisgelo', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Cristaisgelo" text="{CristaisgeloDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Presencaunhas_label" label="{i18n>CQLinhaDetail.amostra.Presencaunhas}" visible="{path: 'HidePresencaunhas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Presencaunhas" emptyIndicatorMode="On" text="{PresencaunhasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Pamputadas_label" label="{i18n>CQLinhaDetail.amostra.Pamputadas}" visible="{path: 'HidePamputadas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Pamputadas" emptyIndicatorMode="On" text="{PamputadasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Npamputadas_label" label="{i18n>CQLinhaDetail.amostra.Npamputadas}" visible="{path: 'HideNpamputadas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Npamputadas" text="{Npamputadas}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Pele_label" label="{i18n>CQLinhaDetail.amostra.Pele}" visible="{path: 'HidePele', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Pele" emptyIndicatorMode="On" text="{PeleDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Carne_label" label="{i18n>CQLinhaDetail.amostra.Carne}" visible="{path: 'HideCarne', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Carne" emptyIndicatorMode="On" text="{CarneDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Tentaculo_label" label="{i18n>CQLinhaDetail.amostra.Tentaculo}" visible="{path: 'HideTentaculo', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Tentaculo" emptyIndicatorMode="On" text="{TentaculoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Odor_label" label="{i18n>CQLinhaDetail.amostra.Odor}" visible="{path: 'HideOdor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Odor" emptyIndicatorMode="On" text="{OdorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Pabertas_label" label="{i18n>CQLinhaDetail.amostra.Pabertas}" visible="{path: 'HidePabertas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Pabertas" emptyIndicatorMode="On" text="{PabertasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Ppabertas_label" label="{i18n>CQLinhaDetail.amostra.Ppabertas}" visible="{path: 'HidePpabertas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Ppabertas" emptyIndicatorMode="On" text="{Ppabertas}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Bexternas_label" label="{i18n>CQLinhaDetail.amostra.Bexternas}" visible="{path: 'HideBexternas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Bexternas" emptyIndicatorMode="On" text="{BexternasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Pbexternas_label" label="{i18n>CQLinhaDetail.amostra.Pbexternas}" visible="{path: 'HidePbexternas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Pbexternas" emptyIndicatorMode="On" text="{Pbexternas}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Parasitas_label" label="{i18n>CQLinhaDetail.amostra.Parasitas}" visible="{path: 'HideParasitas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Parasitas" emptyIndicatorMode="On" text="{ParasitasDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Idparasitas_label" label="{i18n>CQLinhaDetail.amostra.Idparasitas}" visible="{path: 'HideIdparasitas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Idparasitas" emptyIndicatorMode="On" text="{Idparasitas}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Areia_label" label="{i18n>CQLinhaDetail.amostra.Areia}" visible="{path: 'HideAreia', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Areia" emptyIndicatorMode="On" text="{AreiaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Humidade_label" label="{i18n>CQLinhaDetail.amostra.Humidade}" visible="{path: 'HideHumidade', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Humidade" emptyIndicatorMode="On" text="{Humidade}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Humidadec_label" label="{i18n>CQLinhaDetail.amostra.Humidadec}" visible="{path: 'HideHumidadec', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Humidadec" emptyIndicatorMode="On" text="{HumidadecDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Qgelo_label" label="{i18n>CQLinhaDetail.amostra.Qgelo}" visible="{path: 'HideQgelo', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Qgelo" emptyIndicatorMode="On" text="{QgeloDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Fendas_label" label="{i18n>CQLinhaDetail.amostra.Fendas}" visible="{path: 'HideFendas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Fendas" emptyIndicatorMode="On" text="{HideFendas}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Amputacoes_label" label="{i18n>CQLinhaDetail.amostra.Amputacoes}" visible="{path: 'HideAmputacoes', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Amputacoes" emptyIndicatorMode="On" text="{AmputacoesDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Clavicula_label" label="{i18n>CQLinhaDetail.amostra.Clavicula}" visible="{path: 'HideClavicula', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Clavicula" emptyIndicatorMode="On" text="{ClaviculaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Mfigado_label" label="{i18n>CQLinhaDetail.amostra.Mfigado}" visible="{path: 'HideMfigado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Mfigado" emptyIndicatorMode="On" text="{MfigadoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Mvermelho_label" label="{i18n>CQLinhaDetail.amostra.Mvermelho}" visible="{path: 'HideMvermelho', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Mvermelho" emptyIndicatorMode="On" text="{MvermelhoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Empoado_label" label="{i18n>CQLinhaDetail.amostra.Empoado}" visible="{path: 'HideEmpoado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Empoado" emptyIndicatorMode="On" text="{EmpoadoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Ressoado_label" label="{i18n>CQLinhaDetail.amostra.Ressoado}" visible="{path: 'HideRessoado', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Ressoado" emptyIndicatorMode="On" text="{RessoadoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleCor_label" label="i18n>CQLinhaDetail.amostra.PeleCor" visible="{path: 'HidePeleCor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PeleCor" emptyIndicatorMode="On" text="{PeleCorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleMusc_label" label="{i18n>CQLinhaDetail.amostra.PeleMusc}" visible="{path: 'HidePeleMusc', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PeleMusc" emptyIndicatorMode="On" text="{PeleMuscDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleOdor_label" label="{i18n>CQLinhaDetail.amostra.PeleOdor}" visible="{path: 'HidePeleOdor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PeleOdor" emptyIndicatorMode="On" text="{PeleOdorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleTextura_label" label="{i18n>CQLinhaDetail.amostra.PeleTextura}" visible="{path: 'HidePeleTextura', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PeleTextura" emptyIndicatorMode="On" text="{PeleTexturaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_OlhosCor_label" label="{i18n>CQLinhaDetail.amostra.OlhosCor}" visible="{path: 'HideOlhosCor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_OlhosCor" emptyIndicatorMode="On" text="{OlhosCorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_OlhosForma_label" label="{i18n>CQLinhaDetail.amostra.OlhosForma}" visible="{path: 'HideOlhosForma', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_OlhosForma" emptyIndicatorMode="On" text="{OlhosFormaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_GuelrasCor_label" label="{i18n>CQLinhaDetail.amostra.GuelrasCor}" visible="{path: 'HideGuelrasCor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_GuelrasCor" emptyIndicatorMode="On" text="{GuelrasCorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_GuelrasMucosidade_label" label="{i18n>CQLinhaDetail.amostra.GuelrasMucosidade}" visible="{path: 'HideGuelrasMucosidade', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_GuelrasMucosidade" emptyIndicatorMode="On" text="{GuelrasMucosidadeDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_GuelrasOdor_label" label="{i18n>CQLinhaDetail.amostra.GuelrasOdor}" visible="{path: 'HideGuelrasOdor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_GuelrasOdor" emptyIndicatorMode="On" text="{GuelrasOdorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_AbdomenSange_label" label="{i18n>CQLinhaDetail.amostra.AbdomenSange}" visible="{path: 'HideAbdomenSange', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_AbdomenSange" emptyIndicatorMode="On" text="{AbdomenSangeDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_AbdomenOdor_label" label="{i18n>CQLinhaDetail.amostra.AbdomenOdor}" visible="{path: 'HideAbdomenOdor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_AbdomenOdor" emptyIndicatorMode="On" text="{AbdomenOdorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_GeloTina_label" label="{i18n>CQLinhaDetail.amostra.GeloTina}" visible="{path: 'HideGeloTina', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_GeloTina" emptyIndicatorMode="On" text="{GeloTinaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_EstadoFisico_label" label="{i18n>CQLinhaDetail.amostra.EstadoFisico}" visible="{path: 'HideEstadoFisico', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_EstadoFisico" emptyIndicatorMode="On" text="{EstadoFisicoText}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Apresentacao_label" label="{i18n>CQLinhaDetail.amostra.Apresentacao}" visible="{path: 'HideApresentacao', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Apresentacao" emptyIndicatorMode="On" text="{ApresentacaoText}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Corte_label" label="{i18n>CQLinhaDetail.amostra.Corte}" visible="{path: 'HideCorte', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Corte" emptyIndicatorMode="On" text="{CorteDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Especie_label" label="{i18n>CQLinhaDetail.amostra.Especie}" visible="{path: 'HideEspecie', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Especie" emptyIndicatorMode="On" text="{EspecieDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleAsa_label" label="{i18n>CQLinhaDetail.amostra.PeleAsa}" visible="{path: 'HidePeleAsa', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PeleAsa" emptyIndicatorMode="On" text="{PeleAsaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Cor_label" label="{i18n>CQLinhaDetail.amostra.Cor}" visible="{path: 'HideCor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Cor" emptyIndicatorMode="On" text="{CorDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Textura_label" label="{i18n>CQLinhaDetail.amostra.Textura}" visible="{path: 'HideTextura', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Textura" emptyIndicatorMode="On" text="{TexturaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Limpeza_label" label="{i18n>CQLinhaDetail.amostra.Limpeza}" visible="{path: 'HideLimpeza', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Limpeza" emptyIndicatorMode="On" text="{LimpezaDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Evisceracao_label" label="{i18n>CQLinhaDetail.amostra.Evisceracao}" visible="{path: 'HideEvisceracao', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Evisceracao" emptyIndicatorMode="On" text="{EvisceracaoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Migas_label" label="{i18n>CQLinhaDetail.amostra.Migas}" visible="{path: 'HideMigas', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Migas" emptyIndicatorMode="On" text="{MigasDesc}"></Text>
+                                    </form:FormElement>
+                                    <form:FormElement id="CQDetailLinha_amostra_PerdaPeso_label" label="{i18n>CQLinhaDetail.amostra.PerdaPeso}" visible="{path: 'HidePerdaPeso', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_PerdaPeso" emptyIndicatorMode="On" text="{PerdaPeso}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_CxGelo_label" label="{i18n>CQLinhaDetail.amostra.CxGelo}" visible="{path: 'HideCxGelo', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_CxGelo" emptyIndicatorMode="On" text="{CxGeloDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_FilmeAderente_label" label="{i18n>CQLinhaDetail.amostra.FilmeAderente}" visible="{path: 'HideFilmeAderente', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_FilmeAderente" emptyIndicatorMode="On" text="{FilmeAderenteDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_CumpreRoteiro_label" label="{i18n>CQLinhaDetail.amostra.CumpreRoteiro}" visible="{path: 'HideCumpreRoteiro', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_CumpreRoteiro" emptyIndicatorMode="On" text="{CumpreRoteiroDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_VidragemUnif_label" label="{i18n>CQLinhaDetail.amostra.VidragemUnif}" visible="{path: 'HideVidragemUni', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_VidragemUnif" emptyIndicatorMode="On" text="{VidragemUnifDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_MistHomo_label" label="{i18n>CQLinhaDetail.amostra.MistHomo}" visible="{path: 'HideMistHomo', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_MistHomo" emptyIndicatorMode="On" text="{MistHomoDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Residuos_label" label="{i18n>CQLinhaDetail.amostra.Residuos}" visible="{path: 'HideResiduos', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Residuos" emptyIndicatorMode="On" text="{ResiduosDesc}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Sabor_label" label="{i18n>CQLinhaDetail.amostra.Sabor}" visible="{path: 'HideSabor', formatter: '.formatter.hideFormatter'}">
+                                        <Text id="CQDetailLinha_amostra_Sabor" emptyIndicatorMode="On" text="{SaborDesc}"></Text>
+                                    </form:FormElement>
+
+                                </form:FormContainer>
+                            </form:Form>
+
+                            <Title id="CQDetailLinha_perdaPeso_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.perdaPeso.title}"></Title>
+                            <form:Form id="CQDetailLinha_perdaPeso" editable="false">
+                                <form:layout>
+                                    <form:ColumnLayout id="CQDetailLinha_perdaPeso_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                </form:layout>
+
+                                <form:FormContainer id="CQDetailLinha_perdaPeso_container">
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPDeclarado_label" label="{i18n>CQLinhaDetail.perdaPeso.PPDeclarado}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPDeclarado" emptyIndicatorMode="On" text="{parts:[ 'PPDeclarado', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPBruto_label" label="{i18n>CQLinhaDetail.perdaPeso.PPBruto}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPBruto" emptyIndicatorMode="On" text="{parts:[ 'PPBruto', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquido_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquido}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquido" emptyIndicatorMode="On" text="{parts:[ 'PPLiquido', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquidoEsc_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquidoEsc}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquidoEsc" emptyIndicatorMode="On" text="{parts:[ 'PPLiquidoEsc', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPAposDescong_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposDescong}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposDescong" emptyIndicatorMode="On" text="{parts:[ 'PPAposDescong', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPAposCozer_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposCozer}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposCozer" emptyIndicatorMode="On" text="{parts:[ 'PPAposCozer', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                    </form:FormElement>
+                                </form:FormContainer>
+
+                                <form:FormContainer id="CQDetailLinha_perdaPeso_container2">
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercVidPlePl_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercVidPlePl}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercVidPlePl" emptyIndicatorMode="On" text="{PPPercVidPlePl}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercVidPleDec_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercVidPleDec}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercVidPleDec" emptyIndicatorMode="On" text="{PPPercVidPleDec}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercSal_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercSal}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercSal" emptyIndicatorMode="On" text="{PPPercSal}"></Text>
+                                    </form:FormElement>
+                                </form:FormContainer>
+
+                                <form:FormContainer id="CQDetailLinha_perdaPeso_container3">
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercCozPl_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercCozPl}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercCozPl" emptyIndicatorMode="On" text="{PPPercCozPl}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercCozPle_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercCozPle}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercCozPle" emptyIndicatorMode="On" text="{PPPercCozPle}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercCozDec_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercCozDec}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercCozDec" emptyIndicatorMode="On" text="{PPPercCozDec}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercDesPl_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercDesPl}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercDesPl" emptyIndicatorMode="On" text="{PPPercDesPl}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_perdaPeso_PPPercDesCoz_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercDesCoz}">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercDesCoz" emptyIndicatorMode="On" text="{PPPercDesCoz}"></Text>
+                                    </form:FormElement>
+                                </form:FormContainer>
+                            </form:Form>
+
+                            <Title id="CQDetailLinha_Peso_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.Peso.title}"></Title>
+                            <layout:Grid id="CQDetailLinha_Peso_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
+                                <form:Form id="CQDetailLinha_PesoCX" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_PesoCX_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_PesoCX_container">
+                                        <form:title>
+                                            <core:Title id="CQDetailLinha_PesoCX_title" level="H4" text="{i18n>CQLinhaDetail.PesoCX.title}"></core:Title>
+                                        </form:title>
+
+                                        <form:FormElement id="CQDetailLinha_PesoCX_UnSumPb_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPb}">
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPb" emptyIndicatorMode="On" text="{parts:[ 'UnSumPb', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoCX_UnSumPl_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPl}">
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPl" emptyIndicatorMode="On" text="{parts:[ 'UnSumPl', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoCX_UnSumPle_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPle}">
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPle" emptyIndicatorMode="On" text="{parts:[ 'UnSumPle', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+                                </form:Form>
+                                <macros:Table id="CQDetailLinha_PesoCX_table" header="{i18n>CQLinhaDetail.PesoCX.title}" metaPath="_PesosCX/@com.sap.vocabularies.UI.v1.LineItem" />
+
+
+                                <form:Form id="CQDetailLinha_PesoUn" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_PesoUn_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_PesoUn_container">
+                                        <form:title>
+                                            <core:Title id="CQDetailLinha_PesoUn_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.title}"></core:Title>
+                                        </form:title>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_CxMinPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPl}">
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPl" emptyIndicatorMode="On" text="{parts:[ 'CxMinPl', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_UnMedPl_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPl}">
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPl" emptyIndicatorMode="On" text="{parts:[ 'UnMedPl', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPl}">
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPl" emptyIndicatorMode="On" text="{parts:[ 'CxMaxPl', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_CxMinPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPle}">
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPle" emptyIndicatorMode="On" text="{parts:[ 'CxMinPle', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_UnMedPle_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPle}">
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPle" emptyIndicatorMode="On" text="{parts:[ 'UnMedPle', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPle}">
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPle" emptyIndicatorMode="On" text="{parts:[ 'CxMaxPle', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+                                </form:Form>
+                                <macros:Table id="CQDetailLinha_PesoUn_table" header="{i18n>CQLinhaDetail.PesoUN.title}" metaPath="_PesosUn/@com.sap.vocabularies.UI.v1.LineItem" />
+                            </layout:Grid>
+
+                            <Title id="CQDetailLinha_vidragem_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.Vidragem.title}"></Title>
+                            <layout:Grid id="CQDetailLinha_vidragem_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
+                                <form:Form id="CQDetailLinha_vidragem" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_vidragem_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_vidragem_container">
+                                        <form:FormElement id="CQDetailLinha_vidragem_MedVidragem_label" label="{i18n>CQLinhaDetail.Vidragem.MedVidragem}">
+                                            <Text id="CQDetailLinha_vidragem_MedVidragem" emptyIndicatorMode="On" text="{MedVidragem}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+                                </form:Form>
+                                <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.calibre.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem" />
+                            </layout:Grid>
+
+                            <Title id="CQDetailLinha_calibre_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.calibre.title}"></Title>
+                            <layout:Grid id="CQDetailLinha_calibre_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
+                                <form:Form id="CQDetailLinha_calibre" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_calibre_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_calibre_container">
+                                        <form:FormElement id="CQDetailLinha_calibre_CalibreUom_label" label="{i18n>CQLinhaDetail.calibre.CalibreUom}">
+                                            <Text id="CQDetailLinha_calibre_CalibreUom" emptyIndicatorMode="On" text="{parts:[ 'CalibreUom', 'CalibreUomDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+                                </form:Form>
+                                <macros:Table id="CQDetailLinha_calibre_table" header="{i18n>CQLinhaDetail.calibre.title}" metaPath="_Calibres/@com.sap.vocabularies.UI.v1.LineItem" />
+                            </layout:Grid>
+
+                            <Title id="CQDetailLinha_Temperaturas_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.Temperatura.title}" visible="{path: 'HideTemperaturas', formatter: '.formatter.hideFormatter'}"></Title>
+                            <layout:Grid id="CQDetailLinha_Temperaturas_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop" visible="{path: 'HideTemperaturas', formatter: '.formatter.hideFormatter'}">
+                                <form:Form id="CQDetailLinha_Temperaturas" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_Temperaturas_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_Temperaturas_container">
+                                        <form:FormElement id="CQDetailLinha_Temperatura_MinTemp_label" label="{i18n>CQLinhaDetail.Temperatura.MinTemp}">
+                                            <Text id="CQDetailLinha_Temperatura_MinTemp" emptyIndicatorMode="On" text="{MinTemp}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_Temperatura_Maxtemp_label" label="{i18n>CQLinhaDetail.Temperatura.Maxtemp}">
+                                            <Text id="CQDetailLinha_Temperatura_Maxtemp" emptyIndicatorMode="On" text="{Maxtemp}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+                                </form:Form>
+                                <macros:Table id="CQDetailLinha_Temperatura_table" header="{i18n>CQLinhaDetail.Temperatura.title}" metaPath="_Temperaturas/@com.sap.vocabularies.UI.v1.LineItem" />
+                            </layout:Grid>
+                        </VBox>
+                    </ScrollContainer>
+                </content>
+            </IconTabBar>
+
+            <!--  <OverflowToolbar id="CQDetailLinha_dynamicPageHeader_toolbar">
+                <Button id="CQDetailLinha_dynamicPageHeader_toolbar_amostra" class="sapUiSmallMarginBegin" text="{i18n>CQLinhaDetail.toolbar.btn.Amostra}" type="Default" icon="sap-icon://expand-group"></Button>
+                <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep1" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
+
+                <Button id="CQDetailLinha_dynamicPageHeader_toolbar_PerdaPeso" text="{i18n>CQLinhaDetail.toolbar.btn.PerdaPeso}" type="Default" icon="sap-icon://expand-group"></Button>
+                <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep2" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
+
+                <MenuButton id="CQDetailLinha_dynamicPageHeader_toolbar_Peso" text="{i18n>CQLinhaDetail.toolbar.btn.Pesos}">
+                    <menu>
+                        <Menu id="CQDetailLinha_dynamicPageHeader_toolbar_Peso_menu">
+                            <MenuItem id="CQDetailLinha_dynamicPageHeader_toolbar_PesoCx" text="{i18n>CQLinhaDetail.toolbar.btn.PesoCX}" icon="sap-icon://expand-group"></MenuItem>
+                            <MenuItem id="CQDetailLinha_dynamicPageHeader_toolbar_PesoUn" text="{i18n>CQLinhaDetail.toolbar.btn.PesoUn}" icon="sap-icon://expand-group"></MenuItem>
+                        </Menu>
+                    </menu>
+                </MenuButton> -->
+            <!-- <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Peso" text="{i18n>CQLinhaDetail.toolbar.btn.Pesos}" type="Default" icon="sap-icon://simulate"></Button> -->
+            <!-- <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep3" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
+
+            <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Vidragens" text="{i18n>CQLinhaDetail.toolbar.btn.Vidragens}" type="Default" icon="sap-icon://expand-group"></Button>
+            <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep4" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
+
+            <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Calibres" text="{i18n>CQLinhaDetail.toolbar.btn.Calibres}" type="Default" icon="sap-icon://expand-group"></Button>
+            </OverflowToolbar> -->
+
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
