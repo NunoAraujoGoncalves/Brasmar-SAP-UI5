@@ -241,7 +241,7 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Fendas_label" label="{i18n>CQLinhaDetail.amostra.Fendas}" visible="{path: 'HideFendas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Fendas" emptyIndicatorMode="On" text="{HideFendas}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Fendas" emptyIndicatorMode="On" text="{FendasDesc}"></Text>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Amputacoes_label" label="{i18n>CQLinhaDetail.amostra.Amputacoes}" visible="{path: 'HideAmputacoes', formatter: '.formatter.hideFormatter'}">
@@ -268,7 +268,7 @@
                                         <Text id="CQDetailLinha_amostra_Ressoado" emptyIndicatorMode="On" text="{RessoadoDesc}"></Text>
                                     </form:FormElement>
 
-                                    <form:FormElement id="CQDetailLinha_amostra_PeleCor_label" label="i18n>CQLinhaDetail.amostra.PeleCor" visible="{path: 'HidePeleCor', formatter: '.formatter.hideFormatter'}">
+                                    <form:FormElement id="CQDetailLinha_amostra_PeleCor_label" label="{i18n>CQLinhaDetail.amostra.PeleCor}" visible="{path: 'HidePeleCor', formatter: '.formatter.hideFormatter'}">
                                         <Text id="CQDetailLinha_amostra_PeleCor" emptyIndicatorMode="On" text="{PeleCorDesc}"></Text>
                                     </form:FormElement>
 
@@ -538,7 +538,7 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
-                                <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.calibre.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem" />
+                                <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.Vidragem.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem" />
                             </layout:Grid>
 
                             <Title id="CQDetailLinha_calibre_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.calibre.title}"></Title>

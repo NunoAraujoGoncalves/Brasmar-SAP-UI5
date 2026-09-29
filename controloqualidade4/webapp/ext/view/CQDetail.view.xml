@@ -1,4 +1,12 @@
-<mvc:View xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:layout="sap.ui.layout" xmlns:l="sap.ui.layout.form" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQDetail">
+<mvc:View xmlns:uxap="sap.uxap"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:l="sap.ui.layout.form" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQDetail">
     <f:DynamicPage id="CQDetail_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false">
         <!-- DynamicPage Title -->
         <f:title>
@@ -16,7 +24,7 @@
                     <Button id="CQDetail_dynamicPage_Delete" text="{i18n>cqDetail.btn.delete}" type="Transparent"/>
                     <Button id="CQDetail_dynamicPage_Print" text="{i18n>cqDetail.btn.print}" type="Transparent"/>
                     <Button id="CQDetail_dynamicPage_Copy" text="{i18n>cqDetail.btn.copy}" type="Transparent"/>
-                    <Button id="CQDetail_dynamicPage_ModifyMaterial" text="{i18n>cqDetail.btn.modifyMaterial}" type="Transparent"/>
+                    <Button id="CQDetail_dynamicPage_ModifyMaterial" text="{i18n>cqDetail.btn.modifyMaterial}" type="Transparent" visible="{= !%{IsActiveEntity} }"/>
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
@@ -183,7 +191,7 @@
                                             <Text id="CQDetail_subSection_lote_Tipospeso" emptyIndicatorMode="On" text="{parts:[ 'Tipospeso', 'TipospesoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Tipopesoliq_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipopesoliq}">
-                                            <Text id="CQDetail_subSection_lote_Tipopesoliq" emptyIndicatorMode="On" text="{Tipopesoliq}{parts:[ 'Tipopesoliq', 'TipopesoliqDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_Tipopesoliq" emptyIndicatorMode="On" text="{parts:[ 'Tipopesoliq', 'TipopesoliqDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
                                             <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{Teorvidragem}"/>

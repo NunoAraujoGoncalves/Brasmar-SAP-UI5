@@ -62,7 +62,7 @@
                     key="aprovados"
                     count="{
                            path: '/CQCab/$count',
-                           parameters: { $filter: 'Estado eq \'X\'' } }"
+                           parameters: { $filter: 'Estado eq \'C\'' } }"
                 />
             </items>
             <content>

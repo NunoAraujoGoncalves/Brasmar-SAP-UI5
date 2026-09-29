@@ -87,10 +87,6 @@
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "uri": "i18n/i18n.properties"
-      },
-      "ui": {
-        "type": "sap.ui.model.json.JSONModel",
-        "uri": "models/ui.json"
       }
     },
     "resources": {
