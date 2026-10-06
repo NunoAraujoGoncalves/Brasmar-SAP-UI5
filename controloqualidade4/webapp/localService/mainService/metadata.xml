@@ -2042,7 +2042,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
+                                            <PropertyValue Property="message" String="An exception was raised"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -6412,25 +6412,6 @@
                         <PropertyValue Property="Title" String="Material"/>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
                         <Record Type="SAP__UI.CollectionFacet">
@@ -6556,6 +6537,25 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -8850,7 +8850,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
+                                            <PropertyValue Property="message" String="An exception was raised"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -9246,31 +9246,6 @@
                         <PropertyValue Property="Title" String="CQ Tipo Produto"/>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
                         <Record Type="SAP__UI.CollectionFacet">
@@ -9476,6 +9451,31 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
                         </Record>
                     </Collection>
                 </Annotation>

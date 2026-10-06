@@ -3,12 +3,32 @@ import Formatter from "../modules/Formatter";
 import { IconTabBar$SelectEvent } from "sap/m/IconTabBar";
 import ScrollContainer from "sap/m/ScrollContainer";
 import UI5Element from "sap/ui/core/Element";
+import EditHelper from "../modules/EditHelper";
+import { Actions } from "../modules/Constants";
+import Context from "sap/ui/model/odata/v4/Context";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
+import Event from "sap/ui/base/Event";
+import Button from "sap/m/Button";
+import Control from "sap/ui/core/Control";
+import Input from "sap/m/Input";
 
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.view
  */
 export default class CQLinhaDetail extends Controller {
     formatter = new Formatter();
+    editHelper: EditHelper;
+
+    public onInit(): void {
+        super.onInit(); // needs to be called to properly initialize the page controller
+        this.editHelper = new EditHelper(this.getView()!, "CQDetailLinha_footer_draftIndicator");
+    }
+
+    public onExit(): void {
+        this.editHelper.destroy();
+    }
+
 
     public onFilterSelect(oEvent: IconTabBar$SelectEvent) {
         const sKey = oEvent.getParameter("key") as string;
@@ -49,38 +69,40 @@ export default class CQLinhaDetail extends Controller {
         oScrollContainer.scrollToElement(oElement, 400);
     }
 
-    /**
-     * Called when a controller is instantiated and its View controls (if available) are already created.
-     * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-     * @memberOf brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail
-     */
-    // public onInit(): void {
-    //     super.onInit(); // needs to be called to properly initialize the page controller
-    //}
+    /* ---------- Header Functions ---------- */
+    public async onCalcular(): Promise<void> {
+        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.doCalculations, {
+            contexts: this.getContext(),
+            label: this.getText("CQLinhaDetail.btn.Calcular")
+        });
+    }
 
-    /**
-     * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-     * (NOT before the first rendering! onInit() is used for that one!).
-     * @memberOf brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail
-     */
-    // public  onBeforeRendering(): void {
-    //
-    //  }
+    /* ---------- Footer Functions ---------- */
+    public async onApply(): Promise<void> {
+        await this.getExtensionAPI().getEditFlow().applyDocument(this.getContext());
+    }
 
-    /**
-     * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-     * This hook is the same one that SAPUI5 controls get after being rendered.
-     * @memberOf brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail
-     */
-    // public  onAfterRendering(): void {
-    //
-    //  }
+    public onMessagesPress(oEvent: Event) {
+        this.editHelper.openMessages(oEvent.getSource() as Button);
+    }
 
-    /**
-     * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-     * @memberOf brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail
-     */
-    // public onExit(): void {
-    //
-    //  }
+    /* ---------- Input Fields ---------- */
+    public onFieldChange(oEvent: Event) {
+        void this.editHelper.requestSideEffects(oEvent.getSource() as Control);
+    }
+
+    public onValueHelpRequest(oEvent: Event) {
+        void this.editHelper.openValueHelp(oEvent.getSource() as Input);
+    }
+
+    /* ---------- helpers ---------- */
+
+    private getContext(): Context {
+        return this.getView()!.getBindingContext() as Context;
+    }
+
+    private getText(key: string, args?: string[]): string {
+        const bundle = (this.getView()!.getModel("i18n") as ResourceModel).getResourceBundle() as ResourceBundle;
+        return bundle.getText(key, args) ?? key;
+    }
 }

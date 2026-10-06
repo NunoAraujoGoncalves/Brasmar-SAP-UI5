@@ -4,9 +4,10 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:macros="sap.fe.macros"
-    xmlns:html="http://www.w3.org/1999/xhtml" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" core:require="{ Decimal: 'sap/ui/model/odata/type/Decimal' }" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQLinhaDetail"
     xmlns:f="sap.f">
-    <f:DynamicPage id="CQDetailLinha_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false">
+    <f:DynamicPage id="CQDetailLinha_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false" showFooter="{ui>/isEditable}">
         <f:title>
             <f:DynamicPageTitle id="CQDetailLinha_dynamicPage_Title">
                 <f:heading>
@@ -15,19 +16,21 @@
                                 {path: 'i18n>CQLinhaDetail.Title'},
                                 {path: 'Linha'}], formatter: '.formatter.detailLineFormatter'}"></Title>
                 </f:heading>
+                <f:content>
+                    <OverflowToolbar id="CQDetailLinha_dynamicPage_title_overflowToolbar">
+                        <ObjectMarker id="CQDetailLinha_dynamicPage_title_draftMarker" type="Draft" visible="{ui>/isEditable}"></ObjectMarker>
+                    </OverflowToolbar>
+                </f:content>
                 <f:actions>
-                    <Button id="CQDetailLinha_dynamicPage_Edit" text="{i18n>CQLinhaDetail.btn.Edit}" type="Emphasized"></Button>
-                    <Button id="CQDetailLinha_dynamicPage_Calcular" text="{i18n>CQLinhaDetail.btn.Calcular}" type="Default" icon="sap-icon://simulate"></Button>
+                    <!-- <Button id="CQDetailLinha_dynamicPage_Edit" text="{i18n>CQLinhaDetail.btn.Edit}" type="Emphasized"></Button> -->
+                    <Button id="CQDetailLinha_dynamicPage_Calcular" text="{i18n>CQLinhaDetail.btn.Calcular}" type="Default" icon="sap-icon://simulate" press=".onCalcular" visible="{= ${ui>/isEditable} &amp;&amp; %{__OperationControl/doCalculations} === true }"></Button>
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
 
 
-
         <f:header>
             <f:DynamicPageHeader id="CQDetailLinha_dynamicPage_Header" pinnable="true">
-
-
                 <FlexBox id="CQDetailLinha_dynamicPageHeader_flexBox" wrap="Wrap" alignContent="Start" alignItems="Start" width="100%">
                     <VBox id="CQDetailLinha_dynamicPageHeader_vertical_controlo" displayInline="true" class="sapUiSmallMargin">
                         <Title id="CQDetailLinha_dynamicPageHeader_vertical_controlo_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.header.controlo}"/>
@@ -76,7 +79,6 @@
                     </VBox>
                 </FlexBox>
 
-
             </f:DynamicPageHeader>
         </f:header>
 
@@ -106,319 +108,979 @@
                     <ScrollContainer id="CQDetailLinha_Content_scroll" vertical="true" height="100%">
                         <VBox id="CQDetailLinha_Content_vbox" class="sapUiTinyMarginEnd">
                             <Title id="CQDetailLinha_amostra_title" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>CQLinhaDetail.amostra.title}"></Title>
-                            <form:Form id="CQDetailLinha_amostra" editable="false">
+                            <form:Form id="CQDetailLinha_amostra" editable="{ui>/isEditable}">
                                 <form:layout>
                                     <form:ColumnLayout id="CQDetailLinha_amostra_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                 </form:layout>
 
                                 <form:FormContainer id="CQDetailLinha_amostra_container">
                                     <form:FormElement id="CQDetailLinha_amostra_LoteFornecedor_label" label="{i18n>CQLinhaDetail.amostra.LoteFornecedor}">
-                                        <Text id="CQDetailLinha_amostra_LoteFornecedor" emptyIndicatorMode="On" text="{LoteFornecedor}"></Text>
+                                        <Text id="CQDetailLinha_amostra_LoteFornecedor" emptyIndicatorMode="On" text="{LoteFornecedor}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout1" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_LoteFornecedor_edit" value="{LoteFornecedor}" maxLength="20" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout3" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Acondhigiene_label" label="{i18n>CQLinhaDetail.amostra.Acondhigiene}" visible="{path: 'HideAcondhigiene', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Acondhigiene" emptyIndicatorMode="On" text="{AcondhigieneDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Acondhigiene" emptyIndicatorMode="On" text="{AcondhigieneDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout4" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Acondhigiene_edit" selectedKey="{Acondhigiene}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout05" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Acondintegre_label" label="{i18n>CQLinhaDetail.amostra.Acondintegre}" visible="{path: 'HideAcondintegre', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Acondintegre" emptyIndicatorMode="On" text="{AcondintegreDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Acondintegre" emptyIndicatorMode="On" text="{AcondintegreDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout5" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Acondintegre_edit" selectedKey="{Acondintegre}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout6" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Cestranho_label" label="{i18n>CQLinhaDetail.amostra.Cestranho}" visible="{path: 'HideCestranho', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Cestranho" emptyIndicatorMode="On" text="{CestranhoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Cestranho" emptyIndicatorMode="On" text="{CestranhoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout7" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Cestranho_edit" selectedKey="{Cestranho}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout8" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pragas_label" label="{i18n>CQLinhaDetail.amostra.Pragas}" visible="{path: 'HidePragas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pragas" emptyIndicatorMode="On" text="{PragasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Pragas" emptyIndicatorMode="On" text="{PragasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout9" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Pragas_edit" selectedKey="{Pragas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout10" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
+                                    <!-- Sal has a backend side effect (recalculates Salc) -->
                                     <form:FormElement id="CQDetailLinha_amostra_Sal_label" label="{i18n>CQLinhaDetail.amostra.Sal}" visible="{path: 'HideSal', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Sal" emptyIndicatorMode="On" text="{Sal}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Sal" emptyIndicatorMode="On" text="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout11" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Sal_edit" value="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout12" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
+                                    <!-- Salc: Computed -->
                                     <form:FormElement id="CQDetailLinha_amostra_Salc_label" label="{i18n>CQLinhaDetail.amostra.Salc}" visible="{path: 'HideSalc', formatter: '.formatter.hideFormatter'}">
                                         <Text id="CQDetailLinha_amostra_Salc" emptyIndicatorMode="On" text="{SalcDesc}"></Text>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Hg_label" label="{i18n>CQLinhaDetail.amostra.Hg}" visible="{path: 'HideHg', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Hg" emptyIndicatorMode="On" text="{HgDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Hg" emptyIndicatorMode="On" text="{HgDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout13" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Hg_edit" selectedKey="{Hg}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout14" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Eviscerado_label" label="{i18n>CQLinhaDetail.amostra.Eviscerado}" visible="{path: 'HideEviscerado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Eviscerado" emptyIndicatorMode="On" text="{EvisceradoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Eviscerado" emptyIndicatorMode="On" text="{EvisceradoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout15" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Eviscerado_edit" selectedKey="{Eviscerado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout16" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Cpele_label" label="{i18n>CQLinhaDetail.amostra.Cpele}" visible="{path: 'HideCpele', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Cpele" emptyIndicatorMode="On" text="{CpeleDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Cpele" emptyIndicatorMode="On" text="{CpeleDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout17" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Cpele_edit" selectedKey="{Cpele}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout18" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Aparado_label" label="{i18n>CQLinhaDetail.amostra.Aparado}" visible="{path: 'HideAparado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Aparado" emptyIndicatorMode="On" text="{AparadoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Aparado" emptyIndicatorMode="On" text="{AparadoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout19" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Aparado_edit" selectedKey="{Aparado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout21" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Ssangue_label" label="{i18n>CQLinhaDetail.amostra.Ssangue}" visible="{path: 'HideSsangue', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Ssangue" emptyIndicatorMode="On" text="{SsangueDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Ssangue" emptyIndicatorMode="On" text="{SsangueDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout22" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Ssangue_edit" selectedKey="{Ssangue}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout23" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Sespinha_label" label="{i18n>CQLinhaDetail.amostra.Sespinha}" visible="{path: 'HideSespinha', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Sespinha" emptyIndicatorMode="On" text="{SespinhaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Sespinha" emptyIndicatorMode="On" text="{SespinhaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout24" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Sespinha_edit" selectedKey="{Sespinha}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout25" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Desidratado_label" label="{i18n>CQLinhaDetail.amostra.Desidratado}" visible="{path: 'HideDesidratado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Desidratado" emptyIndicatorMode="On" text="{DesidratadoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Desidratado" emptyIndicatorMode="On" text="{DesidratadoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout26" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Desidratado_edit" selectedKey="{Desidratado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout27" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Cristaisgelo_label" label="{i18n>CQLinhaDetail.amostra.Cristaisgelo}" visible="{path: 'HideCristaisgelo', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Cristaisgelo" text="{CristaisgeloDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Cristaisgelo" emptyIndicatorMode="On" text="{CristaisgeloDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout28" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Cristaisgelo_edit" selectedKey="{Cristaisgelo}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout29" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Presencaunhas_label" label="{i18n>CQLinhaDetail.amostra.Presencaunhas}" visible="{path: 'HidePresencaunhas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Presencaunhas" emptyIndicatorMode="On" text="{PresencaunhasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Presencaunhas" emptyIndicatorMode="On" text="{PresencaunhasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout30" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Presencaunhas_edit" selectedKey="{Presencaunhas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout31" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pamputadas_label" label="{i18n>CQLinhaDetail.amostra.Pamputadas}" visible="{path: 'HidePamputadas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pamputadas" emptyIndicatorMode="On" text="{PamputadasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Pamputadas" emptyIndicatorMode="On" text="{PamputadasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout32" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Pamputadas_edit" selectedKey="{Pamputadas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout33" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Npamputadas_label" label="{i18n>CQLinhaDetail.amostra.Npamputadas}" visible="{path: 'HideNpamputadas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Npamputadas" text="{Npamputadas}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Npamputadas" emptyIndicatorMode="On" text="{Npamputadas}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout34" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Npamputadas_edit" value="{Npamputadas}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout35" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pele_label" label="{i18n>CQLinhaDetail.amostra.Pele}" visible="{path: 'HidePele', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pele" emptyIndicatorMode="On" text="{PeleDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Pele" emptyIndicatorMode="On" text="{PeleDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout36" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Pele_edit" selectedKey="{Pele}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout37" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Carne_label" label="{i18n>CQLinhaDetail.amostra.Carne}" visible="{path: 'HideCarne', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Carne" emptyIndicatorMode="On" text="{CarneDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Carne" emptyIndicatorMode="On" text="{CarneDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout38" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Carne_edit" selectedKey="{Carne}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout39" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Tentaculo_label" label="{i18n>CQLinhaDetail.amostra.Tentaculo}" visible="{path: 'HideTentaculo', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Tentaculo" emptyIndicatorMode="On" text="{TentaculoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Tentaculo" emptyIndicatorMode="On" text="{TentaculoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout40" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Tentaculo_edit" selectedKey="{Tentaculo}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout41" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Odor_label" label="{i18n>CQLinhaDetail.amostra.Odor}" visible="{path: 'HideOdor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Odor" emptyIndicatorMode="On" text="{OdorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Odor" emptyIndicatorMode="On" text="{OdorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout42" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Odor_edit" selectedKey="{Odor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout43" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pabertas_label" label="{i18n>CQLinhaDetail.amostra.Pabertas}" visible="{path: 'HidePabertas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pabertas" emptyIndicatorMode="On" text="{PabertasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Pabertas" emptyIndicatorMode="On" text="{PabertasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout44" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Pabertas_edit" selectedKey="{Pabertas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout45" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Ppabertas_label" label="{i18n>CQLinhaDetail.amostra.Ppabertas}" visible="{path: 'HidePpabertas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Ppabertas" emptyIndicatorMode="On" text="{Ppabertas}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Ppabertas" emptyIndicatorMode="On" text="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout46" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Ppabertas_edit" value="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout47" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Bexternas_label" label="{i18n>CQLinhaDetail.amostra.Bexternas}" visible="{path: 'HideBexternas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Bexternas" emptyIndicatorMode="On" text="{BexternasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Bexternas" emptyIndicatorMode="On" text="{BexternasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout48" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Bexternas_edit" selectedKey="{Bexternas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout49" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pbexternas_label" label="{i18n>CQLinhaDetail.amostra.Pbexternas}" visible="{path: 'HidePbexternas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pbexternas" emptyIndicatorMode="On" text="{Pbexternas}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Pbexternas" emptyIndicatorMode="On" text="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout50" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Pbexternas_edit" value="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout51" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Parasitas_label" label="{i18n>CQLinhaDetail.amostra.Parasitas}" visible="{path: 'HideParasitas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Parasitas" emptyIndicatorMode="On" text="{ParasitasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Parasitas" emptyIndicatorMode="On" text="{ParasitasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout52" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Parasitas_edit" selectedKey="{Parasitas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout53" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Idparasitas_label" label="{i18n>CQLinhaDetail.amostra.Idparasitas}" visible="{path: 'HideIdparasitas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Idparasitas" emptyIndicatorMode="On" text="{Idparasitas}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Idparasitas" emptyIndicatorMode="On" text="{Idparasitas}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout54" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Idparasitas_edit" value="{Idparasitas}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout55" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Areia_label" label="{i18n>CQLinhaDetail.amostra.Areia}" visible="{path: 'HideAreia', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Areia" emptyIndicatorMode="On" text="{AreiaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Areia" emptyIndicatorMode="On" text="{AreiaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout56" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Areia_edit" selectedKey="{Areia}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout57" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Humidade_label" label="{i18n>CQLinhaDetail.amostra.Humidade}" visible="{path: 'HideHumidade', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Humidade" emptyIndicatorMode="On" text="{Humidade}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Humidade" emptyIndicatorMode="On" text="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout58" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Humidade_edit" value="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout59" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
+                                    <!-- Humidadec: Computed -->
                                     <form:FormElement id="CQDetailLinha_amostra_Humidadec_label" label="{i18n>CQLinhaDetail.amostra.Humidadec}" visible="{path: 'HideHumidadec', formatter: '.formatter.hideFormatter'}">
                                         <Text id="CQDetailLinha_amostra_Humidadec" emptyIndicatorMode="On" text="{HumidadecDesc}"></Text>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Qgelo_label" label="{i18n>CQLinhaDetail.amostra.Qgelo}" visible="{path: 'HideQgelo', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Qgelo" emptyIndicatorMode="On" text="{QgeloDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Qgelo" emptyIndicatorMode="On" text="{QgeloDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout60" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Qgelo_edit" selectedKey="{Qgelo}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout61" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Fendas_label" label="{i18n>CQLinhaDetail.amostra.Fendas}" visible="{path: 'HideFendas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Fendas" emptyIndicatorMode="On" text="{FendasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Fendas" emptyIndicatorMode="On" text="{FendasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout62" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Fendas_edit" selectedKey="{Fendas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout63" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Amputacoes_label" label="{i18n>CQLinhaDetail.amostra.Amputacoes}" visible="{path: 'HideAmputacoes', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Amputacoes" emptyIndicatorMode="On" text="{AmputacoesDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Amputacoes" emptyIndicatorMode="On" text="{AmputacoesDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout64" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Amputacoes_edit" selectedKey="{Amputacoes}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout65" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Clavicula_label" label="{i18n>CQLinhaDetail.amostra.Clavicula}" visible="{path: 'HideClavicula', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Clavicula" emptyIndicatorMode="On" text="{ClaviculaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Clavicula" emptyIndicatorMode="On" text="{ClaviculaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout66" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Clavicula_edit" selectedKey="{Clavicula}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout67" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Mfigado_label" label="{i18n>CQLinhaDetail.amostra.Mfigado}" visible="{path: 'HideMfigado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Mfigado" emptyIndicatorMode="On" text="{MfigadoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Mfigado" emptyIndicatorMode="On" text="{MfigadoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout68" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Mfigado_edit" selectedKey="{Mfigado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout69" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Mvermelho_label" label="{i18n>CQLinhaDetail.amostra.Mvermelho}" visible="{path: 'HideMvermelho', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Mvermelho" emptyIndicatorMode="On" text="{MvermelhoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Mvermelho" emptyIndicatorMode="On" text="{MvermelhoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout70" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Mvermelho_edit" selectedKey="{Mvermelho}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout71" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Empoado_label" label="{i18n>CQLinhaDetail.amostra.Empoado}" visible="{path: 'HideEmpoado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Empoado" emptyIndicatorMode="On" text="{EmpoadoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Empoado" emptyIndicatorMode="On" text="{EmpoadoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout72" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Empoado_edit" selectedKey="{Empoado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout73" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Ressoado_label" label="{i18n>CQLinhaDetail.amostra.Ressoado}" visible="{path: 'HideRessoado', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Ressoado" emptyIndicatorMode="On" text="{RessoadoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Ressoado" emptyIndicatorMode="On" text="{RessoadoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout74" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Ressoado_edit" selectedKey="{Ressoado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout75" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PeleCor_label" label="{i18n>CQLinhaDetail.amostra.PeleCor}" visible="{path: 'HidePeleCor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PeleCor" emptyIndicatorMode="On" text="{PeleCorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PeleCor" emptyIndicatorMode="On" text="{PeleCorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout76" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_PeleCor_edit" selectedKey="{PeleCor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout77" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PeleMusc_label" label="{i18n>CQLinhaDetail.amostra.PeleMusc}" visible="{path: 'HidePeleMusc', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PeleMusc" emptyIndicatorMode="On" text="{PeleMuscDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PeleMusc" emptyIndicatorMode="On" text="{PeleMuscDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout78" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_PeleMusc_edit" selectedKey="{PeleMusc}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout79" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PeleOdor_label" label="{i18n>CQLinhaDetail.amostra.PeleOdor}" visible="{path: 'HidePeleOdor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PeleOdor" emptyIndicatorMode="On" text="{PeleOdorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PeleOdor" emptyIndicatorMode="On" text="{PeleOdorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout80" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_PeleOdor_edit" selectedKey="{PeleOdor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout81" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PeleTextura_label" label="{i18n>CQLinhaDetail.amostra.PeleTextura}" visible="{path: 'HidePeleTextura', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PeleTextura" emptyIndicatorMode="On" text="{PeleTexturaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PeleTextura" emptyIndicatorMode="On" text="{PeleTexturaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout82" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_PeleTextura_edit" selectedKey="{PeleTextura}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout83" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_OlhosCor_label" label="{i18n>CQLinhaDetail.amostra.OlhosCor}" visible="{path: 'HideOlhosCor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_OlhosCor" emptyIndicatorMode="On" text="{OlhosCorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_OlhosCor" emptyIndicatorMode="On" text="{OlhosCorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout84" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_OlhosCor_edit" selectedKey="{OlhosCor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout85" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_OlhosForma_label" label="{i18n>CQLinhaDetail.amostra.OlhosForma}" visible="{path: 'HideOlhosForma', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_OlhosForma" emptyIndicatorMode="On" text="{OlhosFormaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_OlhosForma" emptyIndicatorMode="On" text="{OlhosFormaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout86" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_OlhosForma_edit" selectedKey="{OlhosForma}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout87" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_GuelrasCor_label" label="{i18n>CQLinhaDetail.amostra.GuelrasCor}" visible="{path: 'HideGuelrasCor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_GuelrasCor" emptyIndicatorMode="On" text="{GuelrasCorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_GuelrasCor" emptyIndicatorMode="On" text="{GuelrasCorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout88" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_GuelrasCor_edit" selectedKey="{GuelrasCor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout89" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_GuelrasMucosidade_label" label="{i18n>CQLinhaDetail.amostra.GuelrasMucosidade}" visible="{path: 'HideGuelrasMucosidade', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_GuelrasMucosidade" emptyIndicatorMode="On" text="{GuelrasMucosidadeDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_GuelrasMucosidade" emptyIndicatorMode="On" text="{GuelrasMucosidadeDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout90" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_GuelrasMucosidade_edit" selectedKey="{GuelrasMucosidade}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout91" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_GuelrasOdor_label" label="{i18n>CQLinhaDetail.amostra.GuelrasOdor}" visible="{path: 'HideGuelrasOdor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_GuelrasOdor" emptyIndicatorMode="On" text="{GuelrasOdorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_GuelrasOdor" emptyIndicatorMode="On" text="{GuelrasOdorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout92" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_GuelrasOdor_edit" selectedKey="{GuelrasOdor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout93" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_AbdomenSange_label" label="{i18n>CQLinhaDetail.amostra.AbdomenSange}" visible="{path: 'HideAbdomenSange', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_AbdomenSange" emptyIndicatorMode="On" text="{AbdomenSangeDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_AbdomenSange" emptyIndicatorMode="On" text="{AbdomenSangeDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout94" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_AbdomenSange_edit" selectedKey="{AbdomenSange}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout95" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_AbdomenOdor_label" label="{i18n>CQLinhaDetail.amostra.AbdomenOdor}" visible="{path: 'HideAbdomenOdor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_AbdomenOdor" emptyIndicatorMode="On" text="{AbdomenOdorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_AbdomenOdor" emptyIndicatorMode="On" text="{AbdomenOdorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout96" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_AbdomenOdor_edit" selectedKey="{AbdomenOdor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout97" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_GeloTina_label" label="{i18n>CQLinhaDetail.amostra.GeloTina}" visible="{path: 'HideGeloTina', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_GeloTina" emptyIndicatorMode="On" text="{GeloTinaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_GeloTina" emptyIndicatorMode="On" text="{GeloTinaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout98" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_GeloTina_edit" selectedKey="{GeloTina}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout99" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_EstadoFisico_label" label="{i18n>CQLinhaDetail.amostra.EstadoFisico}" visible="{path: 'HideEstadoFisico', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_EstadoFisico" emptyIndicatorMode="On" text="{EstadoFisicoText}"></Text>
+                                        <Text id="CQDetailLinha_amostra_EstadoFisico" emptyIndicatorMode="On" text="{EstadoFisicoText}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout101" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_EstadoFisico_edit" selectedKey="{EstadoFisico}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout102" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Apresentacao_label" label="{i18n>CQLinhaDetail.amostra.Apresentacao}" visible="{path: 'HideApresentacao', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Apresentacao" emptyIndicatorMode="On" text="{ApresentacaoText}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Apresentacao" emptyIndicatorMode="On" text="{ApresentacaoText}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout104" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Apresentacao_edit" selectedKey="{Apresentacao}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout1042" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Corte_label" label="{i18n>CQLinhaDetail.amostra.Corte}" visible="{path: 'HideCorte', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Corte" emptyIndicatorMode="On" text="{CorteDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Corte" emptyIndicatorMode="On" text="{CorteDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout105" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Corte_edit" selectedKey="{Corte}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout106" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Especie_label" label="{i18n>CQLinhaDetail.amostra.Especie}" visible="{path: 'HideEspecie', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Especie" emptyIndicatorMode="On" text="{EspecieDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Especie" emptyIndicatorMode="On" text="{EspecieDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout107" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Especie_edit" selectedKey="{Especie}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout108" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PeleAsa_label" label="{i18n>CQLinhaDetail.amostra.PeleAsa}" visible="{path: 'HidePeleAsa', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PeleAsa" emptyIndicatorMode="On" text="{PeleAsaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PeleAsa" emptyIndicatorMode="On" text="{PeleAsaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout109" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_PeleAsa_edit" selectedKey="{PeleAsa}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout110" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Cor_label" label="{i18n>CQLinhaDetail.amostra.Cor}" visible="{path: 'HideCor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Cor" emptyIndicatorMode="On" text="{CorDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Cor" emptyIndicatorMode="On" text="{CorDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout111" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Cor_edit" selectedKey="{Cor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout112" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Textura_label" label="{i18n>CQLinhaDetail.amostra.Textura}" visible="{path: 'HideTextura', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Textura" emptyIndicatorMode="On" text="{TexturaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Textura" emptyIndicatorMode="On" text="{TexturaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout113" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Textura_edit" selectedKey="{Textura}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout114" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Limpeza_label" label="{i18n>CQLinhaDetail.amostra.Limpeza}" visible="{path: 'HideLimpeza', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Limpeza" emptyIndicatorMode="On" text="{LimpezaDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Limpeza" emptyIndicatorMode="On" text="{LimpezaDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout115" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Limpeza_edit" selectedKey="{Limpeza}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout116" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Evisceracao_label" label="{i18n>CQLinhaDetail.amostra.Evisceracao}" visible="{path: 'HideEvisceracao', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Evisceracao" emptyIndicatorMode="On" text="{EvisceracaoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Evisceracao" emptyIndicatorMode="On" text="{EvisceracaoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout117" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Evisceracao_edit" selectedKey="{Evisceracao}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout118" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Migas_label" label="{i18n>CQLinhaDetail.amostra.Migas}" visible="{path: 'HideMigas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Migas" emptyIndicatorMode="On" text="{MigasDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Migas" emptyIndicatorMode="On" text="{MigasDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout119" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Migas_edit" selectedKey="{Migas}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout120" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
+
                                     <form:FormElement id="CQDetailLinha_amostra_PerdaPeso_label" label="{i18n>CQLinhaDetail.amostra.PerdaPeso}" visible="{path: 'HidePerdaPeso', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PerdaPeso" emptyIndicatorMode="On" text="{PerdaPeso}"></Text>
+                                        <Text id="CQDetailLinha_amostra_PerdaPeso" emptyIndicatorMode="On" text="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout121" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_PerdaPeso_edit" value="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout122" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_CxGelo_label" label="{i18n>CQLinhaDetail.amostra.CxGelo}" visible="{path: 'HideCxGelo', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_CxGelo" emptyIndicatorMode="On" text="{CxGeloDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_CxGelo" emptyIndicatorMode="On" text="{CxGeloDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout123" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_CxGelo_edit" selectedKey="{CxGelo}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout124" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_FilmeAderente_label" label="{i18n>CQLinhaDetail.amostra.FilmeAderente}" visible="{path: 'HideFilmeAderente', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_FilmeAderente" emptyIndicatorMode="On" text="{FilmeAderenteDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_FilmeAderente" emptyIndicatorMode="On" text="{FilmeAderenteDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout125" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_FilmeAderente_edit" selectedKey="{FilmeAderente}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout126" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_CumpreRoteiro_label" label="{i18n>CQLinhaDetail.amostra.CumpreRoteiro}" visible="{path: 'HideCumpreRoteiro', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_CumpreRoteiro" emptyIndicatorMode="On" text="{CumpreRoteiroDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_CumpreRoteiro" emptyIndicatorMode="On" text="{CumpreRoteiroDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout127" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_CumpreRoteiro_edit" selectedKey="{CumpreRoteiro}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout128" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_VidragemUnif_label" label="{i18n>CQLinhaDetail.amostra.VidragemUnif}" visible="{path: 'HideVidragemUni', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_VidragemUnif" emptyIndicatorMode="On" text="{VidragemUnifDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_VidragemUnif" emptyIndicatorMode="On" text="{VidragemUnifDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout129" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_VidragemUnif_edit" selectedKey="{VidragemUnif}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout130" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_MistHomo_label" label="{i18n>CQLinhaDetail.amostra.MistHomo}" visible="{path: 'HideMistHomo', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_MistHomo" emptyIndicatorMode="On" text="{MistHomoDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_MistHomo" emptyIndicatorMode="On" text="{MistHomoDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout131" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_MistHomo_edit" selectedKey="{MistHomo}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout132" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Residuos_label" label="{i18n>CQLinhaDetail.amostra.Residuos}" visible="{path: 'HideResiduos', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Residuos" emptyIndicatorMode="On" text="{ResiduosDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Residuos" emptyIndicatorMode="On" text="{ResiduosDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout133" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Residuos_edit" selectedKey="{Residuos}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout134" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Sabor_label" label="{i18n>CQLinhaDetail.amostra.Sabor}" visible="{path: 'HideSabor', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Sabor" emptyIndicatorMode="On" text="{SaborDesc}"></Text>
+                                        <Text id="CQDetailLinha_amostra_Sabor" emptyIndicatorMode="On" text="{SaborDesc}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout135" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Select id="CQDetailLinha_amostra_Sabor_edit" selectedKey="{Sabor}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout136" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Select>
                                     </form:FormElement>
-
                                 </form:FormContainer>
                             </form:Form>
 
                             <Title id="CQDetailLinha_perdaPeso_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.perdaPeso.title}"></Title>
-                            <form:Form id="CQDetailLinha_perdaPeso" editable="false">
+                            <form:Form id="CQDetailLinha_perdaPeso" editable="{ui>/isEditable}">
                                 <form:layout>
                                     <form:ColumnLayout id="CQDetailLinha_perdaPeso_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                 </form:layout>
 
                                 <form:FormContainer id="CQDetailLinha_perdaPeso_container">
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPDeclarado_label" label="{i18n>CQLinhaDetail.perdaPeso.PPDeclarado}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPDeclarado" emptyIndicatorMode="On" text="{parts:[ 'PPDeclarado', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPDeclarado" emptyIndicatorMode="On" text="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout137" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPDeclarado_edit" value="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout138" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPBruto_label" label="{i18n>CQLinhaDetail.perdaPeso.PPBruto}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPBruto" emptyIndicatorMode="On" text="{parts:[ 'PPBruto', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPBruto" emptyIndicatorMode="On" text="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout139" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPBruto_edit" value="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout140" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquido_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquido}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPLiquido" emptyIndicatorMode="On" text="{parts:[ 'PPLiquido', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquido" emptyIndicatorMode="On" text="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout141" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPLiquido_edit" value="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout142" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquidoEsc_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquidoEsc}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPLiquidoEsc" emptyIndicatorMode="On" text="{parts:[ 'PPLiquidoEsc', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquidoEsc" emptyIndicatorMode="On" text="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout143" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPLiquidoEsc_edit" value="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout144" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPAposDescong_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposDescong}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPAposDescong" emptyIndicatorMode="On" text="{parts:[ 'PPAposDescong', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposDescong" emptyIndicatorMode="On" text="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout145" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPAposDescong_edit" value="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout146" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPAposCozer_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposCozer}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPAposCozer" emptyIndicatorMode="On" text="{parts:[ 'PPAposCozer', 'PPUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposCozer" emptyIndicatorMode="On" text="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout147" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPAposCozer_edit" value="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout148" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
                                 </form:FormContainer>
 
@@ -432,7 +1094,16 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPPercSal_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercSal}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPPercSal" emptyIndicatorMode="On" text="{PPPercSal}"></Text>
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercSal" emptyIndicatorMode="On" text="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout149" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_perdaPeso_PPPercSal_edit" value="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout150" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
                                 </form:FormContainer>
 
@@ -472,15 +1143,15 @@
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPb_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPb}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPb" emptyIndicatorMode="On" text="{parts:[ 'UnSumPb', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPb" emptyIndicatorMode="On" text="{path:'UnSumPb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPl_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPl}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPl" emptyIndicatorMode="On" text="{parts:[ 'UnSumPl', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPl" emptyIndicatorMode="On" text="{path:'UnSumPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPle_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPle}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPle" emptyIndicatorMode="On" text="{parts:[ 'UnSumPle', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPle" emptyIndicatorMode="On" text="{path:'UnSumPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
@@ -498,27 +1169,27 @@
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPl}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMinPl" emptyIndicatorMode="On" text="{parts:[ 'CxMinPl', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPl" emptyIndicatorMode="On" text="{path:'CxMinPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_UnMedPl_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPl}">
-                                            <Text id="CQDetailLinha_PesoUn_UnMedPl" emptyIndicatorMode="On" text="{parts:[ 'UnMedPl', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPl" emptyIndicatorMode="On" text="{path:'UnMedPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPl}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMaxPl" emptyIndicatorMode="On" text="{parts:[ 'CxMaxPl', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPl" emptyIndicatorMode="On" text="{path:'CxMaxPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPle}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMinPle" emptyIndicatorMode="On" text="{parts:[ 'CxMinPle', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPle" emptyIndicatorMode="On" text="{path:'CxMinPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_UnMedPle_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPle}">
-                                            <Text id="CQDetailLinha_PesoUn_UnMedPle" emptyIndicatorMode="On" text="{parts:[ 'UnMedPle', 'UnUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPle" emptyIndicatorMode="On" text="{path:'UnMedPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPle}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMaxPle" emptyIndicatorMode="On" text="{parts:[ 'CxMaxPle', 'CxUom' ], formatter:'.formatter.qtdFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPle" emptyIndicatorMode="On" text="{path:'CxMaxPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
@@ -550,7 +1221,16 @@
 
                                     <form:FormContainer id="CQDetailLinha_calibre_container">
                                         <form:FormElement id="CQDetailLinha_calibre_CalibreUom_label" label="{i18n>CQLinhaDetail.calibre.CalibreUom}">
-                                            <Text id="CQDetailLinha_calibre_CalibreUom" emptyIndicatorMode="On" text="{parts:[ 'CalibreUom', 'CalibreUomDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
+                                            <Text id="CQDetailLinha_calibre_CalibreUom" emptyIndicatorMode="On" text="{parts:[ 'CalibreUom', 'CalibreUomDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }">
+                                                <layoutData>
+                                                    <form:ColumnElementData id="CQDetailLinha_layout151" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Text>
+                                            <Select id="CQDetailLinha_calibre_CalibreUom_edit" selectedKey="{CalibreUom}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <form:ColumnElementData id="CQDetailLinha_layout152" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
@@ -580,31 +1260,16 @@
                     </ScrollContainer>
                 </content>
             </IconTabBar>
-
-            <!--  <OverflowToolbar id="CQDetailLinha_dynamicPageHeader_toolbar">
-                <Button id="CQDetailLinha_dynamicPageHeader_toolbar_amostra" class="sapUiSmallMarginBegin" text="{i18n>CQLinhaDetail.toolbar.btn.Amostra}" type="Default" icon="sap-icon://expand-group"></Button>
-                <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep1" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
-
-                <Button id="CQDetailLinha_dynamicPageHeader_toolbar_PerdaPeso" text="{i18n>CQLinhaDetail.toolbar.btn.PerdaPeso}" type="Default" icon="sap-icon://expand-group"></Button>
-                <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep2" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
-
-                <MenuButton id="CQDetailLinha_dynamicPageHeader_toolbar_Peso" text="{i18n>CQLinhaDetail.toolbar.btn.Pesos}">
-                    <menu>
-                        <Menu id="CQDetailLinha_dynamicPageHeader_toolbar_Peso_menu">
-                            <MenuItem id="CQDetailLinha_dynamicPageHeader_toolbar_PesoCx" text="{i18n>CQLinhaDetail.toolbar.btn.PesoCX}" icon="sap-icon://expand-group"></MenuItem>
-                            <MenuItem id="CQDetailLinha_dynamicPageHeader_toolbar_PesoUn" text="{i18n>CQLinhaDetail.toolbar.btn.PesoUn}" icon="sap-icon://expand-group"></MenuItem>
-                        </Menu>
-                    </menu>
-                </MenuButton> -->
-            <!-- <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Peso" text="{i18n>CQLinhaDetail.toolbar.btn.Pesos}" type="Default" icon="sap-icon://simulate"></Button> -->
-            <!-- <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep3" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
-
-            <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Vidragens" text="{i18n>CQLinhaDetail.toolbar.btn.Vidragens}" type="Default" icon="sap-icon://expand-group"></Button>
-            <ToolbarSeparator id="CQDetailLinha_dynamicPageHeader_toolbar_sep4" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"></ToolbarSeparator>
-
-            <Button id="CQDetailLinha_dynamicPageHeader_toolbar_Calibres" text="{i18n>CQLinhaDetail.toolbar.btn.Calibres}" type="Default" icon="sap-icon://expand-group"></Button>
-            </OverflowToolbar> -->
-
         </f:content>
+
+        <!-- NEW: draft footer (sample is a draft node: Apply only; Save/Cancel live on the Controlo page) -->
+        <f:footer>
+            <OverflowToolbar id="CQDetailLinha_footer">
+                <Button id="CQDetailLinha_footer_messages" icon="sap-icon://message-popup" type="Emphasized" text="{= ${message>/}.length }" tooltip="{i18n>cqDetail.btn.messages}" visible="{= ${message>/}.length > 0 }" press=".onMessagesPress"/>
+                <DraftIndicator id="CQDetailLinha_footer_draftIndicator"/>
+                <ToolbarSpacer id="CQDetailLinha_footer_spacer"/>
+                <Button id="CQDetailLinha_footer_apply" text="{i18n>CQLinhaDetail.btn.Apply}" type="Emphasized" press=".onApply"/>
+            </OverflowToolbar>
+        </f:footer>
     </f:DynamicPage>
 </mvc:View>

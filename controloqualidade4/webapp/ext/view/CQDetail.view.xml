@@ -6,8 +6,9 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:f="sap.f"
     xmlns:layout="sap.ui.layout"
-    xmlns:l="sap.ui.layout.form" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQDetail">
-    <f:DynamicPage id="CQDetail_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false">
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:l="sap.ui.layout.form" core:require="{ Decimal: 'sap/ui/model/odata/type/Decimal', Date: 'sap/ui/model/odata/type/Date', CodeDescType: 'brasmar/bm01/controloqualidade4/ext/modules/CodeDescType' }" controllerName="brasmar.bm01.controloqualidade4.ext.view.CQDetail">
+    <f:DynamicPage id="CQDetail_dynamicPage" stickySubheaderProvider="iconTabBar" toggleHeaderOnTitleClick="true" class="sapUiNoContentPadding" headerExpanded="false" showFooter="{ui>/isEditable}">
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle id="CQDetail_dynamicPage_title">
@@ -17,14 +18,20 @@
                 <f:content>
                     <OverflowToolbar id="CQDetail_dynamicPage_title_overflowToolbar">
                         <GenericTag id="CQDetail_dynamicPage_title_genericTag" text="{path: 'ID', formatter: '.formatter.detailHeaderFormatter'}" status="Information" press="onGenericTagPress" design="StatusIconHidden"/>
+                        <ObjectMarker id="CQDetail_dynamicPage_title_draftMarker" type="Draft" visible="{ui>/isEditable}"/>
                     </OverflowToolbar>
                 </f:content>
                 <f:actions>
-                    <Button id="CQDetail_dynamicPage_Edit" text="{i18n>cqDetail.btn.edit}" type="Emphasized"/>
-                    <Button id="CQDetail_dynamicPage_Delete" text="{i18n>cqDetail.btn.delete}" type="Transparent"/>
-                    <Button id="CQDetail_dynamicPage_Print" text="{i18n>cqDetail.btn.print}" type="Transparent"/>
-                    <Button id="CQDetail_dynamicPage_Copy" text="{i18n>cqDetail.btn.copy}" type="Transparent"/>
-                    <Button id="CQDetail_dynamicPage_ModifyMaterial" text="{i18n>cqDetail.btn.modifyMaterial}" type="Transparent" visible="{= !%{IsActiveEntity} }"/>
+                    <Button id="CQDetail_dynamicPage_Concluir" icon="sap-icon://accept" text="{i18n>cqDetail.btn.Concluir}" type="Accept" press=".onConcluir" enabled="{= %{__OperationControl/concluirCQ} === true }"></Button>
+                    <Button id="CQDetail_dynamicPage_Reabrir" text="{i18n>cqDetail.btn.Reabrir}" type="Negative" press=".onReabrir" enabled="{= %{__OperationControl/reabrirCQ} === true }"></Button>
+                    <Button id="CQDetail_dynamicPage_Aprovar" icon="sap-icon://accept" text="{i18n>cqDetail.btn.Aprovar}" type="Accept" press=".onAprovar" enabled="{= %{__OperationControl/aprovarCQ} === true }"></Button>
+                    <Button id="CQDetail_dynamicPage_Desaprovar" text="{i18n>cqDetail.btn.Desaprovar}" type="Negative" press=".onDesaprovar" enabled="{= %{__OperationControl/desaprovarCQ} === true }"></Button>
+
+                    <Button id="CQDetail_dynamicPage_Edit" text="{i18n>cqDetail.btn.edit}" icon="sap-icon://edit" type="Emphasized" press=".onEdit" visible="{= !${ui>/isEditable} &amp;&amp; %{__OperationControl/Edit} === true }"/>
+                    <Button id="CQDetail_dynamicPage_Delete" text="{i18n>cqDetail.btn.delete}" icon="sap-icon://delete" type="Transparent" press=".onDelete" visible="{= !${ui>/isEditable} &amp;&amp; %{__EntityControl/Deletable} === true }"/>
+                    <Button id="CQDetail_dynamicPage_Print" text="{i18n>cqDetail.btn.print}" icon="sap-icon://print" type="Transparent" press=".onPrint" visible="{= %{__OperationControl/printCQ} === true }"/>
+                    <Button id="CQDetail_dynamicPage_Copy" text="{i18n>cqDetail.btn.copy}" icon="sap-icon://copy" type="Transparent" press=".onCopy" visible="{= %{__OperationControl/copy2} === true }"/>
+                    <Button id="CQDetail_dynamicPage_ModifyMaterial" text="{i18n>cqDetail.btn.modifyMaterial}" icon="sap-icon://product" type="Transparent" press=".onChangeMaterial" visible="{= ${ui>/isEditable} &amp;&amp; %{__OperationControl/changeMat} === true }"/>
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
@@ -88,101 +95,175 @@
                         <ScrollContainer id="CQDetail_section_scroll_dadosProduto" vertical="true" height="100%">
                             <VBox id="CQDetail_section_dadosProduto_vbox">
                                 <Title id="CQDetail_subSection_material_title" level="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.dadosProduto.subsection.material.title}"/>
-                                <l:Form id="CQDetail_subSection_material" editable="false">
+                                <l:Form id="CQDetail_subSection_material" editable="{ui>/isEditable}">
                                     <l:layout>
-                                        <l:ColumnLayout id="CQDetail_subSection_material_layout" columnsM="2" columnsL="3" columnsXL="6"/>
-                                        <!-- <l:ResponsiveGridLayout id="CQDetail_subSection_material_layout" backgroundDesign="Translucent" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="6" columnsL="3" columnsM="2" singleContainerFullSize="false">
-                                    </l:ResponsiveGridLayout> -->
+                                        <l:ColumnLayout id="CQDetail_subSection_material_layout" columnsM="2" columnsL="3" columnsXL="6" labelCellsLarge="12"/>
                                     </l:layout>
-                                    <!-- <l:formContainers> -->
                                     <l:FormContainer id="CQDetail_subSection_material_container">
-                                        <!-- <l:formElements> -->
                                         <l:FormElement id="CQDetail_subSection_material_material_label" label="{i18n>cqDetail.dadosProduto.ss.material.material}">
                                             <Text id="CQDetail_subSection_material_material" text="{parts:[ 'Material', 'MaterialDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
-                                        <!-- <l:FormElement id="CQDetail_subSection_material_materialDesc_label" label="{i18n>cqDetail.dadosProduto.ss.material.MaterialDesc}">
-                                                <Text id="CQDetail_subSection_material_materialdesc" emptyIndicatorMode="On" text="{MaterialDesc}"></Text>
-                                            </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_material_Lote_label" label="{i18n>cqDetail.dadosProduto.ss.material.Lote}">
-                                            <Text id="CQDetail_subSection_material_Lote" emptyIndicatorMode="On" text="{Lote}"/>
+                                            <Text id="CQDetail_subSection_material_Lote" emptyIndicatorMode="On" text="{Lote}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_Lote_edit" value="{Lote}" maxLength="10" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_Lote_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_Attachment_label" label="{i18n>cqDetail.dadosProduto.ss.material.Attachment}">
                                             <Link id="CQDetail_subSection_material_Attachment" text="{Filename}" target="_blank" href="{Attachment}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_Responsavel_label" label="{i18n>cqDetail.dadosProduto.ss.material.Responsavel}">
-                                            <Text id="CQDetail_subSection_material_Responsavel" emptyIndicatorMode="On" text="{Responsavel}"/>
+                                            <Text id="CQDetail_subSection_material_Responsavel" emptyIndicatorMode="On" text="{Responsavel}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_Responsavel_edit" value="{Responsavel}" maxLength="100" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_Responsavel_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
-                                        <!-- <l:FormElement id="CQDetail_subSection_material_Tipoprod_label" label="{i18n>cqDetail.dadosProduto.ss.material.Tipoprod}">
-                                                <Text id="CQDetail_subSection_material_Tipoprod" emptyIndicatorMode="On" text="{parts:[ 'Tipoprod', 'TipoprodDesc' ], formatter:'.formatter.detailFieldFormatter'}"></Text>
-                                            </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_material_DtCongelacao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtCongelacao}">
-                                            <Text id="CQDetail_subSection_material_DtCongelacao" emptyIndicatorMode="On" text="{DtCongelacao}"/>
+                                            <Text id="CQDetail_subSection_material_DtCongelacao" emptyIndicatorMode="On" text="{path:'DtCongelacao', type:'Date'}" visible="{= !${ui>/isEditable} }"/>
+                                            <DatePicker id="CQDetail_subSection_material_DtCongelacao_edit" value="{path:'DtCongelacao', 
+                                                        type:'Date', formatOptions: { pattern: 'dd/MM/yyyy' } }" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_DtCongelacao_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </DatePicker>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_DtVencimento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtVencimento}">
-                                            <Text id="CQDetail_subSection_material_DtVencimento" emptyIndicatorMode="On" text="{DtVencimento}"/>
+                                            <Text id="CQDetail_subSection_material_DtVencimento" emptyIndicatorMode="On" text="{path:'DtVencimento', type:'Date'}" visible="{= !${ui>/isEditable} }"/>
+                                            <DatePicker id="CQDetail_subSection_material_DtVencimento_edit" value="{path:'DtVencimento', type:'Date', formatOptions: { pattern: 'dd/MM/yyyy' } }" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_DtVencimento_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </DatePicker>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_DtProducao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtProducao}">
-                                            <Text id="CQDetail_subSection_material_DtProducao" emptyIndicatorMode="On" text="{DtProducao}"/>
+                                            <Text id="CQDetail_subSection_material_DtProducao" emptyIndicatorMode="On" text="{path:'DtProducao', type:'Date'}" visible="{= !${ui>/isEditable} }"/>
+                                            <DatePicker id="CQDetail_subSection_material_DtProducao_edit" value="{path:'DtProducao', type:'Date', formatOptions: { pattern: 'dd/MM/yyyy' } }" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_DtProducao_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </DatePicker>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_DtEmbalamento_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtEmbalamento}">
-                                            <Text id="CQDetail_subSection_material_DtEmbalamento" emptyIndicatorMode="On" text="{DtEmbalamento}"/>
+                                            <Text id="CQDetail_subSection_material_DtEmbalamento" emptyIndicatorMode="On" text="{path:'DtEmbalamento', type:'Date'}" visible="{= !${ui>/isEditable} }"/>
+                                            <DatePicker id="CQDetail_subSection_material_DtEmbalamento_edit" value="{path:'DtEmbalamento', type:'Date', formatOptions: { pattern: 'dd/MM/yyyy' } }" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_DtEmbalamento_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </DatePicker>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_ATestemunho_label" label="{i18n>cqDetail.dadosProduto.ss.material.ATestemunho}">
-                                            <Text id="CQDetail_subSection_material_ATestemunho" emptyIndicatorMode="On" text="{ATestemunho}"/>
+                                            <Text id="CQDetail_subSection_material_ATestemunho" emptyIndicatorMode="On" text="{ATestemunho}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_ATestemunho_edit" value="{ATestemunho}" maxLength="1" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_ATestemunho_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_NCaixa_label" label="{i18n>cqDetail.dadosProduto.ss.material.NCaixa}">
-                                            <Text id="CQDetail_subSection_material_NCaixa" emptyIndicatorMode="On" text="{NCaixa}"/>
+                                            <Text id="CQDetail_subSection_material_NCaixa" emptyIndicatorMode="On" text="{NCaixa}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_NCaixa_edit" value="{NCaixa}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_NCaixa_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_NPalete_label" label="{i18n>cqDetail.dadosProduto.ss.material.NPalete}">
-                                            <Text id="CQDetail_subSection_material_NPalete" emptyIndicatorMode="On" text="{NPalete}"/>
+                                            <Text id="CQDetail_subSection_material_NPalete" emptyIndicatorMode="On" text="{NPalete}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_NPalete_edit" value="{NPalete}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_NPalete_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_Linha_label" label="{i18n>cqDetail.dadosProduto.ss.material.Linha}" visible="{path: 'HideLinhaOP', formatter: '.formatter.hideFormatter'}">
-                                            <Text id="CQDetail_subSection_material_Linha" emptyIndicatorMode="On" text="{Linha}"/>
+                                            <Text id="CQDetail_subSection_material_Linha" emptyIndicatorMode="On" text="{Linha}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_material_Linha_edit" value="{Linha}" maxLength="40" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_Linha_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
-                                        <!-- </l:formElements> -->
                                     </l:FormContainer>
-                                    <!-- </l:formContainers> -->
                                 </l:Form>
                                 <Title id="CQDetail_subSection_certificacao_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.certificacao.title}"/>
-                                <l:Form id="CQDetail_subSection_certificacao" editable="false">
+                                <l:Form id="CQDetail_subSection_certificacao" editable="{ui>/isEditable}">
                                     <l:layout>
                                         <l:ColumnLayout id="CQDetail_subSection_certificacao_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </l:layout>
                                     <l:FormContainer id="CQDetail_subSection_certificacao_container">
                                         <l:FormElement id="CQDetail_subSection_certificacao_certificado_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.certificado}">
-                                            <Text id="CQDetail_subSection_certificacao_certificado" emptyIndicatorMode="On" text="{parts:[ 'Matcertificado', 'MatcertificadoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_certificacao_certificado" emptyIndicatorMode="On" text="{parts:[ 'Matcertificado', 'MatcertificadoDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Select id="CQDetail_subSection_certificacao_certificado_edit" selectedKey="{Matcertificado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_certificado_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_Mscaprov_label" visible="{path: 'HideMSCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Mscaprov}">
-                                            <Text id="CQDetail_subSection_certificacao_Mscaprov" emptyIndicatorMode="On" text="{Mscaprov}"/>
+                                            <Text id="CQDetail_subSection_certificacao_Mscaprov" emptyIndicatorMode="On" text="{Mscaprov}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_certificacao_Mscaprov_edit" value="{Mscaprov}" maxLength="13" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_Mscaprov_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_Ascaprov_label" visible="{path: 'HideASCAprov', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Ascaprov}">
-                                            <Text id="CQDetail_subSection_certificacao_Ascaprov" emptyIndicatorMode="On" text="{Ascaprov}"/>
+                                            <Text id="CQDetail_subSection_certificacao_Ascaprov" emptyIndicatorMode="On" text="{Ascaprov}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_certificacao_Ascaprov_edit" value="{Ascaprov}" maxLength="13" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_Ascaprov_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_Veterinario_label" visible="{path: 'HideVeterinario', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.Veterinario}">
-                                            <Text id="CQDetail_subSection_certificacao_Veterinario" emptyIndicatorMode="On" text="{Veterinario}"/>
+                                            <Text id="CQDetail_subSection_certificacao_Veterinario" emptyIndicatorMode="On" text="{Veterinario}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_certificacao_Veterinario_edit" value="{Veterinario}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_Veterinario_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_DataAbate_label" visible="{path: 'HideDataAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.DataAbate}">
-                                            <Text id="CQDetail_subSection_certificacao_DataAbate" emptyIndicatorMode="On" text="{DataAbate}"/>
+                                            <Text id="CQDetail_subSection_certificacao_DataAbate" emptyIndicatorMode="On" text="{path:'DataAbate', type:'Date'}" visible="{= !${ui>/isEditable} }"/>
+                                            <DatePicker id="CQDetail_subSection_certificacao_DataAbate_edit" value="{path:'DataAbate', type:'Date'}" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_DataAbate_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </DatePicker>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_LocalAbate_label" visible="{path: 'HideLocalAbate', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.LocalAbate}">
-                                            <Text id="CQDetail_subSection_certificacao_LocalAbate" emptyIndicatorMode="On" text="{LocalAbate}"/>
+                                            <Text id="CQDetail_subSection_certificacao_LocalAbate" emptyIndicatorMode="On" text="{LocalAbate}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_certificacao_LocalAbate_edit" value="{LocalAbate}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_LocalAbate_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_NumViveiro_label" visible="{path: 'HideNumViviero', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.NumViveiro}">
-                                            <Text id="CQDetail_subSection_certificacao_NumViveiro" emptyIndicatorMode="On" text="{NumViveiro}"/>
+                                            <Text id="CQDetail_subSection_certificacao_NumViveiro" emptyIndicatorMode="On" text="{NumViveiro}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_certificacao_NumViveiro_edit" value="{NumViveiro}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_certificacao_NumViveiro_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_CAlhalal_label" visible="{path: 'HideHalal', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.CAlhalal}">
-                                            <Text id="CQDetail_subSection_certificacao_CAlhalal" emptyIndicatorMode="On" text="{CAlhalal}"/>
+                                            <Switch id="CQDetail_subSection_certificacao_CAlhalal" state="{CAlhalal}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_PP_label" visible="{path: 'HidePP', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.certificacao.PP}">
-                                            <Text id="CQDetail_subSection_certificacao_PP" emptyIndicatorMode="On" text="{PP}"/>
+                                            <Switch id="CQDetail_subSection_certificacao_PP" state="{PP}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_certificacao_SGluten_label" label="{i18n>cqDetail.dadosProduto.ss.certificacao.SGluten}">
-                                            <Text id="CQDetail_subSection_certificacao_SGluten" emptyIndicatorMode="On" text="{SGluten}"/>
+                                            <Switch id="CQDetail_subSection_certificacao_SGluten" state="{SGluten}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
                                 <Title id="CQDetail_subSection_lote_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.lote.title}"/>
-                                <l:Form id="CQDetail_subSection_lote" editable="false">
+                                <l:Form id="CQDetail_subSection_lote" editable="{ui>/isEditable}">
                                     <l:layout>
                                         <l:ColumnLayout id="CQDetail_subSection_lote_layout" columnsM="2" columnsL="3" columnsXL="5"/>
                                     </l:layout>
@@ -194,10 +275,10 @@
                                             <Text id="CQDetail_subSection_lote_Tipopesoliq" emptyIndicatorMode="On" text="{parts:[ 'Tipopesoliq', 'TipopesoliqDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
-                                            <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{Teorvidragem}"/>
+                                            <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{path:'Teorvidragem', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
-                                            <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{VidragemM}"/>
+                                            <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{path:'VidragemM', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Nomecientifico_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Nomecientifico}">
                                             <Text id="CQDetail_subSection_lote_Nomecientifico" emptyIndicatorMode="On" text="{parts:[ 'Nomecientifico', 'NomecientificoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
@@ -211,19 +292,34 @@
                                             <ObjectStatus id="CQDetail_subSection_lote_MMMarca" class="sapUiNoMargin" icon="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMMarca', 'MMMarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Marca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Marca}">
-                                            <Text id="CQDetail_subSection_lote_Marca" emptyIndicatorMode="On" text="{parts:[ 'Marca', 'MarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_Marca" emptyIndicatorMode="On" text="{parts:[ 'Marca', 'MarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Marca_edit" value="{parts:[{path:'Marca'}, {path:'MarcaDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Marca_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_MMOrigem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMOrigem}">
                                             <ObjectStatus id="CQDetail_subSection_lote_MMOrigem" class="sapUiNoMargin" icon="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Origem', 'MMOrigem' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMOrigem', 'MMOrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Origem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Origem}">
-                                            <Text id="CQDetail_subSection_lote_Origem" emptyIndicatorMode="On" text="{parts:[ 'Origem', 'OrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_Origem" emptyIndicatorMode="On" text="{parts:[ 'Origem', 'OrigemDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Origem_edit" value="{parts:[{path:'Origem'}, {path:'OrigemDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Origem_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_MMIdiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMIdiomapadrao}">
                                             <ObjectStatus id="CQDetail_subSection_lote_MMIdiomapadrao" class="sapUiNoMargin" icon="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zidiomapadrao', 'MMIdiomapadrao' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMIdiomapadrao', 'MMIdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Zidiomapadrao_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zidiomapadrao}">
-                                            <Text id="CQDetail_subSection__lote_Zidiomapadrao" emptyIndicatorMode="On" text="{parts:[ 'Zidiomapadrao', 'IdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection__lote_Zidiomapadrao" emptyIndicatorMode="On" text="{parts:[ 'Zidiomapadrao', 'IdiomapadraoDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection__lote_Zidiomapadrao_edit" value="{parts:[{path:'Zidiomapadrao'}, {path:'IdiomapadraoDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection__lote_Zidiomapadrao_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                     <l:FormContainer id="CQDetail_subSection_lote_container3">
@@ -231,16 +327,36 @@
                                             <ObjectStatus id="CQDetail_subSection_lote_MMZonadecaptura" class="sapUiNoMargin" icon="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Zonadecaptura', 'MMZonadecaptura' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMZonadecaptura', 'MMZonadecapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Zonadecaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Zonadecaptura}">
-                                            <Text id="CQDetail_subSection_lote_Zonadecaptura" emptyIndicatorMode="On" text="{parts:[ 'Zonadecaptura', 'ZonacapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_Zonadecaptura" emptyIndicatorMode="On" text="{parts:[ 'Zonadecaptura', 'ZonacapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Zonadecaptura_edit" value="{parts:[{path:'Zonadecaptura'}, {path:'ZonacapturaDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Zonadecaptura_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura2}">
-                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura2" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura2', 'ZonaCapturaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura2" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura2', 'ZonaCapturaDesc2' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ZonaDeCaptura2_edit" value="{parts:[{path:'ZonaDeCaptura2'}, {path:'ZonaCapturaDesc2'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ZonaDeCaptura2_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura3}">
-                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura3" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura3', 'ZonaCapturaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura3" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura3', 'ZonaCapturaDesc3' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ZonaDeCaptura3_edit" value="{parts:[{path:'ZonaDeCaptura3'}, {path:'ZonaCapturaDesc3'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ZonaDeCaptura3_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ZonaDeCaptura4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ZonaDeCaptura4}">
-                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura4" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura4', 'ZonaCapturaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ZonaDeCaptura4" emptyIndicatorMode="On" text="{parts:[ 'ZonaDeCaptura4', 'ZonaCapturaDesc4' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ZonaDeCaptura4_edit" value="{parts:[{path:'ZonaDeCaptura4'}, {path:'ZonaCapturaDesc4'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ZonaDeCaptura4_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                     <l:FormContainer id="CQDetail_subSection_lote_container4">
@@ -248,16 +364,36 @@
                                             <ObjectStatus id="CQDetail_subSection_lote_MMArtepesca" class="sapUiNoMargin" icon="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Artepesca', 'MMArtepesca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMArtepesca', 'MMArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Artepesca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Artepesca}">
-                                            <Text id="CQDetail_subSection_lote_Artepesca" emptyIndicatorMode="On" text="{parts:[ 'Artepesca', 'ArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_Artepesca" emptyIndicatorMode="On" text="{parts:[ 'Artepesca', 'ArtepescaDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Artepesca_edit" value="{parts:[{path:'Artepesca'}, {path:'ArtepescaDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Artepesca_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ArtePesca2_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca2}">
-                                            <Text id="CQDetail_subSection_lote_ArtePesca2" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca2', 'ArtePescaDesc2' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ArtePesca2" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca2', 'ArtePescaDesc2' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ArtePesca2_edit" value="{parts:[{path:'ArtePesca2'}, {path:'ArtePescaDesc2'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ArtePesca2_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ArtePesca3_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca3}">
-                                            <Text id="CQDetail_subSection_lote_ArtePesca3" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca3', 'ArtePescaDesc3' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ArtePesca3" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca3', 'ArtePescaDesc3' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ArtePesca3_edit" value="{parts:[{path:'ArtePesca3'}, {path:'ArtePescaDesc3'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ArtePesca3_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_ArtePesca4_label" label="{i18n>cqDetail.dadosProduto.ss.lote.ArtePesca4}">
-                                            <Text id="CQDetail_subSection_lote_ArtePesca4" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca4', 'ArtePescaDesc4' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_lote_ArtePesca4" emptyIndicatorMode="On" text="{parts:[ 'ArtePesca4', 'ArtePescaDesc4' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_ArtePesca4_edit" value="{parts:[{path:'ArtePesca4'}, {path:'ArtePescaDesc4'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_ArtePesca4_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                     <l:FormContainer id="CQDetail_subSection_lote_container5">
@@ -265,28 +401,44 @@
                                             <ObjectStatus id="CQDetail_subSection_lote_MMCalibre" class="sapUiNoMargin" icon="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Calibre', 'MMCalibre' ], formatter:'.formatter.detailStatusFormatter'}" text="{MMCalibreDesc}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Calibre_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibre}">
-                                            <Text id="CQDetail_subSection_lote_Calibre" emptyIndicatorMode="On" text="{CalibreDesc}"/>
+                                            <Text id="CQDetail_subSection_lote_Calibre" emptyIndicatorMode="On" text="{CalibreDesc}" visible="{= !${ui>/isEditable} }"/>
+                                            <Select id="CQDetail_subSection_lote_Calibre_edit" selectedKey="{Calibre}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Calibre_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_MMCalibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremin}">
-                                            <Text id="CQDetail_subSection_lote_MMCalibremin" emptyIndicatorMode="On" text="{MMCalibremin}"/>
+                                            <Text id="CQDetail_subSection_lote_MMCalibremin" emptyIndicatorMode="On" text="{path:'MMCalibremin', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Calibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremin}">
-                                            <Text id="CQDetail_subSection_lote_Calibremin" emptyIndicatorMode="On" text="{Calibremin}"/>
+                                            <Text id="CQDetail_subSection_lote_Calibremin" emptyIndicatorMode="On" text="{path:'Calibremin', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Calibremin_edit" value="{path:'Calibremin', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Calibremin_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_MMCalibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMCalibremax}">
-                                            <Text id="CQDetail_subSection_lote_MMCalibremax" emptyIndicatorMode="On" text="{MMCalibremax}"/>
+                                            <Text id="CQDetail_subSection_lote_MMCalibremax" emptyIndicatorMode="On" text="{path:'MMCalibremax', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Calibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremax}">
-                                            <Text id="CQDetail_subSection_lote_Calibremax" emptyIndicatorMode="On" text="{Calibremax}"/>
+                                            <Text id="CQDetail_subSection_lote_Calibremax" emptyIndicatorMode="On" text="{path:'Calibremax', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_lote_Calibremax_edit" value="{path:'Calibremax', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Calibremax_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
                                 <Title id="CQDetail_subSection_documento_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.documento.title}"/>
-                                <l:Form id="CQDetail_subSection_documento" visible="{path: 'HideDadosDoc', formatter: '.formatter.hideFormatter'}" editable="false">
+                                <l:Form id="CQDetail_subSection_documento" visible="{path: 'HideDadosDoc', formatter: '.formatter.hideFormatter'}" editable="{ui>/isEditable}">
                                     <l:layout>
                                         <l:ColumnLayout id="CQDetail_subSection_documento_layout" columnsM="2" columnsL="3" columnsXL="5"/>
                                     </l:layout>
                                     <l:FormContainer id="CQDetail_subSection_documento_container">
+                                        <!-- Documento: Immutable; Supplier/Contentor/RepQual/LinkLotes/CarregaDet: Computed -->
                                         <l:FormElement id="CQDetail_subSection_documento_Documento_label" label="{i18n>cqDetail.dadosProduto.ss.documento.Documento}">
                                             <Text id="CQDetail_subSection_documento_Documento" emptyIndicatorMode="On" text="{Documento}"/>
                                         </l:FormElement>
@@ -297,10 +449,10 @@
                                             <Text id="CQDetail_subSection_documento_Contentor" emptyIndicatorMode="On" text="{Contentor}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Contertorselado_label" visible="{path: 'HideContentorSelado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertorselado}">
-                                            <Switch id="CQDetail_subSection_documento_Contertorselado" state="{Contertorselado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Contertorselado" state="{Contertorselado}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Contertoraberto_label" visible="{path: 'HideAberto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Contertoraberto}">
-                                            <Switch id="CQDetail_subSection_documento_Contertoraberto" state="{Contertoraberto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Contertoraberto" state="{Contertoraberto}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_RepQual_label" visible="{path: 'HideRepQual', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.RepQual}">
                                             <Text id="CQDetail_subSection_documento_RepQual" emptyIndicatorMode="On" text="{RepQual}"/>
@@ -312,51 +464,97 @@
                                             <Switch id="CQDetail_subSection_documento_CarregaDet" state="{CarregaDet}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Selo_label" visible="{path: 'HideSelo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Selo}">
-                                            <Text id="CQDetail_subSection_documento_Selo" emptyIndicatorMode="On" text="{Selo}"/>
+                                            <Text id="CQDetail_subSection_documento_Selo" emptyIndicatorMode="On" text="{Selo}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Selo_edit" value="{Selo}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Selo_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Entreposto_label" visible="{path: 'HideEntreposto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Entreposto}">
-                                            <Switch id="CQDetail_subSection_documento_Entreposto" state="{Entreposto}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Entreposto" state="{Entreposto}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Nexportador_label" visible="{path: 'HideNexportador', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nexportador}">
-                                            <Text id="CQDetail_subSection_documento_Nexportador" emptyIndicatorMode="On" text="{Nexportador}"/>
+                                            <Text id="CQDetail_subSection_documento_Nexportador" emptyIndicatorMode="On" text="{Nexportador}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Nexportador_edit" value="{Nexportador}" maxLength="40" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Nexportador_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Tempveiculo_label" visible="{path: 'HideTempVeiculo', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempveiculo}">
-                                            <Text id="CQDetail_subSection_documento_Tempveiculo" emptyIndicatorMode="On" text="{Tempveiculo}"/>
+                                            <Text id="CQDetail_subSection_documento_Tempveiculo" emptyIndicatorMode="On" text="{path:'Tempveiculo', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:5,scale:2}}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Tempveiculo_edit" value="{path:'Tempveiculo', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:5,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Tempveiculo_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Tempproduto_label" visible="{path: 'HideTempProduto', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Tempproduto}">
-                                            <Text id="CQDetail_subSection_documento_Tempproduto" emptyIndicatorMode="On" text="{Tempproduto}"/>
+                                            <Text id="CQDetail_subSection_documento_Tempproduto" emptyIndicatorMode="On" text="{path:'Tempproduto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:5,scale:2}}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Tempproduto_edit" value="{path:'Tempproduto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:5,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Tempproduto_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Veiculohigienizado_label" visible="{path: 'HideVeiculoHigienizado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Veiculohigienizado}">
-                                            <Switch id="CQDetail_subSection_documento_Veiculohigienizado" state="{Veiculohigienizado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Veiculohigienizado" state="{Veiculohigienizado}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Precozinhado_label" visible="{path: 'HidePreCozinhado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Precozinhado}">
-                                            <Switch id="CQDetail_subSection_documento_Precozinhado" state="{Precozinhado}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Precozinhado" state="{Precozinhado}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Datalogger_label" visible="{path: 'HideDatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Datalogger}">
-                                            <Switch id="CQDetail_subSection_documento_Datalogger" state="{Datalogger}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Datalogger" state="{Datalogger}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Dataloggerestado_label" visible="{path: 'HideDataloggerEstado', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Dataloggerestado}">
-                                            <Text id="CQDetail_subSection_documento_Dataloggerestado" emptyIndicatorMode="On" text="{Dataloggerestado}"/>
+                                            <Text id="CQDetail_subSection_documento_Dataloggerestado" emptyIndicatorMode="On" text="{parts:[ 'Dataloggerestado', 'DtLoggerEstDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Select id="CQDetail_subSection_documento_Dataloggerestado_edit" selectedKey="{Dataloggerestado}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Dataloggerestado_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Iddatalogger_label" visible="{path: 'HideIDdatalogger', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Iddatalogger}">
-                                            <Text id="CQDetail_subSection_documento_Iddatalogger" emptyIndicatorMode="On" text="{Iddatalogger}"/>
+                                            <Text id="CQDetail_subSection_documento_Iddatalogger" emptyIndicatorMode="On" text="{Iddatalogger}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Iddatalogger_edit" value="{Iddatalogger}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Iddatalogger_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Nc_label" visible="{path: 'HideNC', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Nc}">
-                                            <Text id="CQDetail_subSection_documento_Nc" emptyIndicatorMode="On" text="{Nc}"/>
+                                            <Text id="CQDetail_subSection_documento_Nc" emptyIndicatorMode="On" text="{Nc}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Nc_edit" value="{Nc}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Nc_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
+                                        <!-- Cmr has a backend side effect: toggling it refreshes HideCmrFields -->
                                         <l:FormElement id="CQDetail_subSection_documento_Cmr_label" visible="{path: 'HideCMR', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Cmr}">
-                                            <Switch id="CQDetail_subSection_documento_Cmro" state="{Cmr}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_documento_Cmro" state="{Cmr}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_Matricula_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.Matricula}">
-                                            <Text id="CQDetail_subSection_documento_Matricula" emptyIndicatorMode="On" text="{Matricula}"/>
+                                            <Text id="CQDetail_subSection_documento_Matricula" emptyIndicatorMode="On" text="{Matricula}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_Matricula_edit" value="{Matricula}" maxLength="10" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_Matricula_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_documento_NomeTransportador_label" visible="{path: 'HideCmrFields', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.ss.documento.NomeTransportador}">
-                                            <Text id="CQDetail_subSection_documento_NomeTransportador" emptyIndicatorMode="On" text="{NomeTransportador}"/>
+                                            <Text id="CQDetail_subSection_documento_NomeTransportador" emptyIndicatorMode="On" text="{NomeTransportador}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_documento_NomeTransportador_edit" value="{NomeTransportador}" maxLength="40" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_documento_NomeTransportador_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
                                 <Title id="CQDetail_subSection_embalagem_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.embalagem.title}"/>
-                                <l:Form id="CQDetail_subSection_embalagem" editable="false">
+                                <l:Form id="CQDetail_subSection_embalagem" editable="{ui>/isEditable}">
                                     <l:layout>
                                         <l:ColumnLayout id="CQDetail_subSection_embalagem_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </l:layout>
@@ -391,23 +589,33 @@
                                             <Text id="CQDetail_subSection_embalagem_tipo_Tipoproduto" emptyIndicatorMode="On" text="{parts:[ 'Tipoproduto', 'TipoprodutoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_CalibreAprox_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.CalibreAprox}">
-                                            <Switch id="CQDetail_subSection_embalagem_tipo_CalibreAprox" state="{CalibreAprox}" enabled="false" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
+                                            <Switch id="CQDetail_subSection_embalagem_tipo_CalibreAprox" state="{CalibreAprox}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMNembalporcaixa}">
                                             <Text id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa" emptyIndicatorMode="On" text="{MMNembalporcaixa}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Nembalporcaixa}">
-                                            <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}"/>
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_edit" value="{Nembalporcaixa}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMApresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMApresentacao}">
                                             <Text id="CQDetail_subSection_embalagem_tipo_MMApresentacao" emptyIndicatorMode="On" text="{parts:[ 'MMApresentacao', 'MMApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_Apresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Apresentacao}">
-                                            <Text id="CQDetail_subSection_embalagem_tipo_Apresentacao" emptyIndicatorMode="On" text="{parts:[ 'Apresentacao', 'ApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Apresentacao" emptyIndicatorMode="On" text="{parts:[ 'Apresentacao', 'ApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} }"/>
+                                            <Select id="CQDetail_subSection_embalagem_tipo_Apresentacao_edit" selectedKey="{Apresentacao}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_embalagem_tipo_Apresentacao_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
-                                <l:Form id="CQDetail_subSection_dimensoes" editable="false" class="sapUiTinyMarginTop">
+                                <l:Form id="CQDetail_subSection_dimensoes" editable="{ui>/isEditable}" class="sapUiTinyMarginTop">
                                     <l:layout>
                                         <l:ColumnLayout id="CQDetail_subSection_dimensoes_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </l:layout>
@@ -416,28 +624,71 @@
                                             <core:Title id="CQDetail_subSection_dimensoes_cx_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.title}"/>
                                         </l:title>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Pmscx_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Pmscx}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Pmscx" emptyIndicatorMode="On" text="{Pmscx}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Pmscx" emptyIndicatorMode="On" text="{Pmscx}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Pmscx_edit" value="{Pmscx}" maxLength="18" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Pmscx_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxcomprimento_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxcomprimento}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxcomprimento" emptyIndicatorMode="On" number="{Cxcomprimento}" unit="{Cxuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxcomprimento" emptyIndicatorMode="On" text="{path:'Cxcomprimento', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxcomprimento_edit" value="{path:'Cxcomprimento', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxcomprimento_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxlargura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxlargura}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxlargura" emptyIndicatorMode="On" number="{Cxlargura}" unit="{Cxuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxlargura" emptyIndicatorMode="On" text="{path:'Cxlargura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxlargura_edit" value="{path:'Cxlargura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxlargura_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxaltura_label" visible="{path: 'HideCxDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxaltura}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_cx_Cxaltura" emptyIndicatorMode="On" number="{Cxaltura}" unit="{Cxuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxaltura" emptyIndicatorMode="On" text="{path:'Cxaltura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxaltura_edit" value="{path:'Cxaltura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxaltura_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
+                                        <!-- <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxuomdim_label" visible="{= ${ui>/isEditable} &amp;&amp; !${HideCxDim} }" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxuomdim}">
+                                            <Select id="CQDetail_subSection_dimensoes_cx_Cxuomdim_edit" selectedKey="{Cxuomdim}" forceSelection="false" width="100%" change=".onFieldChange" app:valueList="true"/>
+                                        </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesobruto}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Cxpesobruto', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto" emptyIndicatorMode="On" text="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_edit" value="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquido}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquido', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" emptyIndicatorMode="On" text="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_edit" value="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquidoesc}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Cxpesoliquidoesc', 'Cxuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_edit" value="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxtara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxtara}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{parts:[ 'Cxtara', 'Cxuomtara' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}} {Cxuomtara}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxtara_edit" value="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" description="{Cxuomtara}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxtara_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                     <l:FormContainer id="CQDetail_subSection_dimensoes_un_container">
@@ -445,36 +696,84 @@
                                             <core:Title id="CQDetail_subSection_dimensoes_un_title" level="H4" text="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.title}"/>
                                         </l:title>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Uncomprimento_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Uncomprimento}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Uncomprimento" emptyIndicatorMode="On" number="{Uncomprimento}" unit="{Unuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Uncomprimento" emptyIndicatorMode="On" text="{path:'Uncomprimento', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Uncomprimento_edit" value="{path:'Uncomprimento', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Uncomprimento_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unlargura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unlargura}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unlargura" emptyIndicatorMode="On" number="{Unlargura}" unit="{Unuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unlargura" emptyIndicatorMode="On" text="{path:'Unlargura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unlargura_edit" value="{path:'Unlargura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unlargura_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unaltura_label" visible="{path: 'HideUnDim', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unaltura}">
-                                            <ObjectNumber id="CQDetail_subSection_dimensoes_un_Unaltura" emptyIndicatorMode="On" number="{Unaltura}" unit="{Unuomdim}" emphasized="false"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unaltura" emptyIndicatorMode="On" text="{path:'Unaltura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuomdim}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unaltura_edit" value="{path:'Unaltura', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuomdim}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unaltura_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
+                                        <!-- <l:FormElement id="CQDetail_subSection_dimensoes_un_Unuomdim_label" visible="{= ${ui>/isEditable} &amp;&amp; !${HideUnDim} }" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unuomdim}">
+                                            <Select id="CQDetail_subSection_dimensoes_un_Unuomdim_edit" selectedKey="{Unuomdim}" forceSelection="false" width="100%" change=".onFieldChange" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unuomdim_edit_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
+                                        </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesobruto}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{parts:[ 'Unpesobruto', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesobruto_edit" value="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesobruto_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquido}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquido', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{path:'Unpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquido_edit" value="{path:'Unpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesoliquido_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquidoesc}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{parts:[ 'Unpesoliquidoesc', 'Unuompeso' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_edit" value="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Untara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Untara}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{parts:[ 'Untara', 'Unuomtara' ], formatter:'.formatter.qtdFormatter'}"/>
+                                            <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}} {Unuomtara}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Untara_edit" value="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" description="{Unuomtara}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Untara_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
+                                <!-- Observações -->
                                 <Title id="CQDetail_subSection_obs_title" level="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.dadosProduto.subsection.obs.title}"/>
-                                <l:Form id="CQDetail_subSection_obs" editable="false" class="sapUiTinyMarginTop">
+                                <l:Form id="CQDetail_subSection_obs" editable="{ui>/isEditable}" class="sapUiTinyMarginTop">
                                     <l:layout>
-                                        <l:ColumnLayout id="CQDetail_subSection_obs_layout" columnsM="2" columnsL="3" columnsXL="6"/>
+                                        <l:ColumnLayout id="CQDetail_subSection_obs_layout" columnsM="1" columnsL="1" columnsXL="1"/>
                                     </l:layout>
                                     <l:FormContainer id="CQDetail_subSection_obs_id">
-                                        <l:FormElement id="CQDetail_subSection_obs_obs_label" label="{i18n>cqDetail.dadosProduto.subsection.obs.obs}">
-                                            <Text id="CQDetail_subSection_obs_obs" emptyIndicatorMode="On" text="{Observacoes}"/>
+                                        <l:FormElement id="CQDetail_subSection_obs_obs_label">
+                                            <Text id="CQDetail_subSection_obs_obs" emptyIndicatorMode="On" text="{Observacoes}" visible="{= !${ui>/isEditable} }"/>
+                                            <TextArea id="CQDetail_subSection_obs_obs_edit" value="{Observacoes}" rows="4" growing="true" width="100%" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_obs_obs_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </TextArea>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
@@ -483,21 +782,32 @@
                     </IconTabFilter>
                     <IconTabSeparator id="CQDetail_sections_tabBar_sep1"/>
                     <IconTabFilter id="CQDetail_section_ft" text="{i18n>cqDetail.ft.title}">
+
                         <ScrollContainer id="CQDetail_section_scroll_ft" vertical="true" height="100%">
                             <VBox id="CQDetail_section_ft_vbox">
+
                                 <Title id="CQDetail_subSection_Ingredientes_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.ft.subsection.Ingredientes.title}"/>
                                 <layout:Grid id="CQDetail_section_ft_grid1" defaultSpan="XL12 L12 M12 S12">
-                                    <macros:Table id="CQDetail_Ingredientes_table" header="{i18n>cqDetail.ft.subsection.Ingredientes.table.title}" metaPath="_ingredientes/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                    <macros:Table id="CQDetail_Ingredientes_table" header="{i18n>cqDetail.ft.subsection.Ingredientes.table.title}" metaPath="_ingredientes/@com.sap.vocabularies.UI.v1.LineItem">
+                                        <macros:creationMode name="InlineCreationRows"/>
+                                    </macros:Table>
                                 </layout:Grid>
+
                                 <Title id="CQDetail_subSection_alergenios_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.ft.subsection.alergenios.title}"/>
                                 <layout:Grid id="CQDetail_section_ft_grid2" defaultSpan="XL12 L12 M12 S12">
                                     <HBox id="CQDetail_subSection_alergenios">
                                         <VBox id="tes1" class="sapUiTinyMarginEnd">
-                                            <macros:Table id="CQDetail_alergenios_contem_table" header="{i18n>cqDetail.ft.subsection.alergenios.contem.title}" metaPath="_alegerneosContem/@com.sap.vocabularies.UI.v1.LineItem"/>
+                                            <macros:Table id="CQDetail_alergenios_contem_table" header="{i18n>cqDetail.ft.subsection.alergenios.contem.title}" metaPath="_alegerneosContem/@com.sap.vocabularies.UI.v1.LineItem">
+                                                <macros:creationMode name="InlineCreationRows"/>
+                                            </macros:Table>
                                         </VBox>
-                                        <macros:Table id="CQDetail_alergenios_podeConter_table" header="{i18n>cqDetail.ft.subsection.alergenios.podeConter.title}" metaPath="_alegerneosPodeConter/@com.sap.vocabularies.UI.v1.LineItem"/>
+
+                                        <macros:Table id="CQDetail_alergenios_podeConter_table" header="{i18n>cqDetail.ft.subsection.alergenios.podeConter.title}" metaPath="_alegerneosPodeConter/@com.sap.vocabularies.UI.v1.LineItem">
+                                            <macros:creationMode name="InlineCreationRows"/>
+                                        </macros:Table>
                                     </HBox>
                                 </layout:Grid>
+
                                 <Title id="CQDetail_subSection_nutricionais_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.ft.subsection.Nutricionais.title}"/>
                                 <layout:Grid id="CQDetail_section_ft_grid3" defaultSpan="XL12 L12 M12 S12">
                                     <layout:Grid id="CQDetail_subSection_nutricionais_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
@@ -507,10 +817,20 @@
                                             </l:layout>
                                             <l:FormContainer id="CQDetail_subSection_nutricionais_container">
                                                 <l:FormElement id="CQDetail_subSection_nutricionais_Vntipo_label" label="{i18n>cqDetail.ft.subsection.Nutricionais.Vntipo}">
-                                                    <Text id="CQDetail_subSection_nutricionais_Vntipo" emptyIndicatorMode="On" text="{parts:[ 'Vntipo', 'VntipoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                                    <Text id="CQDetail_subSection_nutricionais_Vntipo" visible="{= !${ui>/isEditable} }" emptyIndicatorMode="On" text="{parts:[ 'Vntipo', 'VntipoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                                    <Input id="CQDetail_subSection_nutricionais_Vntipo_edit" value="{parts:[{path:'Vntipo'}, {path:'VntipoDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                        <layoutData>
+                                                            <l:ColumnElementData id="CQDetail_subSection_nutricionais_Vntipo_layout" cellsSmall="12" cellsLarge="12"/>
+                                                        </layoutData>
+                                                    </Input>
                                                 </l:FormElement>
                                                 <l:FormElement id="CQDetail_subSection_nutricionais_Grupopais_label" label="{i18n>cqDetail.ft.subsection.Nutricionais.Grupopais}">
-                                                    <Text id="CQDetail_subSection_nutricionais_Grupopais" emptyIndicatorMode="On" text="{parts:[ 'Grupopais', 'GrupopaisDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                                    <Text id="CQDetail_subSection_nutricionais_Grupopais" visible="{= !${ui>/isEditable} }" emptyIndicatorMode="On" text="{parts:[ 'Grupopais', 'GrupopaisDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                                    <Input id="CQDetail_subSection_nutricionais_Grupopais_edit" value="{parts:[{path:'Grupopais'}, {path:'GrupopaisDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                        <layoutData>
+                                                            <l:ColumnElementData id="CQDetail_subSection_nutricionais_Grupopais_layout" cellsSmall="12" cellsLarge="12"/>
+                                                        </layoutData>
+                                                    </Input>
                                                 </l:FormElement>
                                             </l:FormContainer>
                                         </l:Form>
@@ -520,6 +840,7 @@
                             </VBox>
                         </ScrollContainer>
                     </IconTabFilter>
+
                     <IconTabSeparator id="CQDetail_sections_tabBar_sep2"/>
                     <IconTabFilter id="CQDetail_section_amostragens" text="{i18n>cqDetail.amostragens.title}">
                         <ScrollContainer id="CQDetail_section_scroll_amostragens" vertical="true" height="100%">
@@ -535,6 +856,7 @@
                             </VBox>
                         </ScrollContainer>
                     </IconTabFilter>
+
                     <IconTabSeparator id="CQDetail_sections_tabBar_sep3"/>
                     <IconTabFilter id="CQDetail_section_admin" text="{i18n>cqDetail.admin.title}">
                         <ScrollContainer id="CQDetail_section_scroll_admin" vertical="true" height="100%">
@@ -581,8 +903,18 @@
                             </VBox>
                         </ScrollContainer>
                     </IconTabFilter>
+
                 </items>
             </IconTabBar>
         </f:content>
+        <f:footer>
+            <OverflowToolbar id="CQDetail_footer">
+                <Button id="CQDetail_footer_messages" icon="sap-icon://message-popup" type="Emphasized" text="{= ${message>/}.length }" tooltip="{i18n>cqDetail.btn.messages}" visible="{= ${message>/}.length > 0 }" press=".onMessagesPress"/>
+                <DraftIndicator id="CQDetail_footer_draftIndicator"/>
+                <ToolbarSpacer id="CQDetail_footer_spacer"/>
+                <Button id="CQDetail_footer_save" text="{i18n>cqDetail.btn.save}" type="Emphasized" press=".onSave"/>
+                <Button id="CQDetail_footer_cancel" text="{i18n>cqDetail.btn.cancel}" press=".onCancel"/>
+            </OverflowToolbar>
+        </f:footer>
     </f:DynamicPage>
 </mvc:View>
