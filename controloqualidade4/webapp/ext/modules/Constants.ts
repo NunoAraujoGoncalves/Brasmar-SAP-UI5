@@ -8,5 +8,8 @@ export const Actions = {
     concluir: `${SERVICE_NAMESPACE}.concluirCQ`,
     reabrir: `${SERVICE_NAMESPACE}.reabrirCQ`,
     aprovar: `${SERVICE_NAMESPACE}.aprovarCQ`,
-    desaprovar: `${SERVICE_NAMESPACE}.desaprovarCQ`
+    desaprovar: `${SERVICE_NAMESPACE}.desaprovarCQ`,
+    copySemControlo: `${SERVICE_NAMESPACE}.copy`, // bound to CQLinhasSemControloType (overload resolved by the context)
+    convertUom: `${SERVICE_NAMESPACE}.convertUom`,
+    convertUomCalibre: `${SERVICE_NAMESPACE}.convertUomCalibre`
 } as const;

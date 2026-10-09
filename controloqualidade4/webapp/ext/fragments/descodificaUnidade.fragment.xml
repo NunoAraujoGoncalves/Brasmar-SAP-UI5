@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="descodificaUnidadeDialog" title="{i18n>cbunidade.title}" binding="{com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBUn(...)}" contentWidth="400px">
+        <form:SimpleForm id="descodificaUnidadeForm" binding="{$Parameter}" editable="true" labelSpanS="4">
+            <Label id="descodificaUnidadeLabel" text="{i18n>cbunidade.cb}" />
+            <Input id="descodificaUnidadeInput" value="{CodigoBarras}" />
+            <Label id="emptyUnidade" text="" />
+            <Button id="descodificaUnidade" text="{i18n>cbunidade.btn.descodificar}" press=".onPressDescodificaUN" />
+        </form:SimpleForm>
+        <List id="descodificaUnidadeList" items="{value}" busyIndicatorDelay="10">
+            <items>
+                <ObjectListItem id="descodificaUnidadeListItem" title="{Material}" intro="{MaterialDesc}">
+                    <attributes>
+                        <ObjectAttribute id="unEan" title="{i18n>cbunidade.ean}" text="{Ean}" />
+                        <ObjectAttribute id="unPrefixoEan" title="{i18n>cbunidade.prefixoEan}" text="{PrefixoEan}" />
+                    </attributes>
+                </ObjectListItem>
+            </items>
+        </List>
+        <endButton>
+            <Button id="descodificaUnidadeClose" text="{i18n>cbunidade.btn.close}" press=".onPressUnCloseDialog" />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

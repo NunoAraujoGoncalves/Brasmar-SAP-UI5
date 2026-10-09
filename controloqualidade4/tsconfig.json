@@ -15,7 +15,7 @@
                 "./webapp/*"
             ]
         },
-        "types": ["./node_modules/@sapui5/types", "@types/qunit"]
+        "types": ["./node_modules/@sapui5/types", "@types/qunit", "@types/w3c-web-serial"]
         // "typeRoots": [
         //     "./node_modules/@types",
         //     "./node_modules/@sapui5/types"

@@ -1,15 +1,25 @@
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import Log from "sap/base/Log";
 import Button from "sap/m/Button";
 import Column from "sap/m/Column";
 import ColumnListItem from "sap/m/ColumnListItem";
+import Dialog from "sap/m/Dialog";
 import DraftIndicator from "sap/m/DraftIndicator";
+import FlexBox from "sap/m/FlexBox";
+import HBox from "sap/m/HBox";
 import Input from "sap/m/Input";
 import Label from "sap/m/Label";
+import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import MessageItem from "sap/m/MessageItem";
 import MessagePopover from "sap/m/MessagePopover";
+import OverflowToolbar from "sap/m/OverflowToolbar";
+import OverflowToolbarLayoutData from "sap/m/OverflowToolbarLayoutData";
+import SearchField from "sap/m/SearchField";
 import Select from "sap/m/Select";
-import TableSelectDialog, { TableSelectDialog$ConfirmEvent, TableSelectDialog$SearchEvent } from "sap/m/TableSelectDialog";
+import Table from "sap/m/Table";
 import Text from "sap/m/Text";
+import Toolbar from "sap/m/Toolbar";
+import VBox from "sap/m/VBox";
 import Event from "sap/ui/base/Event";
 import Control from "sap/ui/core/Control";
 import Item from "sap/ui/core/Item";
@@ -24,6 +34,7 @@ import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 import ODataPropertyBinding from "sap/ui/model/odata/v4/ODataPropertyBinding";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
 
 type ValueListParameter = {
     $Type: string;
@@ -40,12 +51,31 @@ type ValueListMapping = {
     Parameters: ValueListParameter[];
 };
 
+type ValueListColumn = {
+    property: string;
+    label: string;
+    type: string;
+};
+
+type ValueListFilterField = {
+    property: string;
+    localProperty: string;
+    label: string;
+    type: string;
+};
+
+type FilterFieldState = ValueListFilterField & {
+    value: string;
+    valueState: string;
+};
+
 type ValueListInfo = {
     mapping: ValueListMapping;
     localProperty: string;
     keyProperty: string;
     textProperty?: string;
-    columns: { property: string; label: string }[];
+    columns: ValueListColumn[];
+    inParameters: ValueListFilterField[];
 };
 
 type SideEffectsAnnotation = {
@@ -55,6 +85,13 @@ type SideEffectsAnnotation = {
 
 type ValueHelpTarget = { input: Input; context: Context; info: ValueListInfo };
 
+type ValueHelpDialogParts = {
+    dialog: Dialog;
+    table: Table;
+    model: JSONModel;
+    info: ValueListInfo;
+};
+
 const COMMON = "@com.sap.vocabularies.Common.v1";
 const CORE_COMPUTED = "@Org.OData.Core.V1.Computed";
 const IN_PARAMETER = /ValueListParameter(In|InOut)$/;
@@ -62,14 +99,15 @@ const OUT_PARAMETER = /ValueListParameter(Out|InOut)$/;
 const DISPLAY_PARAMETER = /ValueListParameterDisplayOnly$/;
 const LOG_COMPONENT = "brasmar.bm01.controloqualidade4.EditHelper";
 const CONSTANT_PARAMETER = /ValueListParameterConstant$/;
+const NUMBER_TYPE = /^Edm\.(Byte|SByte|Int16|Int32|Double|Single)$/;
+const STRING_NUMBER_TYPE = /^Edm\.(Int64|Decimal)$/;
 
 export default class EditHelper {
     private readonly view: View;
     private readonly draftIndicatorId?: string;
     private readonly valueLists = new Map<string, Promise<ValueListInfo | undefined>>();
-    private readonly valueHelpDialogs = new Map<string, TableSelectDialog>();
+    private readonly valueHelpDialogs = new Map<string, ValueHelpDialogParts>();
     private valueHelpTarget?: ValueHelpTarget;
-    private valueHelpInFilters: Filter[] = [];
     private currentContext?: Context;
     private patchBinding?: ODataContextBinding;
     private messagePopover?: MessagePopover;
@@ -252,12 +290,29 @@ export default class EditHelper {
             if (textProperty && !properties.includes(textProperty)) {
                 properties.push(textProperty);
             }
-            const columns = await Promise.all(properties.map(async (property) => ({
-                property,
-                label: ((await valueListMetaModel.requestObject(`${entityPath}/${property}${COMMON}.Label`)) as string | undefined) ?? property
-            })));
 
-            return { mapping, localProperty, keyProperty, textProperty, columns };
+            const columns = await Promise.all(properties.map(async (property) => {
+                const [label, type] = await Promise.all([
+                    valueListMetaModel.requestObject(`${entityPath}/${property}${COMMON}.Label`) as Promise<string | undefined>,
+                    valueListMetaModel.requestObject(`${entityPath}/${property}/$Type`) as Promise<string | undefined>
+                ]);
+                return { property, label: label ?? property, type: type ?? "Edm.String" };
+            }));
+
+            // 5. In parameters that depend on other fields of the record (e.g. Centro) -> editable dialog filters
+            const inParameters = mapping.Parameters
+                .filter((p) => IN_PARAMETER.test(p.$Type) && p.LocalDataProperty && p.LocalDataProperty.$PropertyPath !== localProperty)
+                .map((p) => {
+                    const column = columns.find((c) => c.property === p.ValueListProperty);
+                    return {
+                        property: p.ValueListProperty,
+                        localProperty: p.LocalDataProperty!.$PropertyPath,
+                        label: column?.label ?? p.ValueListProperty,
+                        type: column?.type ?? "Edm.String"
+                    };
+                });
+
+            return { mapping, localProperty, keyProperty, textProperty, columns, inParameters };
         } catch (error) {
             Log.warning(`No value list for ${localProperty}`, String(error), LOG_COMPONENT);
             return undefined;
@@ -277,25 +332,24 @@ export default class EditHelper {
             return;
         }
 
-        const dialog = this.getValueHelpDialog(info);
+        const parts = this.getValueHelpDialog(info);
         this.valueHelpTarget = { input, context, info };
 
         //Adiciona valores aos parametros se estes dependerem de outros dados do controlo (p.e. lotes de um material)
-        this.valueHelpInFilters = info.mapping.Parameters
-            .filter((p) => IN_PARAMETER.test(p.$Type) && p.LocalDataProperty && p.LocalDataProperty.$PropertyPath !== info.localProperty)
-            .map((p) => ({
-                property: p.ValueListProperty,
-                value: context.getProperty(p.LocalDataProperty!.$PropertyPath) as unknown
-            }))
-            .filter(({ value }) => value !== undefined && value !== null && value !== "")
-            .map(({ property, value }) => new Filter(property, FilterOperator.EQ, value));
+        const filters: FilterFieldState[] = info.inParameters.map((field) => {
+            const value = context.getProperty(field.localProperty) as unknown;
+            return { ...field, value: value === undefined || value === null ? "" : String(value), valueState: "None" };
+        });
+        parts.model.setData({
+            search: "",
+            showFilters: parts.model.getProperty("/showFilters") === true,
+            filters,
+            activeCount: 0,
+            activeText: ""
+        });
 
-        const itemsBinding = dialog.getBinding("items") as ODataListBinding;
-        if (info.mapping.SearchSupported) {
-            itemsBinding.changeParameters({ $search: undefined });
-        }
-        itemsBinding.filter(this.valueHelpInFilters);
-        dialog.open("");
+        this.applyValueHelpFilters(parts);
+        parts.dialog.open();
     }
 
     /**
@@ -317,59 +371,219 @@ export default class EditHelper {
 
     /**
      * Cria o dialog fragment com as colunas previstas nos metadados 
-     * 
+     * uma search bar e uma area de filtros (In parameters) que pode ser mostrada/escondida
      */
-    private getValueHelpDialog(info: ValueListInfo): TableSelectDialog {
+    private getValueHelpDialog(info: ValueListInfo): ValueHelpDialogParts {
         const key = `${info.mapping.CollectionPath}|${info.localProperty}`;
-        let dialog = this.valueHelpDialogs.get(key);
-        if (!dialog) {
-            dialog = new TableSelectDialog({
-                title: info.mapping.Label ?? info.localProperty,
-                contentWidth: "40rem",
-                growing: true,
-                growingThreshold: 50,
-                columns: info.columns.map((column) => new Column({ header: new Label({ text: column.label }) })),
-                search: (event: TableSelectDialog$SearchEvent) => this.onValueHelpSearch(event, info),
-                confirm: (event: TableSelectDialog$ConfirmEvent) => void this.onValueHelpConfirm(event)
-            });
-            dialog.setModel(info.mapping.$model, "vl");
-            dialog.bindItems({
-                path: `vl>/${info.mapping.CollectionPath}`,
-                templateShareable: false,
-                filters: this.getConstantFilters(info),
-                template: new ColumnListItem({
-                    cells: info.columns.map((column) => new Text({ text: `{vl>${column.property}}` }))
+        const existing = this.valueHelpDialogs.get(key);
+        if (existing) {
+            return existing;
+        }
+
+        const model = new JSONModel({ search: "", showFilters: false, filters: [], activeCount: 0, activeText: "" });
+        const apply = (): void => this.applyValueHelpFilters(parts);
+        const toggleFilters = (): void => { model.setProperty("/showFilters", !model.getProperty("/showFilters")) };
+
+        const searchField = new SearchField({
+            width: "100%",
+            placeholder: this.getText("valueHelp.search"),
+            value: "{vh>/search}",
+            search: apply,
+            layoutData: new OverflowToolbarLayoutData({ shrinkable: true, minWidth: "10rem" })
+        });
+
+        const filterButton = new Button({
+            icon: "sap-icon://filter",
+            type: "Transparent",
+            visible: info.inParameters.length > 0,
+            text: {
+                parts: [{ path: "vh>/showFilters" }, { path: "vh>/activeCount" }],
+                formatter: (show: boolean, count: number) =>
+                    `${this.getText(show ? "valueHelp.hideFilters" : "valueHelp.showFilters")}${count > 0 ? ` (${count})` : ""}`
+            },
+            press: toggleFilters
+        });
+
+        const filterFieldTemplate = new VBox({
+            items: [
+                new Label({ text: "{vh>label}" }),
+                new Input({ value: "{vh>value}", valueState: "{vh>valueState}", width: "12rem", submit: apply })
+            ]
+        });
+        filterFieldTemplate.addStyleClass("sapUiSmallMarginEnd sapUiTinyMarginBottom");
+
+        const filterArea = new VBox({
+            visible: "{vh>/showFilters}",
+            items: [
+                new FlexBox({
+                    wrap: "Wrap",
+                    alignItems: "End",
+                    items: { path: "vh>/filters", template: filterFieldTemplate, templateShareable: false }
+                }),
+                new HBox({
+                    justifyContent: "End",
+                    items: [
+                        new Button({ text: this.getText("valueHelp.go"), type: "Emphasized", press: apply }),
+                        new Button({
+                            text: this.getText("valueHelp.clear"),
+                            type: "Transparent",
+                            press: () => {
+                                (model.getProperty("/filters") as FilterFieldState[]).forEach((_f, index) =>
+                                    model.setProperty(`/filters/${index}/value`, ""));
+                                apply();
+                            }
+                        })
+                    ]
                 })
-            });
-            this.view.addDependent(dialog);
-            this.valueHelpDialogs.set(key, dialog);
-        }
-        return dialog;
+            ]
+        });
+        filterArea.addStyleClass("sapUiSmallMarginBeginEnd sapUiSmallMarginTop");
+
+        const table = new Table({
+            mode: "SingleSelectMaster",
+            growing: true,
+            growingThreshold: 50,
+            growingScrollToLoad: true,
+            sticky: ["ColumnHeaders", "InfoToolbar"],
+            infoToolbar: new Toolbar({
+                active: true,
+                design: "Info",
+                visible: "{= !${vh>/showFilters} && ${vh>/activeCount} > 0 }",
+                content: [new Text({ text: "{vh>/activeText}" })],
+                press: toggleFilters
+            }),
+            columns: info.columns.map((column) => new Column({ header: new Label({ text: column.label }) })),
+            selectionChange: (event: ListBase$SelectionChangeEvent) => void this.onValueHelpSelect(event, parts)
+        });
+        table.setModel(info.mapping.$model, "vl");
+        table.bindItems({
+            path: `vl>/${info.mapping.CollectionPath}`,
+            templateShareable: false,
+            filters: this.getConstantFilters(info),
+            template: new ColumnListItem({
+                cells: info.columns.map((column) => new Text({ text: `{vl>${column.property}}` }))
+            })
+        });
+
+        const dialog = new Dialog({
+            title: info.mapping.Label ?? info.localProperty,
+            contentWidth: "50rem",
+            contentHeight: "70%",
+            resizable: true,
+            draggable: true,
+            horizontalScrolling: false,
+            subHeader: new OverflowToolbar({ content: [searchField, filterButton] }),
+            content: [filterArea, table],
+            endButton: new Button({ text: this.getText("valueHelp.cancel"), press: () => dialog.close() })
+        });
+        dialog.setModel(model, "vh");
+        this.view.addDependent(dialog);
+
+        const parts: ValueHelpDialogParts = { dialog, table, model, info };
+        this.valueHelpDialogs.set(key, parts);
+        return parts;
     }
 
-    private onValueHelpSearch(event: TableSelectDialog$SearchEvent, info: ValueListInfo): void {
-        const value = event.getParameter("value") ?? "";
-        const itemsBinding = event.getSource().getBinding("items") as ODataListBinding;
+
+    /**
+     * Aplica filtros (In parameters editados pelo utilizador) + pesquisa a tabela do dialog.
+     * Constantes ja estao nos application filters do bindItems.
+     */
+    private applyValueHelpFilters(parts: ValueHelpDialogParts): void {
+        const { model, table, info } = parts;
+        const search = String(model.getProperty("/search") ?? "").trim();
+        const fields = (model.getProperty("/filters") ?? []) as FilterFieldState[];
+
+        const filters: Filter[] = [];
+        const active: string[] = [];
+        fields.forEach((field, index) => {
+            const text = String(field.value ?? "").trim();
+            const value = text ? this.parseFilterValue(text, field.type) : undefined;
+            model.setProperty(`/filters/${index}/valueState`, text && value === undefined ? "Error" : "None");
+            if (value !== undefined) {
+                filters.push(new Filter(field.property, FilterOperator.EQ, value));
+                active.push(`${field.label}: ${text}`);
+            }
+        });
+        model.setProperty("/activeCount", active.length);
+        model.setProperty("/activeText", this.getText("valueHelp.filteredBy", [active.join(", ")]));
+
+        const itemsBinding = table.getBinding("items") as ODataListBinding;
         if (info.mapping.SearchSupported) {
-            itemsBinding.changeParameters({ $search: value || undefined });
-            itemsBinding.filter(this.valueHelpInFilters);
-            return;
+            itemsBinding.changeParameters({ $search: search || undefined });
+        } else {
+            const searchFilter = this.getSearchFilter(info, search);
+            if (searchFilter) {
+                filters.push(searchFilter);
+            }
         }
-        const filters = [...this.valueHelpInFilters];
-        if (value) {
-            filters.push(new Filter({
-                path: info.textProperty ?? info.keyProperty,
-                operator: FilterOperator.Contains,
-                value1: value,
-                caseSensitive: false
-            }));
-        }
-        itemsBinding.filter(filters);
+
+        // one AND group: an array of filters on the same path would be OR-ed by UI5
+        itemsBinding.filter(filters.length > 0 ? new Filter({ filters, and: true }) : []);
     }
 
-    private async onValueHelpConfirm(event: TableSelectDialog$ConfirmEvent): Promise<void> {
-        const item = event.getParameter("selectedItem");
+
+    /**
+     * Pesquisa sem tolower() (nao suportado por alguns servicos):
+     * contains case-sensitive sobre codigo e descricao, com as variantes
+     * original / MAIUSCULAS / minusculas / Capitalizado, ligadas por OR.
+     * Colunas numericas usam eq (contains so funciona em Edm.String).
+     */
+    private getSearchFilter(info: ValueListInfo, search: string): Filter | undefined {
+        if (!search) {
+            return undefined;
+        }
+        const variants = [...new Set([search, search.toUpperCase(), search.toLowerCase(), this.capitalize(search)])];
+        const searchProperties = new Set([info.keyProperty, info.textProperty ?? info.keyProperty]);
+
+        const filters: Filter[] = [];
+        info.columns
+            .filter((column) => searchProperties.has(column.property))
+            .forEach((column) => {
+                if (column.type === "Edm.String") {
+                    variants.forEach((variant) => filters.push(new Filter({
+                        path: column.property,
+                        operator: FilterOperator.Contains,
+                        value1: variant,
+                        caseSensitive: true // no tolower() in the request
+                    })));
+                } else if (NUMBER_TYPE.test(column.type) || STRING_NUMBER_TYPE.test(column.type)) {
+                    const value = this.parseFilterValue(search, column.type);
+                    if (value !== undefined) {
+                        filters.push(new Filter(column.property, FilterOperator.EQ, value));
+                    }
+                }
+            });
+        return filters.length > 0 ? new Filter({ filters, and: false }) : undefined;
+    }
+
+
+    /**
+     * Converte o texto escrito pelo utilizador para o tipo JS esperado pelo OData V4
+     * (number para Int16/Int32/..., string para Int64/Decimal). undefined = valor invalido.
+     */
+    private parseFilterValue(text: string, type: string): unknown {
+        if (NUMBER_TYPE.test(type)) {
+            const number = Number(text.replace(",", "."));
+            return Number.isFinite(number) ? number : undefined;
+        }
+        if (STRING_NUMBER_TYPE.test(type)) {
+            const normalised = text.replace(",", ".");
+            return /^-?\d+(\.\d+)?$/.test(normalised) ? normalised : undefined;
+        }
+        return text;
+    }
+
+    private capitalize(text: string): string {
+        return text.toLowerCase().replace(/(^|\s)\S/g, (char) => char.toUpperCase());
+    }
+
+
+    private async onValueHelpSelect(event: ListBase$SelectionChangeEvent, parts: ValueHelpDialogParts): Promise<void> {
+        const item = event.getParameter("listItem");
         const target = this.valueHelpTarget;
+        parts.table.removeSelections(true);
+        parts.dialog.close();
         if (!item || !target) {
             return;
         }
@@ -394,7 +608,8 @@ export default class EditHelper {
 
         await Promise.all(outParameters
             .filter((_p, index) => !computed[index])
-            .map((p) => context.setProperty(p.LocalDataProperty!.$PropertyPath as string, row.getProperty(p.ValueListProperty))));
+            .map((p) => context.setProperty(p.LocalDataProperty!.$PropertyPath as string, row.getProperty(p.ValueListProperty)))
+        );
 
         await this.requestSideEffects(input);
     }
@@ -453,5 +668,11 @@ export default class EditHelper {
             this.view.addDependent(this.messagePopover);
         }
         this.messagePopover.toggle(button);
+    }
+
+    /* ---------- helpers ---------- */
+    private getText(key: string, args?: string[]): string {
+        const bundle = (this.view.getModel("i18n") as ResourceModel | undefined)?.getResourceBundle() as ResourceBundle | undefined;
+        return bundle?.getText(key, args) ?? key;
     }
 }

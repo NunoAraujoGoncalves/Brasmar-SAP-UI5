@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+    > 
+    <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="400px" beforeOpen=".onBalancaBeforeOpen" afterOpen=".teste">
+        <form:SimpleForm id="BalancaDialog_form" editable="true" labelSpanS="2">
+            <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onPressBalancaStart" />
+            <Button id="BalancaDialog_btn_stop" text="{i18n>BalancaDialog.btn.stop}" icon="sap-icon://media-pause" press=".onPressBalancaEnd" enabled="false" />
+        </form:SimpleForm>
+
+        <Table id="BalancaDialog_table" growing="true" growingThreshold="10" mode="MultiSelect" items="{balanca>/PesosUn}">
+            <headerToolbar>
+                <OverflowToolbar id="BalancaDialog_toolbar">
+                    <Title id="BalancaDialog_table_title" text="{i18n>BalancaDialog.table.title}" />
+                    <ToolbarSpacer id="BalancaDialog_table_spacer" />
+                    <Button id="BalancaDialog_table_btn_delete" text="{i18n>BalancaDialog.table.btn.delete}" enabled="true" press=".onPressBalancaDelete" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="BalancaDialog_column_peso_label" demandPopin="true" minScreenWidth="Phone">
+                    <Text id="BalancaDialog_column_peso" text="{i18n>BalancaDialog.table.peso}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="BalancaDialog_item_peso" vAlign="Middle">
+                    <cells>
+                        <Input id="BalancaDialog_input_peso" value="{balanca>PB}" description="{balanca>uom}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <beginButton>
+            <Button id="BalancaDialog_btn_okay" text="{i18n>BalancaDialog.btn.okay}" icon="sap-icon://accept" press=".onPressOkayDialog" />
+        </beginButton>
+        <endButton>
+            <Button id="BalancaDialog_btn_close" text="{i18n>BalancaDialog.btn.close}" icon="sap-icon://decline" press=".onPressCloseDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

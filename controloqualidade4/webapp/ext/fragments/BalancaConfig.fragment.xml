@@ -1,0 +1,71 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="BalancaConfigDialog" title="{i18n>balancaCfg.title}" contentWidth="50rem" draggable="true" resizable="true" busy="{serial>/busy}" busyIndicatorDelay="0">
+        <content>
+            <MessageStrip id="BalancaConfig_notSupported" type="Error" showIcon="true" text="{i18n>balancaCfg.notSupported}" visible="{= !${serial>/supported} }" class="sapUiSmallMargin"/>
+            <MessageStrip id="BalancaConfig_status" showIcon="true" visible="{serial>/supported}" class="sapUiSmallMargin" type="{= ${serial>/connected} ? 'Success' : 'Warning' }" text="{= ${serial>/connected} ? ${i18n>balancaCfg.status.connected} + ': ' + ${serial>/portLabel} : ${i18n>balancaCfg.status.disconnected} }"/>
+
+            <form:SimpleForm id="BalancaConfig_form" editable="true" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1" visible="{serial>/supported}">
+                <form:content>
+                    <core:Title id="BalancaConfig_title_port" text="{i18n>balancaCfg.section.port}"></core:Title>
+                    <Label id="BalancaConfig_port_label" text="{i18n>balancaCfg.port}" labelFor="BalancaConfig_port"/>
+                    <Select id="BalancaConfig_port" forceSelection="false" width="100%" items="{serial>/ports}" selectedKey="{serial>/selectedPort}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_port_item" key="{serial>key}" text="{serial>label}"/>
+                    </Select>
+                    <Button id="BalancaConfig_port_add" text="{i18n>balancaCfg.port.add}" icon="sap-icon://add" press=".onSerialAddPort" enabled="{= !${serial>/connected} }"/>
+
+                    <!-- sap.m.Select has no noDataText: show the hint while no port is authorised -->
+                    <Text id="BalancaConfig_port_none" text="{i18n>balancaCfg.port.none}" visible="{= ${serial>/ports}.length === 0 }"/>
+
+                    <core:Title id="BalancaConfig_title_settings" text="{i18n>balancaCfg.section.settings}"/>
+                    <Label id="BalancaConfig_baudRate_label" text="{i18n>balancaCfg.baudRate}" labelFor="BalancaConfig_baudRate"/>
+                    <Select id="BalancaConfig_baudRate" width="100%" selectedKey="{serial>/settings/baudRate}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_baud_1200" key="1200" text="1200"/>
+                        <core:Item id="BalancaConfig_baud_2400" key="2400" text="2400"/>
+                        <core:Item id="BalancaConfig_baud_4800" key="4800" text="4800"/>
+                        <core:Item id="BalancaConfig_baud_9600" key="9600" text="9600"/>
+                        <core:Item id="BalancaConfig_baud_19200" key="19200" text="19200"/>
+                        <core:Item id="BalancaConfig_baud_38400" key="38400" text="38400"/>
+                        <core:Item id="BalancaConfig_baud_57600" key="57600" text="57600"/>
+                        <core:Item id="BalancaConfig_baud_115200" key="115200" text="115200"/>
+                    </Select>
+                    <Label id="BalancaConfig_dataBits_label" text="{i18n>balancaCfg.dataBits}" labelFor="BalancaConfig_dataBits"/>
+                    <Select id="BalancaConfig_dataBits" width="100%" selectedKey="{serial>/settings/dataBits}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_dataBits_7" key="7" text="7"/>
+                        <core:Item id="BalancaConfig_dataBits_8" key="8" text="8"/>
+                    </Select>
+                    <Label id="BalancaConfig_stopBits_label" text="{i18n>balancaCfg.stopBits}" labelFor="BalancaConfig_stopBits"/>
+                    <Select id="BalancaConfig_stopBits" width="100%" selectedKey="{serial>/settings/stopBits}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_stopBits_1" key="1" text="1"/>
+                        <core:Item id="BalancaConfig_stopBits_2" key="2" text="2"/>
+                    </Select>
+                    <Label id="BalancaConfig_parity_label" text="{i18n>balancaCfg.parity}" labelFor="BalancaConfig_parity"/>
+                    <Select id="BalancaConfig_parity" width="100%" selectedKey="{serial>/settings/parity}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_parity_none" key="none" text="{i18n>balancaCfg.parity.none}"/>
+                        <core:Item id="BalancaConfig_parity_even" key="even" text="{i18n>balancaCfg.parity.even}"/>
+                        <core:Item id="BalancaConfig_parity_odd" key="odd" text="{i18n>balancaCfg.parity.odd}"/>
+                    </Select>
+                    <Label id="BalancaConfig_flowControl_label" text="{i18n>balancaCfg.flowControl}" labelFor="BalancaConfig_flowControl"/>
+                    <Select id="BalancaConfig_flowControl" width="100%" selectedKey="{serial>/settings/flowControl}" enabled="{= !${serial>/connected} }">
+                        <core:Item id="BalancaConfig_flowControl_none" key="none" text="{i18n>balancaCfg.flowControl.none}"/>
+                        <core:Item id="BalancaConfig_flowControl_hardware" key="hardware" text="{i18n>balancaCfg.flowControl.hardware}"/>
+                    </Select>
+                    <Text id="BalancaConfig_settings_hint" text="{i18n>balancaCfg.settings.hint}" visible="{serial>/connected}"/>
+
+                    <core:Title id="BalancaConfig_title_test" text="{i18n>balancaCfg.section.test}"/>
+                    <Label id="BalancaConfig_lastValue_label" text="{i18n>balancaCfg.lastValue}" labelFor="BalancaConfig_lastValue"/>
+                    <ObjectNumber id="BalancaConfig_lastValue" number="{serial>/lastReading/text}" emphasized="true" emptyIndicatorMode="On"/>
+                    <Label id="BalancaConfig_rawValue_label" text="{i18n>balancaCfg.rawValue}" labelFor="BalancaConfig_rawValue"/>
+                    <Text id="BalancaConfig_rawValue" emptyIndicatorMode="On" renderWhitespace="true" text="{= ${serial>/lastReading} ? ${serial>/lastReading/raw} + '  (' + ${serial>/lastReading/time} + ')' : '' }"/>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <buttons>
+            <Button id="BalancaConfig_btn_connect" text="{i18n>balancaCfg.btn.connect}" icon="sap-icon://connected" type="Emphasized" press=".onSerialConnect" enabled="{= ${serial>/supported} &amp;&amp; !${serial>/connected} }"/>
+            <Button id="BalancaConfig_btn_disconnect" text="{i18n>balancaCfg.btn.disconnect}" icon="sap-icon://disconnected" press=".onSerialDisconnect" enabled="{serial>/connected}"/>
+            <Button id="BalancaConfig_btn_test" text="{i18n>balancaCfg.btn.test}" icon="sap-icon://measure" press=".onSerialTest" enabled="{serial>/connected}"/>
+            <Button id="BalancaConfig_btn_close" text="{i18n>balancaCfg.btn.close}" press=".onSerialClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

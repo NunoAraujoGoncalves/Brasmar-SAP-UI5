@@ -11,9 +11,14 @@ import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import mobileLibrary from "sap/m/library";
 import Event from "sap/ui/base/Event";
 import Control from "sap/ui/core/Control";
-import Button from "sap/m/Button";
+import Button, { Button$PressEvent } from "sap/m/Button";
 import Input from "sap/m/Input";
 import DynamicPage from "sap/f/DynamicPage";
+import Dialog from "sap/m/Dialog";
+import List from "sap/m/List";
+import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
+import MessageToast from "sap/m/MessageToast";
+import TableAPI from "sap/fe/macros/table/TableAPI";
 
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.view
@@ -23,6 +28,8 @@ export default class CQDetail extends Controller {
     formatter = new Formatter();
     editHelper: EditHelper;
     oPopover: Promise<Popover> | undefined;
+    cbCaixaFragment: Dialog;
+    cbUnidadeFragment: Dialog;
 
 
     public onInit(): void {
@@ -154,6 +161,120 @@ export default class CQDetail extends Controller {
         page.setBusy(false);
     }
 
+    /* ---------- Fragemnt CB Caixa ---------- */
+    public async onCbCaixa(): Promise<void> {
+        if (!this.cbCaixaFragment) {
+            this.cbCaixaFragment = (await Fragment.load({
+                id: this.getView()?.getId(),
+                name: "brasmar.bm01.controloqualidade4.ext.fragments.descodificaCaixa",
+                controller: this
+            })) as Dialog;
+            this.getView()?.addDependent(this.cbCaixaFragment);
+        }
+        this.cbCaixaFragment.open();
+    }
+
+
+    public async onPressDescodifica(event: Button$PressEvent): Promise<void> {
+        const sList = this.getView()?.byId("descodificaCBList") as List;
+        sList.setBusy(true);
+
+        const oDialog = this.getView()?.byId("descodificaCBDialog") as Dialog,
+            oAction = oDialog.getObjectBinding() as ODataContextBinding;
+
+        try {
+            await oAction.execute();
+            MessageToast.show(this.getText("cbcaixa.msg.sucesso"));
+        } catch (error) {
+            const err = error instanceof Error ? error : new Error(String(error));
+            MessageToast.show(this.getText("cbcaixa.msg.erro", [err.message]));
+        }
+
+        this.getContext().refresh();
+        sList.setBusy(false);
+    }
+
+
+    public async onPressCloseDialog(event: Button$PressEvent): Promise<void> {
+        this.cbCaixaFragment.close();
+        this.getContext().refresh();
+    }
+
+
+    /* ---------- Fragment CB Unidade ---------- */
+    public async onCbUnidade(): Promise<void> {
+        if (!this.cbUnidadeFragment) {
+            this.cbUnidadeFragment = (await Fragment.load({
+                id: this.getView()?.getId(),
+                name: "brasmar.bm01.controloqualidade4.ext.fragments.descodificaUnidade",
+                controller: this
+            })) as Dialog;
+            this.getView()?.addDependent(this.cbUnidadeFragment);
+        }
+        this.cbUnidadeFragment.open();
+    }
+
+
+    public async onPressDescodificaUN(event: Button$PressEvent): Promise<void> {
+        const sList = this.getView()?.byId("descodificaUnidadeList") as List;
+        sList.setBusy(true);
+
+        const oDialog = this.getView()?.byId("descodificaUnidadeDialog") as Dialog,
+            oAction = oDialog.getObjectBinding() as ODataContextBinding;
+
+        try {
+            await oAction.execute();
+            MessageToast.show(this.getText("cbcaixa.msg.sucesso"));
+        } catch (error) {
+            const err = error instanceof Error ? error : new Error(String(error));
+            MessageToast.show(this.getText("cbcaixa.msg.erro", [err.message]));
+        }
+
+        this.getContext().refresh();
+        sList.setBusy(false);
+    }
+
+
+    public async onPressUnCloseDialog(event: Button$PressEvent): Promise<void> {
+        this.cbUnidadeFragment.close();
+        this.getContext().refresh();
+    }
+
+
+    /* ---------- Tabela Sem Controlo ---------- */
+    public async onCopySemControlo(): Promise<void> {
+        const table = this.byId("CQDetail_fcontrolo_table") as TableAPI;
+        const selected = table.getSelectedContexts();
+        if (selected.length === 0) {
+            return;
+        }
+
+        // replaces Core.OperationAvailable (_it/__OperationControl/copy) of the generated button
+        const available = await Promise.all(selected.map((context) =>
+            context.requestProperty("__OperationControl/copy") as Promise<boolean | undefined>));
+        const contexts = selected.filter((_context, index) => available[index] === true );
+        if (contexts.length === 0) {
+            MessageToast.show(this.getText("cqDetail.semControlo.copy.notAvailable"));
+            return;
+        } 
+
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.copySemControlo, {
+                contexts,
+                invocationGrouping: "ChangeSet",
+                label: this.getText("cqDetail.semControlo.btn.copy")
+            });
+        } catch (error) {
+            // parameter dialog cancelled or backend error (FE already shows the messages): nothing to refresh
+            return;
+        }
+        
+        // the table is bound relative to the CQ (_semControlo), so it can't be refreshed directly:
+        // ask the CQ context to reload the navigation instead
+        await this.getContext().requestSideEffects([{ $NavigationPropertyPath: "_semControlo" }]);
+    }
+
+
     /* ---------- footer ---------- */
 
     public async onSave(): Promise<void> {
@@ -161,7 +282,7 @@ export default class CQDetail extends Controller {
         page.setBusy(true);
 
         await this.getExtensionAPI().getEditFlow().saveDocument(this.getContext());
-        
+
         page.setBusy(false);
     }
 

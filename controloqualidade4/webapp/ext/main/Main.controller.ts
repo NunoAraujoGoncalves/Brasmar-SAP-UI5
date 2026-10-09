@@ -1,11 +1,20 @@
 import Controller from "sap/fe/core/PageController";
 import Event from "sap/ui/base/Event";
 import FilterBar from "sap/fe/macros/filterBar/FilterBarAPI";
+import TableAPI from "sap/fe/macros/table/TableAPI";
+import MessageToast from "sap/m/MessageToast";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
+import MessageBox from "sap/m/MessageBox";
+
+const COUNT_TABS = ["main_IconTabBar_todos", "main_IconTabBar_pendentes", "main_IconTabBar_concluidos", "main_IconTabBar_aprovados"];
 
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.main
  */
 export default class Main extends Controller {
+
+    private firstRouteMatch = true;
 
     /**
      * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -14,7 +23,15 @@ export default class Main extends Controller {
      */
     public onInit(): void {
         super.onInit(); // needs to be called to properly initialize the page controller
+        this.getAppComponent().getRouter().getRoute("CQCabMain")?.attachPatternMatched(this.onRouteMatched, this);
     }
+
+
+    public onExit(): void {
+        this.getAppComponent().getRouter().getRoute("CQCabMain")?.detachPatternMatched(this.onRouteMatched, this);
+    }
+
+    /*  Filtros section  */
 
     onFilterSelect(oEvent: Event) {
         let sKey = (oEvent as any).getParameter("key"),
@@ -42,29 +59,93 @@ export default class Main extends Controller {
     }
 
 
-    /**
-     * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-     * (NOT before the first rendering! onInit() is used for that one!).
-     * @memberOf brasmar.bm01.controloqualidade4.ext.main.Main
-     */
-    // public  onBeforeRendering(): void {
-    //
-    //  }
+    /* ---------- main tab buttons ---------- */
+    public async onCreate(): Promise<void> {
+        await this.getExtensionAPI().getEditFlow().createDocument("/CQCab", {
+            creationMode: "NewPage"
+        });
+    }
 
-    /**
-     * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-     * This hook is the same one that SAPUI5 controls get after being rendered.
-     * @memberOf brasmar.bm01.controloqualidade4.ext.main.Main
-     */
-    // public  onAfterRendering(): void {
-    //
-    //  }
 
+    public async onDelete(): Promise<void> {
+        const table = this.byId("main_table") as TableAPI;
+        const selected = table.getSelectedContexts();
+        if (selected.length === 0) {
+            MessageBox.warning(this.getText("main.noSelections.error"));
+            // MessageToast.show(this.getText("main.noSelections.error"));
+            return;
+        }
+
+        //Verifica se as linhas selecionadas podem ser apagadas
+        const deletable = await Promise.all(selected.map((context) =>
+            context.requestProperty("__EntityControl/Deletable") as Promise<boolean | undefined>));
+        const toDelete = selected.filter((_context, index) => deletable[index] === true);
+        const skipped = selected.length - toDelete.length;
+
+        if (toDelete.length === 0) {
+            MessageBox.warning(this.getText("main.delete.notAllowed"));
+            return;
+        }
+
+        const confirmed = await this.confirm(
+            this.getText("main.delete.title"),
+            this.getText("main.delete.confirm", [String(toDelete.length)])
+                + (skipped > 0 ? `\n\n${this.getText("main.delete.skipped",[String(skipped)])}` : "")
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        table.setBusy(true);
+        const results = await Promise.allSettled(toDelete.map((context) => context.delete()));
+        table.setBusy(false);
+
+        const failed = results.filter((result) => result.status === "rejected") as PromiseRejectedResult[];
+        if (failed.length > 0) {
+            MessageBox.error(this.getText("main.delete.failed", [String(failed.length)]), {
+                details: failed.map((result) => String((result.reason as Error)?.message ?? result.reason)).join("\n")
+            });
+            table.refresh();    
+        } else {
+            MessageToast.show(this.getText("main.delete.success",[String(toDelete.length)]));
+        }
+        this.refreshCounts();
+    }
+
+
+    /* ---------- helpers ---------- */
     /**
-     * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-     * @memberOf brasmar.bm01.controloqualidade4.ext.main.Main
+     * Ao voltar do CQDetail (novo controlo gravado, alterado ou eliminado)
+     * atualiza a tabela e os contadores dos separadores.
+     * Na primeira entrada não faz nada para não duplicar o pedido inicial.
      */
-    // public onExit(): void {
-    //
-    //  }
+    private onRouteMatched(): void {
+        if (this.firstRouteMatch) {
+            this.firstRouteMatch = false;
+            return;
+        }
+        (this.byId("main_table") as TableAPI | undefined)?.refresh();
+        this.refreshCounts();
+    }
+
+    private refreshCounts(): void {
+        COUNT_TABS.forEach((id) => this.byId(id)?.getBinding("count")?.refresh());
+    }
+
+    private confirm(title: string, text: string): Promise<boolean> {
+        return new Promise((resolve) => {
+            MessageBox.confirm(text, {
+                title,
+                actions: [MessageBox.Action.DELETE, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.DELETE,
+                onClose: (action: string) => resolve(action === MessageBox.Action.DELETE)
+            })
+        });
+    }
+
+    private getText(key: string, args?: string[]): string {
+        const bundle = (this.getView()!.getModel("i18n") as ResourceModel).getResourceBundle() as ResourceBundle;
+        return bundle.getText(key, args) ?? key;
+    }
 }

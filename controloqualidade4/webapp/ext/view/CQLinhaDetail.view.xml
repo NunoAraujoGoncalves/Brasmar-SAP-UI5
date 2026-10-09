@@ -23,6 +23,12 @@
                 </f:content>
                 <f:actions>
                     <!-- <Button id="CQDetailLinha_dynamicPage_Edit" text="{i18n>CQLinhaDetail.btn.Edit}" type="Emphasized"></Button> -->
+                    <Button id="CQDetailLinha_dynamicPage_BalancaConfig" 
+                    text="{i18n>CQLinhaDetail.btn.BalancaConfig}"
+                    icon="sap-icon://action-settings"
+                    press=".onBalancaConfig"
+                    type="{= ${serial>/connected} ? 'Success' : 'Default' }"
+                    tooltip="{= ${serial>/connected} ? ${i18n>balancaCfg.status.connected} + ': ' + ${serial>/portLabel} : ${i18n>balancaCfg.status.disconnected} }"></Button>
                     <Button id="CQDetailLinha_dynamicPage_Calcular" text="{i18n>CQLinhaDetail.btn.Calcular}" type="Default" icon="sap-icon://simulate" press=".onCalcular" visible="{= ${ui>/isEditable} &amp;&amp; %{__OperationControl/doCalculations} === true }"></Button>
                 </f:actions>
             </f:DynamicPageTitle>
@@ -181,12 +187,12 @@
 
                                     <!-- Sal has a backend side effect (recalculates Salc) -->
                                     <form:FormElement id="CQDetailLinha_amostra_Sal_label" label="{i18n>CQLinhaDetail.amostra.Sal}" visible="{path: 'HideSal', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Sal" emptyIndicatorMode="On" text="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_amostra_Sal" emptyIndicatorMode="On" text="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout11" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_amostra_Sal_edit" value="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_amostra_Sal_edit" value="{path:'Sal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout12" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -407,12 +413,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Ppabertas_label" label="{i18n>CQLinhaDetail.amostra.Ppabertas}" visible="{path: 'HidePpabertas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Ppabertas" emptyIndicatorMode="On" text="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_amostra_Ppabertas" emptyIndicatorMode="On" text="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout46" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_amostra_Ppabertas_edit" value="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_amostra_Ppabertas_edit" value="{path:'Ppabertas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout47" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -433,12 +439,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Pbexternas_label" label="{i18n>CQLinhaDetail.amostra.Pbexternas}" visible="{path: 'HidePbexternas', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Pbexternas" emptyIndicatorMode="On" text="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_amostra_Pbexternas" emptyIndicatorMode="On" text="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout50" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_amostra_Pbexternas_edit" value="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_amostra_Pbexternas_edit" value="{path:'Pbexternas', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout51" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -485,12 +491,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_Humidade_label" label="{i18n>CQLinhaDetail.amostra.Humidade}" visible="{path: 'HideHumidade', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_Humidade" emptyIndicatorMode="On" text="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_amostra_Humidade" emptyIndicatorMode="On" text="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout58" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_amostra_Humidade_edit" value="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_amostra_Humidade_edit" value="{path:'Humidade', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout59" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -893,12 +899,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_amostra_PerdaPeso_label" label="{i18n>CQLinhaDetail.amostra.PerdaPeso}" visible="{path: 'HidePerdaPeso', formatter: '.formatter.hideFormatter'}">
-                                        <Text id="CQDetailLinha_amostra_PerdaPeso" emptyIndicatorMode="On" text="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_amostra_PerdaPeso" emptyIndicatorMode="On" text="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout121" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_amostra_PerdaPeso_edit" value="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:14,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_amostra_PerdaPeso_edit" value="{path:'PerdaPeso', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout122" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1006,12 +1012,12 @@
 
                                 <form:FormContainer id="CQDetailLinha_perdaPeso_container">
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPDeclarado_label" label="{i18n>CQLinhaDetail.perdaPeso.PPDeclarado}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPDeclarado" emptyIndicatorMode="On" text="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPDeclarado" emptyIndicatorMode="On" text="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout137" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPDeclarado_edit" value="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPDeclarado_edit" value="{path:'PPDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout138" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1019,12 +1025,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPBruto_label" label="{i18n>CQLinhaDetail.perdaPeso.PPBruto}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPBruto" emptyIndicatorMode="On" text="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPBruto" emptyIndicatorMode="On" text="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout139" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPBruto_edit" value="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPBruto_edit" value="{path:'PPBruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout140" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1032,12 +1038,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquido_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquido}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPLiquido" emptyIndicatorMode="On" text="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquido" emptyIndicatorMode="On" text="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout141" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPLiquido_edit" value="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPLiquido_edit" value="{path:'PPLiquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout142" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1045,12 +1051,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPLiquidoEsc_label" label="{i18n>CQLinhaDetail.perdaPeso.PPLiquidoEsc}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPLiquidoEsc" emptyIndicatorMode="On" text="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPLiquidoEsc" emptyIndicatorMode="On" text="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout143" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPLiquidoEsc_edit" value="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPLiquidoEsc_edit" value="{path:'PPLiquidoEsc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout144" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1058,12 +1064,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPAposDescong_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposDescong}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPAposDescong" emptyIndicatorMode="On" text="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposDescong" emptyIndicatorMode="On" text="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout145" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPAposDescong_edit" value="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPAposDescong_edit" value="{path:'PPAposDescong', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout146" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1071,12 +1077,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPAposCozer_label" label="{i18n>CQLinhaDetail.perdaPeso.PPAposCozer}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPAposCozer" emptyIndicatorMode="On" text="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPAposCozer" emptyIndicatorMode="On" text="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {PPUom}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout147" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPAposCozer_edit" value="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPAposCozer_edit" value="{path:'PPAposCozer', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{PPUom}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout148" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1094,12 +1100,12 @@
                                     </form:FormElement>
 
                                     <form:FormElement id="CQDetailLinha_perdaPeso_PPPercSal_label" label="{i18n>CQLinhaDetail.perdaPeso.PPPercSal}">
-                                        <Text id="CQDetailLinha_perdaPeso_PPPercSal" emptyIndicatorMode="On" text="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" visible="{= !${ui>/isEditable} }">
+                                        <Text id="CQDetailLinha_perdaPeso_PPPercSal" emptyIndicatorMode="On" text="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:16,scale:2}}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout149" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <Input id="CQDetailLinha_perdaPeso_PPPercSal_edit" value="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:16,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                        <Input id="CQDetailLinha_perdaPeso_PPPercSal_edit" value="{path:'PPPercSal', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:16,scale:2}}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout150" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
@@ -1137,21 +1143,30 @@
                                         <form:ColumnLayout id="CQDetailLinha_PesoCX_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </form:layout>
 
+                                    <form:toolbar>
+                                        <OverflowToolbar id="CQDetailLinha_Peso_toolbar">
+                                            <Button id="CQDetailLinha_Peso_btn_convertUm" text="{i18n>CQLinhaDetail.Peso.btn.convertUm}" icon="sap-icon://measure" type="Emphasized" press=".onPesosConverterUm" visible="{= ${ui>/isEditable}}"></Button>
+                                        </OverflowToolbar>
+                                    </form:toolbar>
+
                                     <form:FormContainer id="CQDetailLinha_PesoCX_container">
                                         <form:title>
                                             <core:Title id="CQDetailLinha_PesoCX_title" level="H4" text="{i18n>CQLinhaDetail.PesoCX.title}"></core:Title>
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPb_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPb}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPb" emptyIndicatorMode="On" text="{path:'UnSumPb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPb" emptyIndicatorMode="On" text="{path:'UnSumPb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPl_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPl}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPl" emptyIndicatorMode="On" text="{path:'UnSumPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPl" emptyIndicatorMode="On" text="{path:'UnSumPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPle_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPle}">
-                                            <Text id="CQDetailLinha_PesoCX_UnSumPle" emptyIndicatorMode="On" text="{path:'UnSumPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoCX_UnSumPle" emptyIndicatorMode="On" text="{path:'UnSumPle', 
+                                            type:'Decimal',
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                            constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
@@ -1163,33 +1178,44 @@
                                         <form:ColumnLayout id="CQDetailLinha_PesoUn_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </form:layout>
 
+                                    <form:toolbar>
+                                        <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar">
+                                            <Button id="CQDetailLinha_PesoUn_btn_balanca" 
+                                            text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" 
+                                            icon="sap-icon://compare-2" 
+                                            type="Emphasized" 
+                                            press=".onPesoUnBalanca" 
+                                            visible="{= ${ui>/isEditable}}"></Button>
+                                        </OverflowToolbar>
+                                    </form:toolbar>
+
                                     <form:FormContainer id="CQDetailLinha_PesoUn_container">
                                         <form:title>
                                             <core:Title id="CQDetailLinha_PesoUn_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.title}"></core:Title>
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPl}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMinPl" emptyIndicatorMode="On" text="{path:'CxMinPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPl" emptyIndicatorMode="On" text="{path:'CxMinPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_UnMedPl_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPl}">
-                                            <Text id="CQDetailLinha_PesoUn_UnMedPl" emptyIndicatorMode="On" text="{path:'UnMedPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPl" emptyIndicatorMode="On" text="{path:'UnMedPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPl}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMaxPl" emptyIndicatorMode="On" text="{path:'CxMaxPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPl" emptyIndicatorMode="On" text="{path:'CxMaxPl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPle}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMinPle" emptyIndicatorMode="On" text="{path:'CxMinPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMinPle" emptyIndicatorMode="On" text="{path:'CxMinPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_UnMedPle_label" label="{i18n>CQLinhaDetail.PesoUN.UnMedPle}">
-                                            <Text id="CQDetailLinha_PesoUn_UnMedPle" emptyIndicatorMode="On" text="{path:'UnMedPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_UnMedPle" emptyIndicatorMode="On" text="{path:'UnMedPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {UnUom}"></Text>
                                         </form:FormElement>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMaxPle_label" label="{i18n>CQLinhaDetail.PesoUN.CxMaxPle}">
-                                            <Text id="CQDetailLinha_PesoUn_CxMaxPle" emptyIndicatorMode="On" text="{path:'CxMaxPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
+                                            <Text id="CQDetailLinha_PesoUn_CxMaxPle" emptyIndicatorMode="On" text="{path:'CxMaxPle', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {CxUom}"></Text>
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
@@ -1218,6 +1244,18 @@
                                     <form:layout>
                                         <form:ColumnLayout id="CQDetailLinha_calibre_layout" columnsM="2" columnsL="3" columnsXL="6"/>
                                     </form:layout>
+
+                                    <form:toolbar>
+                                        <OverflowToolbar id="CQDetailLinha_calibre_toolbar">
+                                        <Button id="CQDetailLinha_calibre_btn_balanca" 
+                                            text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" 
+                                            icon="sap-icon://compare-2" 
+                                            type="Emphasized" 
+                                            press=".onPesoCalibreBalanca" 
+                                            visible="{= ${ui>/isEditable}}"></Button>
+                                            <Button id="CQDetailLinha_calibre_btn_convertUm" text="{i18n>CQLinhaDetail.calibre.convertUm}" icon="sap-icon://measure" type="Emphasized" press=".onCalibresConverterUm" visible="{= ${ui>/isEditable}}"></Button>
+                                        </OverflowToolbar>
+                                    </form:toolbar>
 
                                     <form:FormContainer id="CQDetailLinha_calibre_container">
                                         <form:FormElement id="CQDetailLinha_calibre_CalibreUom_label" label="{i18n>CQLinhaDetail.calibre.CalibreUom}">
