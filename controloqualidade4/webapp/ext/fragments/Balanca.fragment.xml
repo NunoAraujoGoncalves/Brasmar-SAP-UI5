@@ -1,20 +1,27 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
-    xmlns:form="sap.ui.layout.form"
-    > 
-    <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="400px" beforeOpen=".onBalancaBeforeOpen" afterOpen=".teste">
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="500px" beforeOpen=".onBalancaBeforeOpen" afterClose=".onBalancaAfterClose">
         <form:SimpleForm id="BalancaDialog_form" editable="true" labelSpanS="2">
-            <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onPressBalancaStart" />
-            <Button id="BalancaDialog_btn_stop" text="{i18n>BalancaDialog.btn.stop}" icon="sap-icon://media-pause" press=".onPressBalancaEnd" enabled="false" />
+            <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onPressBalancaStart" enabled="{= !${balanca>/reading} }"  />
+            <Button id="BalancaDialog_btn_stop" text="{i18n>BalancaDialog.btn.stop}" icon="sap-icon://media-pause" press=".onPressBalancaEnd" enabled="{balanca>/reading}" />
         </form:SimpleForm>
+
+        <!-- peso atual da balança + estado da sessão -->
+        <MessageStrip id="BalancaDialog_status" showIcon="true" class="sapUiSmallMarginBeginEnd sapUiTinyMarginBottom" type="{= ${balanca>/reading} ? 'Information' : 'None' }" text="{= ${balanca>/reading} ? ${i18n>BalancaDialog.status.reading} : ${i18n>BalancaDialog.status.idle} }">
+        </MessageStrip>
+        <HBox id="BalancaDialog_live" alignItems="Center" class="sapUiSmallMarginBeginEnd" visible="{serial>/connected}">
+            <Label id="BalancaDialog_live_label" text="{i18n>BalancaDialog.liveWeight}" class="sapUiTinyMarginEnd"/>
+            <ObjectNumber id="BalancaDialog_live_value" number="{serial>/lastReading/text}" emphasized="true"/>
+        </HBox>
 
         <Table id="BalancaDialog_table" growing="true" growingThreshold="10" mode="MultiSelect" items="{balanca>/PesosUn}">
             <headerToolbar>
                 <OverflowToolbar id="BalancaDialog_toolbar">
                     <Title id="BalancaDialog_table_title" text="{i18n>BalancaDialog.table.title}" />
                     <ToolbarSpacer id="BalancaDialog_table_spacer" />
-                    <Button id="BalancaDialog_table_btn_delete" text="{i18n>BalancaDialog.table.btn.delete}" enabled="true" press=".onPressBalancaDelete" />
+                    <Button id="BalancaDialog_table_btn_delete" text="{i18n>BalancaDialog.table.btn.delete}" enabled="{= !${balanca>/reading} }" press=".onPressBalancaDelete" />
                 </OverflowToolbar>
             </headerToolbar>
             <columns>
@@ -32,10 +39,10 @@
         </Table>
 
         <beginButton>
-            <Button id="BalancaDialog_btn_okay" text="{i18n>BalancaDialog.btn.okay}" icon="sap-icon://accept" press=".onPressOkayDialog" />
+            <Button id="BalancaDialog_btn_okay" text="{i18n>BalancaDialog.btn.okay}" icon="sap-icon://accept" press=".onPressOkayDialog" enabled="{= !${balanca>/reading} }" />
         </beginButton>
         <endButton>
-            <Button id="BalancaDialog_btn_close" text="{i18n>BalancaDialog.btn.close}" icon="sap-icon://decline" press=".onPressCloseDialog" />
+            <Button id="BalancaDialog_btn_close" text="{i18n>BalancaDialog.btn.close}" icon="sap-icon://decline" press=".onPressCloseDialog" enabled="{= !${balanca>/reading} }"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

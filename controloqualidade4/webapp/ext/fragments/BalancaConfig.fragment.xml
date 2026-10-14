@@ -51,6 +51,14 @@
                         <core:Item id="BalancaConfig_flowControl_none" key="none" text="{i18n>balancaCfg.flowControl.none}"/>
                         <core:Item id="BalancaConfig_flowControl_hardware" key="hardware" text="{i18n>balancaCfg.flowControl.hardware}"/>
                     </Select>
+
+                    <Label id="BalancaConfig_sendMode_label" text="{i18n>balancaCfg.sendMode}" labelFor="BalancaConfig_sendMode"/>
+                    <!-- not a port setting: stays editable while connected, saved immediately -->
+                    <Select id="BalancaConfig_sendMode" width="100%" selectedKey="{serial>/settings/sendMode}" change=".onSerialSendModeChange">
+                        <core:Item id="BalancaConfig_sendMode_continuous" key="continuous" text="{i18n>balancaCfg.sendMode.continuous}"/>
+                        <core:Item id="BalancaConfig_sendMode_perWeighing" key="perWeighing" text="{i18n>balancaCfg.sendMode.perWeighing}"/>
+                    </Select>
+
                     <Text id="BalancaConfig_settings_hint" text="{i18n>balancaCfg.settings.hint}" visible="{serial>/connected}"/>
 
                     <core:Title id="BalancaConfig_title_test" text="{i18n>balancaCfg.section.test}"/>

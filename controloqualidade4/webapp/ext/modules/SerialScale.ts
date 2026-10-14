@@ -1,6 +1,13 @@
 import Log from "sap/base/Log";
 import JSONModel from "sap/ui/model/json/JSONModel";
 
+/**
+ * Como a balança envia os pesos:
+ * - continuous: leituras contínuas (várias por segundo), a app deteta a pesagem estável
+ * - perWeighing: um valor por pesagem (a balança envia sozinha quando estável, ou na tecla imprimir)
+ */
+export type ScaleSendMode = "continuous" | "perWeighing";
+
 /* Port Settings */
 export type SerialSettings = {
     baudRate: string;
@@ -8,6 +15,7 @@ export type SerialSettings = {
     stopBits: string;
     parity: ParityType;
     flowControl: FlowControlType;
+    sendMode: ScaleSendMode; // not a port setting: used by the weighing dialog (can change while connected)
 };
 
 /** One value received from the scale */
@@ -29,6 +37,10 @@ export class SerialScaleError extends Error {
     }
 }
 
+export type ReadingListener = (reading: ScaleReading) => void;
+export type DisconnectListener = () => void;
+
+type Subscription = { onReading: ReadingListener; onDisconnect?: DisconnectListener };
 type PortItem = { key: string; label: string };
 type StoredSettings = Partial<SerialSettings> & { usbVendorId?: number; usbProductId?: number };
 
@@ -43,7 +55,8 @@ export const DEFAULT_SETTINGS: SerialSettings = {
     dataBits: "8",
     stopBits: "1",
     parity: "none",
-    flowControl: "hardware"
+    flowControl: "hardware",
+    sendMode: "continuous" 
 };
 
 
@@ -83,6 +96,7 @@ export class SerialScale {
     private readLoop?: Promise<void>;
     private keepReading = false;
     private waiters: ((reading: ScaleReading) => void)[] = [];
+    private readonly listeners = new Set<Subscription>();
 
     constructor() {
         this.model = new JSONModel({
@@ -209,6 +223,31 @@ export class SerialScale {
     }
 
 
+    /**
+     * Guarda já os parâmetros atuais (p.e. sendMode, que pode mudar com a balança ligada).
+     * Mantém os ids USB da porta ligada ou, se não houver, os que já estavam guardados.
+     */
+    public persistSettings(): void {
+        const stored = this.readStorage();
+        const info: SerialPortInfo = this.port?.getInfo()
+            ?? { usbVendorId: stored?.usbVendorId, usbProductId : stored?.usbProductId };
+        this.saveSettings(this.model.getProperty("/settings") as SerialSettings, info);    
+    }
+
+
+    /**
+     * Liga com a última porta e parâmetros guardados, sem passar pelo dialog de configuração.
+     * Não precisa de gesto do utilizador (só requestPort precisa). Sem porta autorizada -> erro "noPort".
+     */
+    public async ensureConnected(): Promise<void> {
+        if (this.port) {
+            return;
+        }
+        await this.refreshPorts();
+        await this.connect();
+    }
+
+
     /** metodo trigger quando perde ligação */
     public async disconnect(): Promise<void> {
         const port = this.port;
@@ -228,6 +267,7 @@ export class SerialScale {
             this.model.setProperty("/connected", false);
             this.model.setProperty("/portLabel", "");
             this.setBusy(false);
+            this.notifyDisconnect();
         }
     }
 
@@ -237,7 +277,7 @@ export class SerialScale {
      */
     public readNext(timeoutMs = 5000): Promise<ScaleReading> {
         if (!this.port) {
-            return Promise.reject(new SerialScaleError("notConnected"));            
+            return Promise.reject(new SerialScaleError("notConnected"));
         }
         return new Promise((resolve, reject) => {
             const waiter = (reading: ScaleReading): void => {
@@ -250,6 +290,21 @@ export class SerialScale {
             }, timeoutMs);
             this.waiters.push(waiter);
         });
+    }
+
+    /**
+     * Recebe TODOS os valores lidos da balança até chamar a função devolvida (unsubscribe).
+     * onDisconnect é chamado se a ligação terminar (Desligar, cabo); a subscrição acaba aí.
+     */
+    public subscibe(onReading: ReadingListener, onDisconnect?: DisconnectListener): () => void {
+        if (!this.port) {
+            throw new SerialScaleError("notConnected");
+        }
+        const subscription: Subscription = { onReading, onDisconnect };
+        this.listeners.add(subscription);
+        return () => {
+            this.listeners.delete(subscription)
+        };
     }
 
 
@@ -265,7 +320,7 @@ export class SerialScale {
             const reader = decoder.readable.pipeThrough(new TransformStream(new FrameTransformer())).getReader();
             this.reader = reader;
             try {
-                for (;;) {
+                for (; ;) {
                     const { value, done } = await reader.read();
                     if (done) {
                         break;
@@ -275,7 +330,7 @@ export class SerialScale {
                     }
                 }
             } catch (error) {
-                Log.warning("Serial read error", String(error), LOG_COMPONENT);                
+                Log.warning("Serial read error", String(error), LOG_COMPONENT);
             } finally {
                 reader.releaseLock();
                 await piped;
@@ -299,6 +354,27 @@ export class SerialScale {
         const waiters = this.waiters;
         this.waiters = [];
         waiters.forEach((waiter) => waiter(reading));
+
+        this.listeners.forEach((listener) => {
+            try {
+                listener.onReading(reading);
+            } catch (error) {
+                Log.error("Serial reading listener failed", String(error), LOG_COMPONENT);
+            }
+        });
+    }
+
+    /** Avisa as subscrições que a ligação terminou e remove-as */
+    private notifyDisconnect(): void {
+        const listeners = [...this.listeners];
+        this.listeners.clear();
+        listeners.forEach((listener) => {
+            try {
+                listener.onDisconnect?.();
+            } catch (error) {
+                Log.error("Serial disconnect listener failed", String(error), LOG_COMPONENT);
+            }
+        });
     }
 
 
@@ -341,7 +417,8 @@ export class SerialScale {
             dataBits: stored?.dataBits ?? DEFAULT_SETTINGS.dataBits,
             stopBits: stored?.stopBits ?? DEFAULT_SETTINGS.stopBits,
             parity: stored?.parity ?? DEFAULT_SETTINGS.parity,
-            flowControl: stored?.flowControl ?? DEFAULT_SETTINGS.flowControl
+            flowControl: stored?.flowControl ?? DEFAULT_SETTINGS.flowControl,
+            sendMode: stored?.sendMode ?? DEFAULT_SETTINGS.sendMode
         };
     }
 
@@ -360,7 +437,7 @@ export class SerialScale {
             const stored: StoredSettings = { ...settings, usbVendorId: info.usbVendorId, usbProductId: info.usbProductId };
             window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
         } catch (error) {
-             // storage not available (private mode, policy): defaults are used next time
+            // storage not available (private mode, policy): defaults are used next time
         }
     }
 }

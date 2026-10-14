@@ -693,8 +693,8 @@
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxtara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxtara}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Cxuomtara}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxtara_edit" value="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" description="{Cxuomtara}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxtara_edit" value="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxtara_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
@@ -761,8 +761,8 @@
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Untara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Untara}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Unuomtara}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_un_Untara_edit" value="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" description="{Unuomtara}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Untara" emptyIndicatorMode="On" text="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Untara_edit" value="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Untara_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>

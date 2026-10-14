@@ -23,12 +23,7 @@
                 </f:content>
                 <f:actions>
                     <!-- <Button id="CQDetailLinha_dynamicPage_Edit" text="{i18n>CQLinhaDetail.btn.Edit}" type="Emphasized"></Button> -->
-                    <Button id="CQDetailLinha_dynamicPage_BalancaConfig" 
-                    text="{i18n>CQLinhaDetail.btn.BalancaConfig}"
-                    icon="sap-icon://action-settings"
-                    press=".onBalancaConfig"
-                    type="{= ${serial>/connected} ? 'Success' : 'Default' }"
-                    tooltip="{= ${serial>/connected} ? ${i18n>balancaCfg.status.connected} + ': ' + ${serial>/portLabel} : ${i18n>balancaCfg.status.disconnected} }"></Button>
+                    <Button id="CQDetailLinha_dynamicPage_BalancaConfig" text="{i18n>CQLinhaDetail.btn.BalancaConfig}" icon="sap-icon://action-settings" press=".onBalancaConfig" type="{= ${serial>/connected} ? 'Success' : 'Default' }" tooltip="{= ${serial>/connected} ? ${i18n>balancaCfg.status.connected} + ': ' + ${serial>/portLabel} : ${i18n>balancaCfg.status.disconnected} }"></Button>
                     <Button id="CQDetailLinha_dynamicPage_Calcular" text="{i18n>CQLinhaDetail.btn.Calcular}" type="Default" icon="sap-icon://simulate" press=".onCalcular" visible="{= ${ui>/isEditable} &amp;&amp; %{__OperationControl/doCalculations} === true }"></Button>
                 </f:actions>
             </f:DynamicPageTitle>
@@ -1137,6 +1132,9 @@
                             </form:Form>
 
                             <Title id="CQDetailLinha_Peso_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.Peso.title}"></Title>
+
+                            <Title id="CQDetailLinha_Peso_cx_title" titleStyle="H4" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.PesoCX.title}"></Title>
+
                             <layout:Grid id="CQDetailLinha_Peso_grid" defaultSpan="XL12 L12 M12 S12" hSpacing="0" class="sapUiTinyMarginTop">
                                 <form:Form id="CQDetailLinha_PesoCX" editable="false">
                                     <form:layout>
@@ -1170,8 +1168,16 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
-                                <macros:Table id="CQDetailLinha_PesoCX_table" header="{i18n>CQLinhaDetail.PesoCX.title}" metaPath="_PesosCX/@com.sap.vocabularies.UI.v1.LineItem" />
+                                <macros:Table id="CQDetailLinha_PesoCX_table" header="{i18n>CQLinhaDetail.PesoCX.title}" metaPath="_PesosCX/@com.sap.vocabularies.UI.v1.LineItem">
+                                    <macros:columns>
+                                        <macros:Column id="CQDetailLinha_PesoCX_column_balanca" key="pesoCx_balanca" header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" anchor="DataField::Pb" placement="Before" width="8rem" importance="High">
+                                            <Button id="CQDetailLinha_PesoCX_btn_balanca" icon="sap-icon://compare" type="Emphasized" text="{i18n>CQLinhaDetail.PesoCX.balanca.column}" tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" press=".onPesoCxBalanca" visible="{ui>/isEditable}" enabled="{= !${balanca>/reading} }"/>
+                                        </macros:Column>
+                                    </macros:columns>
+                                </macros:Table>
 
+
+                                <Title id="CQDetailLinha_PesoUn_title" titleStyle="H4" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.PesoUN.title}"></Title>
 
                                 <form:Form id="CQDetailLinha_PesoUn" editable="false">
                                     <form:layout>
@@ -1180,18 +1186,13 @@
 
                                     <form:toolbar>
                                         <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar">
-                                            <Button id="CQDetailLinha_PesoUn_btn_balanca" 
-                                            text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" 
-                                            icon="sap-icon://compare-2" 
-                                            type="Emphasized" 
-                                            press=".onPesoUnBalanca" 
-                                            visible="{= ${ui>/isEditable}}"></Button>
+                                            <Button id="CQDetailLinha_PesoUn_btn_balanca" text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" icon="sap-icon://compare-2" type="Emphasized" press=".onPesoUnBalanca" visible="{= ${ui>/isEditable}}"></Button>
                                         </OverflowToolbar>
                                     </form:toolbar>
 
                                     <form:FormContainer id="CQDetailLinha_PesoUn_container">
                                         <form:title>
-                                            <core:Title id="CQDetailLinha_PesoUn_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.title}"></core:Title>
+                                            <core:Title id="CQDetailLinha_PesoUn_form_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.title}"></core:Title>
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPl}">
@@ -1219,6 +1220,9 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
+                                <!-- <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar">
+                                    <Button id="CQDetailLinha_PesoUn_btn_balanca" text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" icon="sap-icon://compare-2" type="Emphasized" press=".onPesoUnBalanca" visible="{= ${ui>/isEditable}}"></Button>
+                                </OverflowToolbar> -->
                                 <macros:Table id="CQDetailLinha_PesoUn_table" header="{i18n>CQLinhaDetail.PesoUN.title}" metaPath="_PesosUn/@com.sap.vocabularies.UI.v1.LineItem" />
                             </layout:Grid>
 
@@ -1235,7 +1239,37 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
-                                <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.Vidragem.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem" />
+                                <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.Vidragem.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem">
+                                    <macros:columns>
+                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPl" 
+                                                key="pesoPl_Vid_balanca" 
+                                                header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" 
+                                                anchor="DataField::Pl" placement="Before" width="8rem" importance="High">
+                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPl" 
+                                            icon="sap-icon://compare"
+                                             type="Emphasized" 
+                                             text="{i18n>CQLinhaDetail.PesoCX.balanca.column}"
+                                              tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" 
+                                              press=".onPesoVidPlBalanca" 
+                                              visible="{ui>/isEditable}" 
+                                              enabled="{= !${balanca>/reading} }"/>
+                                        </macros:Column>
+
+                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPle" 
+                                                key="pesoPle_vid_balanca" 
+                                                header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" 
+                                                anchor="DataField::Ple" placement="Before" width="8rem" importance="High">
+                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPle" 
+                                            icon="sap-icon://compare"
+                                             type="Emphasized" 
+                                             text="{i18n>CQLinhaDetail.PesoCX.balanca.column}"
+                                              tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" 
+                                              press=".onPesoVidPleBalanca" 
+                                              visible="{ui>/isEditable}" 
+                                              enabled="{= !${balanca>/reading} }"/>
+                                        </macros:Column>
+                                    </macros:columns>
+                                </macros:Table>
                             </layout:Grid>
 
                             <Title id="CQDetailLinha_calibre_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.calibre.title}"></Title>
@@ -1247,12 +1281,7 @@
 
                                     <form:toolbar>
                                         <OverflowToolbar id="CQDetailLinha_calibre_toolbar">
-                                        <Button id="CQDetailLinha_calibre_btn_balanca" 
-                                            text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" 
-                                            icon="sap-icon://compare-2" 
-                                            type="Emphasized" 
-                                            press=".onPesoCalibreBalanca" 
-                                            visible="{= ${ui>/isEditable}}"></Button>
+                                            <Button id="CQDetailLinha_calibre_btn_balanca" text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" icon="sap-icon://compare-2" type="Emphasized" press=".onPesoCalibreBalanca" visible="{= ${ui>/isEditable}}"></Button>
                                             <Button id="CQDetailLinha_calibre_btn_convertUm" text="{i18n>CQLinhaDetail.calibre.convertUm}" icon="sap-icon://measure" type="Emphasized" press=".onCalibresConverterUm" visible="{= ${ui>/isEditable}}"></Button>
                                         </OverflowToolbar>
                                     </form:toolbar>

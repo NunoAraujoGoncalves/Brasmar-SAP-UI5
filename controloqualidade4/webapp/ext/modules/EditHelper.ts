@@ -621,11 +621,20 @@ export default class EditHelper {
             ?? this.getPropertyBinding(control, "state");
 
         const context = control.getBindingContext() as Context | null | undefined;
-        if (!binding || !context) {
+        const property = binding?.getPath();
+        if (!binding || !context || !property) {
             return;
         }
 
-        const property = binding.getPath();
+        await this.requestPropertySideEffects(context, property);
+    }
+
+    /**
+     * Side effects de uma propriedade de uma entidade (SideEffects#SAP__Field_<propriedade> + descrição Common.Text).
+     * Usado pelos campos de input e também quando o código escreve a propriedade diretamente
+     * (p.e. Pb lido da balança com context.setProperty, que não dispara side effects sozinho).
+     */
+    public async requestPropertySideEffects(context: Context, property: string): Promise<void> {
         const metaModel = (context.getModel() as ODataModel).getMetaModel();
         const entityMetaPath = metaModel.getMetaPath(context.getPath());
 
@@ -650,6 +659,7 @@ export default class EditHelper {
             await context.requestSideEffects(targets);
         }
     }
+
 
     /* ---------- messages ---------- */
     public openMessages(button: Button): void {
