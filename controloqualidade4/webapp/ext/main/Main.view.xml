@@ -5,6 +5,9 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:f="sap.f" controllerName="brasmar.bm01.controloqualidade4.ext.main.Main">
     <Page id="main_pageId">
+        <headerContent>
+            <Button id="main_btn_create" text="{i18n>main.btn.create}" type="Default" icon="sap-icon://add-document" press=".onCreate"></Button>
+        </headerContent>
         <IconTabBar id="main_IconTabBar" expanded="false" select=".onFilterSelect">
             <items>
                 <IconTabFilter id="main_IconTabBar_todos" icon="sap-icon://inventory" iconColor="Neutral" text="{i18n>main.todos}" key="all" count="{/CQCab/$count}"/>
@@ -23,7 +26,8 @@
             </items>
             <content>
                 <Panel id="main_filter_panel" expandable="true" headerText="{i18n>main.filtros}">
-                    <macros:FilterBar id="main_filter" metaPath="@com.sap.vocabularies.UI.v1.SelectionFields"/>
+                    <macros:FilterBar id="main_filter" metaPath="@com.sap.vocabularies.UI.v1.SelectionFields">
+                    </macros:FilterBar>
                 </Panel>
                 <Panel id="main_tabela_panel">
                     <!-- <VBox id="mainVbox"> -->

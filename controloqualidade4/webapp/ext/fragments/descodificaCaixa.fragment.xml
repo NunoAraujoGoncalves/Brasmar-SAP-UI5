@@ -2,12 +2,12 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:form="sap.ui.layout.form">
-    <Dialog id="descodificaCBDialog" title="{i18n>cbcaixa.title}" binding="{com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBCaixa(...)}" contentWidth="400px">
+    <Dialog id="descodificaCBDialog" title="{i18n>cbcaixa.title}" binding="{com.sap.gateway.srvd.zui_tabcq_o4.v0001.descodificaCBCaixa(...)}" contentWidth="450px">
 
-        <form:SimpleForm id="descodificaCBForm" binding="{$Parameter}" editable="true" labelSpanS="4">
+        <form:SimpleForm id="descodificaCBForm" binding="{$Parameter}" editable="true" columnsXL="1" columnsL="1">
             <Label id="descodificaCBLabel" text="{i18n>cbcaixa.cb.label}" />
             <Input id="descodificaCBInput" value="{CodigoBarras}" />
-            <Label id="empty" text="" />
+            <!-- <Label id="empty" text="" /> -->
             <Button id="descodifica" text="{i18n>cbcaixa.btn.descodificar}" press=".onPressDescodifica" />
         </form:SimpleForm>
         <List id="descodificaCBList" items="{value}" busyIndicatorDelay="10">

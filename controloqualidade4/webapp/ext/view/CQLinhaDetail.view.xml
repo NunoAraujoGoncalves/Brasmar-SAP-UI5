@@ -1142,14 +1142,40 @@
                                     </form:layout>
 
                                     <form:toolbar>
-                                        <OverflowToolbar id="CQDetailLinha_Peso_toolbar">
+                                        <OverflowToolbar id="CQDetailLinha_Peso_toolbar" visible="{= ${ui>/isEditable}}">
                                             <Button id="CQDetailLinha_Peso_btn_convertUm" text="{i18n>CQLinhaDetail.Peso.btn.convertUm}" icon="sap-icon://measure" type="Emphasized" press=".onPesosConverterUm" visible="{= ${ui>/isEditable}}"></Button>
                                         </OverflowToolbar>
                                     </form:toolbar>
 
                                     <form:FormContainer id="CQDetailLinha_PesoCX_container">
                                         <form:title>
-                                            <core:Title id="CQDetailLinha_PesoCX_title" level="H4" text="{i18n>CQLinhaDetail.PesoCX.title}"></core:Title>
+                                            <core:Title id="CQDetailLinha_PesoCX_title" level="H4" text="{i18n>CQLinhaDetail.PesoCX.container.dim}"></core:Title>
+                                        </form:title>
+
+                                        <form:FormElement id="CQDetailLinha_PesoCX_Cxpesobruto_label" label="{i18n>CQLinhaDetail.PesoCX.Cxpesobruto}">
+                                            <Text id="CQDetailLinha_PesoCX_Cxpesobruto" emptyIndicatorMode="On" text="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}"></Text>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_PesoCX_Cxpesoliquido_label" label="{i18n>CQLinhaDetail.PesoCX.Cxpesoliquido}">
+                                            <Text id="CQDetailLinha_PesoCX_Cxpesoliquido" emptyIndicatorMode="On" text="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoCX_Cxpesoliquidoesc_label" label="{i18n>CQLinhaDetail.PesoCX.Cxpesoliquidoesc}">
+                                            <Text id="CQDetailLinha_PesoCX_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoCX_Cxtara_label" label="{i18n>CQLinhaDetail.PesoCX.Cxtara}">
+                                            <Text id="CQDetailLinha_PesoCX_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+
+                                </form:Form>
+                                <form:Form id="CQDetailLinha_PesoCX2" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_PesoCX_layout2" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_PesoCX_container2">
+                                        <form:title>
+                                            <core:Title id="CQDetailLinha_PesoCX_title1" level="H4" text="{i18n>CQLinhaDetail.PesoCX.container.resumo}"></core:Title>
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoCX_UnSumPb_label" label="{i18n>CQLinhaDetail.PesoCX.UnSumPb}">
@@ -1168,6 +1194,8 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
+
+
                                 <macros:Table id="CQDetailLinha_PesoCX_table" header="{i18n>CQLinhaDetail.PesoCX.title}" metaPath="_PesosCX/@com.sap.vocabularies.UI.v1.LineItem">
                                     <macros:columns>
                                         <macros:Column id="CQDetailLinha_PesoCX_column_balanca" key="pesoCx_balanca" header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" anchor="DataField::Pb" placement="Before" width="8rem" importance="High">
@@ -1185,14 +1213,43 @@
                                     </form:layout>
 
                                     <form:toolbar>
-                                        <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar">
+                                        <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar" visible="{= ${ui>/isEditable}}">
                                             <Button id="CQDetailLinha_PesoUn_btn_balanca" text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" icon="sap-icon://compare-2" type="Emphasized" press=".onPesoUnBalanca" visible="{= ${ui>/isEditable}}"></Button>
                                         </OverflowToolbar>
                                     </form:toolbar>
 
                                     <form:FormContainer id="CQDetailLinha_PesoUn_container">
                                         <form:title>
-                                            <core:Title id="CQDetailLinha_PesoUn_form_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.title}"></core:Title>
+                                            <core:Title id="CQDetailLinha_PesoUn_form_title" level="H4" text="{i18n>CQLinhaDetail.PesoUN.container.dim}"></core:Title>
+                                        </form:title>
+
+                                        <form:FormElement id="CQDetailLinha_PesoUn_Nembalporcaixa_label" label="{i18n>CQLinhaDetail.PesoUN.Nembalporcaixa}">
+                                            <Text id="CQDetailLinha_PesoUn_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoUn_Unpesobruto_label" label="{i18n>CQLinhaDetail.PesoUN.Unpesobruto}">
+                                            <Text id="CQDetailLinha_PesoUn_Unpesobruto" emptyIndicatorMode="On" text="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoUn_Unpesoliquido_label" label="{i18n>CQLinhaDetail.PesoUN.Unpesoliquido}">
+                                            <Text id="CQDetailLinha_PesoUn_Unpesoliquido" emptyIndicatorMode="On" text="{path:'Unpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoUn_Unpesoliquidoesc_label" label="{i18n>CQLinhaDetail.PesoUN.Unpesoliquidoesc}">
+                                            <Text id="CQDetailLinha_PesoUn_Unpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}"></Text>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_PesoUn_Untara_label" label="{i18n>CQLinhaDetail.PesoUN.Untara}">
+                                            <Text id="CQDetailLinha_PesoUn_Untara" emptyIndicatorMode="On" text="{path:'Untara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}"></Text>
+                                        </form:FormElement>
+                                    </form:FormContainer>
+
+                                </form:Form>
+
+                                <form:Form id="CQDetailLinha_PesoUn2" editable="false">
+                                    <form:layout>
+                                        <form:ColumnLayout id="CQDetailLinha_PesoUn_layout2" columnsM="2" columnsL="3" columnsXL="6"/>
+                                    </form:layout>
+
+                                    <form:FormContainer id="CQDetailLinha_PesoUn_container2">
+                                        <form:title>
+                                            <core:Title id="CQDetailLinha_PesoUn_form_title2" level="H4" text="{i18n>CQLinhaDetail.PesoUN.container.resumo}"></core:Title>
                                         </form:title>
 
                                         <form:FormElement id="CQDetailLinha_PesoUn_CxMinPl_label" label="{i18n>CQLinhaDetail.PesoUN.CxMinPl}">
@@ -1220,9 +1277,6 @@
                                         </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
-                                <!-- <OverflowToolbar id="CQDetailLinha_PesoUn_toolbar">
-                                    <Button id="CQDetailLinha_PesoUn_btn_balanca" text="{i18n>CQLinhaDetail.PesoUN.btn.balanca}" icon="sap-icon://compare-2" type="Emphasized" press=".onPesoUnBalanca" visible="{= ${ui>/isEditable}}"></Button>
-                                </OverflowToolbar> -->
                                 <macros:Table id="CQDetailLinha_PesoUn_table" header="{i18n>CQLinhaDetail.PesoUN.title}" metaPath="_PesosUn/@com.sap.vocabularies.UI.v1.LineItem" />
                             </layout:Grid>
 
@@ -1237,36 +1291,23 @@
                                         <form:FormElement id="CQDetailLinha_vidragem_MedVidragem_label" label="{i18n>CQLinhaDetail.Vidragem.MedVidragem}">
                                             <Text id="CQDetailLinha_vidragem_MedVidragem" emptyIndicatorMode="On" text="{MedVidragem}"></Text>
                                         </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_vidragem_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
+                                            <Text id="CQDetailLinha_vidragem_Teorvidragem" emptyIndicatorMode="On" text="{path:'Teorvidragem', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}"/>
+                                        </form:FormElement>
+                                        <form:FormElement id="CQDetailLinha_vidragem_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
+                                            <Text id="CQDetailLinha_vidragem_VidragemM" emptyIndicatorMode="On" text="{path:'VidragemM', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}"/>
+                                        </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
                                 <macros:Table id="CQDetailLinha_Vidragem_table" header="{i18n>CQLinhaDetail.Vidragem.title}" metaPath="_Vidragens/@com.sap.vocabularies.UI.v1.LineItem">
                                     <macros:columns>
-                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPl" 
-                                                key="pesoPl_Vid_balanca" 
-                                                header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" 
-                                                anchor="DataField::Pl" placement="Before" width="8rem" importance="High">
-                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPl" 
-                                            icon="sap-icon://compare"
-                                             type="Emphasized" 
-                                             text="{i18n>CQLinhaDetail.PesoCX.balanca.column}"
-                                              tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" 
-                                              press=".onPesoVidPlBalanca" 
-                                              visible="{ui>/isEditable}" 
-                                              enabled="{= !${balanca>/reading} }"/>
+                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPl" key="pesoPl_Vid_balanca" header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" anchor="DataField::Pl" placement="Before" width="8rem" importance="High">
+                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPl" icon="sap-icon://compare" type="Emphasized" text="{i18n>CQLinhaDetail.PesoCX.balanca.column}" tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" press=".onPesoVidPlBalanca" visible="{ui>/isEditable}" enabled="{= !${balanca>/reading} }"/>
                                         </macros:Column>
 
-                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPle" 
-                                                key="pesoPle_vid_balanca" 
-                                                header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" 
-                                                anchor="DataField::Ple" placement="Before" width="8rem" importance="High">
-                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPle" 
-                                            icon="sap-icon://compare"
-                                             type="Emphasized" 
-                                             text="{i18n>CQLinhaDetail.PesoCX.balanca.column}"
-                                              tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" 
-                                              press=".onPesoVidPleBalanca" 
-                                              visible="{ui>/isEditable}" 
-                                              enabled="{= !${balanca>/reading} }"/>
+                                        <macros:Column id="CQDetailLinha_Vidragem_column_balancaPle" key="pesoPle_vid_balanca" header="{i18n>CQLinhaDetail.PesoCX.balanca.column}" anchor="DataField::Ple" placement="Before" width="8rem" importance="High">
+                                            <Button id="CQDetailLinha_Vidragem_btn_balancaPle" icon="sap-icon://compare" type="Emphasized" text="{i18n>CQLinhaDetail.PesoCX.balanca.column}" tooltip="{i18n>CQLinhaDetail.PesoCX.balanca.tooltip}" press=".onPesoVidPleBalanca" visible="{ui>/isEditable}" enabled="{= !${balanca>/reading} }"/>
                                         </macros:Column>
                                     </macros:columns>
                                 </macros:Table>
@@ -1299,6 +1340,14 @@
                                                 </layoutData>
                                             </Select>
                                         </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_calibre_Calibremin_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremin}">
+                                            <Text id="CQDetailLinha_calibre_Calibremin" emptyIndicatorMode="On" text="{path:'Calibremin', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:16,scale:2}}"/>
+                                        </form:FormElement>
+
+                                        <form:FormElement id="CQDetailLinha_calibre_Calibremax_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Calibremax}">
+                                            <Text id="CQDetailLinha_calibre_Calibremax" emptyIndicatorMode="On" text="{path:'Calibremax', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:16,scale:2}}"/>
+                                        </form:FormElement>
                                     </form:FormContainer>
                                 </form:Form>
                                 <macros:Table id="CQDetailLinha_calibre_table" header="{i18n>CQLinhaDetail.calibre.title}" metaPath="_Calibres/@com.sap.vocabularies.UI.v1.LineItem" />
@@ -1323,6 +1372,24 @@
                                 </form:Form>
                                 <macros:Table id="CQDetailLinha_Temperatura_table" header="{i18n>CQLinhaDetail.Temperatura.title}" metaPath="_Temperaturas/@com.sap.vocabularies.UI.v1.LineItem" />
                             </layout:Grid>
+
+                            <!-- Observações Linha  -->
+                            <Title id="CQDetailLinha_Observacoes_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.Observacoes.title}"></Title>
+                            <form:Form id="CQDetailLinha_Observacoes_form" editable="{ui>/isEditable}" class="sapUiTinyMarginTop">
+                                <form:layout>
+                                    <form:ColumnLayout id="CQDetailLinha_Observacoes_form_layout" columnsM="1" columnsL="1" columnsXL="1"></form:ColumnLayout>
+                                </form:layout>
+                                <form:FormContainer id="CQDetailLinha_Observacoes_container">
+                                    <form:FormElement id="CQDetailLinha_Observacoes_elem">
+                                        <Text id="CQDetailLinha_Observacoes_obs" emptyIndicatorMode="On" text="{ObsLin}" visible="{= !${ui>/isEditable} }"></Text>
+                                        <TextArea id="CQDetailLinha_Observacoes_obs_input" value="{ObsLin}" rows="4" growing="true" width="100%" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_Observacoes_obs_input_layout" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </TextArea>
+                                    </form:FormElement>
+                                </form:FormContainer>
+                            </form:Form>
                         </VBox>
                     </ScrollContainer>
                 </content>

@@ -757,6 +757,21 @@
                 <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="18"/>
                 <Property Name="MaterialDesc" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="Lote" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Cxpesobruto" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Cxpesoliquido" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Cxpesoliquidoesc" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Cxtara" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="4"/>
+                <Property Name="Cxuompeso" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Nembalporcaixa" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Unpesobruto" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Unpesoliquido" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Unpesoliquidoesc" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Untara" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="4"/>
+                <Property Name="Unuompeso" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Teorvidragem" Type="Edm.Decimal" Nullable="false" Precision="4" Scale="2"/>
+                <Property Name="VidragemM" Type="Edm.Decimal" Nullable="false" Precision="4" Scale="2"/>
+                <Property Name="Calibremin" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
+                <Property Name="Calibremax" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
                 <Property Name="ParentDraftUUID" Type="Edm.Guid"/>
@@ -6001,6 +6016,77 @@
                 <Annotation Term="SAP__common.Label" String="Batch"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Batch Number"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Cxpesobruto">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Cxuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Cxpesoliquido">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Cxuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Cxpesoliquidoesc">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Cxuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Cxtara">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Cxuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Profile Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 4 Decimal Places and +/- Sign"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Cxuompeso">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Base Unit of Measure"/>
+                <Annotation Term="SAP__common.Heading" String="BUn"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Nembalporcaixa">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="INT4"/>
+                <Annotation Term="SAP__common.QuickInfo" String="4 Byte Signed Integer"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Unpesobruto">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Unuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Unpesoliquido">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Unuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Unpesoliquidoesc">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Unuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Untara">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__measures.Unit" Path="Unuompeso"/>
+                <Annotation Term="SAP__common.Label" String="Profile Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 4 Decimal Places and +/- Sign"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Unuompeso">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Base Unit of Measure"/>
+                <Annotation Term="SAP__common.Heading" String="BUn"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Teorvidragem">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/VidragemM">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Calibremin">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Calibremax">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/HasDraftEntity">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
@@ -10566,6 +10652,7 @@
                         <PropertyPath>Responsavel</PropertyPath>
                         <PropertyPath>Documento</PropertyPath>
                         <PropertyPath>Nexportador</PropertyPath>
+                        <PropertyPath>Datacriacao</PropertyPath>
                     </Collection>
                 </Annotation>
                 <Annotation Term="Communication.Contact">

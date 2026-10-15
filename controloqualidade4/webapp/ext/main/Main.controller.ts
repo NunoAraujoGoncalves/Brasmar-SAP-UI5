@@ -6,6 +6,7 @@ import MessageToast from "sap/m/MessageToast";
 import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
+import JSONModel from "sap/ui/model/json/JSONModel";
 
 const COUNT_TABS = ["main_IconTabBar_todos", "main_IconTabBar_pendentes", "main_IconTabBar_concluidos", "main_IconTabBar_aprovados"];
 
@@ -90,7 +91,7 @@ export default class Main extends Controller {
         const confirmed = await this.confirm(
             this.getText("main.delete.title"),
             this.getText("main.delete.confirm", [String(toDelete.length)])
-                + (skipped > 0 ? `\n\n${this.getText("main.delete.skipped",[String(skipped)])}` : "")
+            + (skipped > 0 ? `\n\n${this.getText("main.delete.skipped", [String(skipped)])}` : "")
         );
 
         if (!confirmed) {
@@ -106,9 +107,9 @@ export default class Main extends Controller {
             MessageBox.error(this.getText("main.delete.failed", [String(failed.length)]), {
                 details: failed.map((result) => String((result.reason as Error)?.message ?? result.reason)).join("\n")
             });
-            table.refresh();    
+            table.refresh();
         } else {
-            MessageToast.show(this.getText("main.delete.success",[String(toDelete.length)]));
+            MessageToast.show(this.getText("main.delete.success", [String(toDelete.length)]));
         }
         this.refreshCounts();
     }
@@ -127,6 +128,12 @@ export default class Main extends Controller {
         }
         (this.byId("main_table") as TableAPI | undefined)?.refresh();
         this.refreshCounts();
+
+        const uiModel = this.getView()?.getModel("ui") as JSONModel | undefined;
+        if (uiModel && uiModel.getProperty("/isEditable") !== false) {
+            uiModel?.setProperty("/isEditable", false);
+            uiModel.setProperty("/editMode", "Display");
+        }
     }
 
     private refreshCounts(): void {
