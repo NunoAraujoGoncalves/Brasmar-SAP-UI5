@@ -29,6 +29,8 @@
 
                     <Button id="CQDetail_dynamicPage_Edit" text="{i18n>cqDetail.btn.edit}" icon="sap-icon://edit" type="Emphasized" press=".onEdit" visible="{= !${ui>/isEditable} &amp;&amp; %{__OperationControl/Edit} === true }"/>
                     <Button id="CQDetail_dynamicPage_Delete" text="{i18n>cqDetail.btn.delete}" icon="sap-icon://delete" type="Transparent" press=".onDelete" visible="{= !${ui>/isEditable} &amp;&amp; %{__EntityControl/Deletable} === true }"/>
+                    
+                    <Button id="CQDetail_dynamicPage_Email" text="{i18n>cqDetail.btn.email}" icon="sap-icon://email" type="Transparent" press=".onMail" visible="true"/>
                     <Button id="CQDetail_dynamicPage_Print" text="{i18n>cqDetail.btn.print}" icon="sap-icon://print" type="Transparent" press=".onPrint" visible="{= %{__OperationControl/printCQ} === true }"/>
                     <Button id="CQDetail_dynamicPage_Copy" text="{i18n>cqDetail.btn.copy}" icon="sap-icon://copy" type="Transparent" press=".onCopy" visible="{= %{__OperationControl/copy2} === true }"/>
                     <Button id="CQDetail_dynamicPage_ModifyMaterial" text="{i18n>cqDetail.btn.modifyMaterial}" icon="sap-icon://product" type="Transparent" press=".onChangeMaterial" visible="{= ${ui>/isEditable} &amp;&amp; %{__OperationControl/changeMat} === true }"/>
@@ -157,11 +159,17 @@
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_ATestemunho_label" label="{i18n>cqDetail.dadosProduto.ss.material.ATestemunho}">
                                             <Text id="CQDetail_subSection_material_ATestemunho" emptyIndicatorMode="On" text="{ATestemunho}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_material_ATestemunho_edit" value="{ATestemunho}" maxLength="1" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <!-- <Input id="CQDetail_subSection_material_ATestemunho_edit" value="{ATestemunho}" maxLength="1" change=".onFieldChange" visible="{ui>/isEditable}">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_material_ATestemunho_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
-                                            </Input>
+                                            </Input> -->
+                                            <Select id="CQDetail_subSection_material_ATestemunho_edit" selectedKey="{ATestemunho}" forceSelection="false" width="100%" change=".onFieldChange" visible="{ui>/isEditable}" app:valueList="true">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_material_ATestemunho_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Select>
+
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_material_NCaixa_label" label="{i18n>cqDetail.dadosProduto.ss.material.NCaixa}">
                                             <Text id="CQDetail_subSection_material_NCaixa" emptyIndicatorMode="On" text="{NCaixa}" visible="{= !${ui>/isEditable} }"/>
@@ -280,12 +288,28 @@
                                         <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
                                             <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{path:'VidragemM', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}"/>
                                         </l:FormElement>
-                                        <l:FormElement id="CQDetail_subSection_lote_Nomecientifico_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Nomecientifico}">
-                                            <Text id="CQDetail_subSection_lote_Nomecientifico" emptyIndicatorMode="On" text="{parts:[ 'Nomecientifico', 'NomecientificoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
-                                        </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Tipocaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipocaptura}">
                                             <Text id="CQDetail_subSection_lote_Tipocaptura" emptyIndicatorMode="On" text="{parts:[ 'Tipocaptura', 'TipocapturaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
+
+                                        <!-- <l:FormElement id="CQDetail_subSection_lote_MMMarca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMMarca}">
+                                            <ObjectStatus id="CQDetail_subSection_lote_MMMarca" class="sapUiNoMargin" icon="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailIconFormatter'}" state="{parts:[ 'Marca', 'MMMarca' ], formatter:'.formatter.detailStatusFormatter'}" text="{parts:[ 'MMMarca', 'MMMarcaDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
+                                        </l:FormElement> -->
+
+                                        <l:FormElement id="CQDetail_subSection_lote_Nomecientifico_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Nomecientifico}">
+                                            <Text id="CQDetail_subSection_lote_Nomecientifico" emptyIndicatorMode="On" text="{parts:[ 'Nomecientifico', 'NomecientificoDesc' ], formatter:'.formatter.detailFieldFormatter'}" visible="{= !${ui>/isEditable} || ${HideNomeCientifico} }"/>
+
+                                            <Input id="CQDetail_subSection_lote_Nomecientifico_edit" value="{parts:[{path:'Nomecientifico'}, {path:'NomecientificoDesc'}], type:'CodeDescType', useRawValues:true}" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; !${HideNomeCientifico} }">
+
+
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_lote_Nomecientifico_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
+                                        </l:FormElement>
+
+
+
                                     </l:FormContainer>
                                     <l:FormContainer id="CQDetail_subSection_lote_container2">
                                         <l:FormElement id="CQDetail_subSection_lote_MMMarca_label" label="{i18n>cqDetail.dadosProduto.ss.lote.MMMarca}">
@@ -601,17 +625,7 @@
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_CalibreAprox_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.CalibreAprox}">
                                             <Switch id="CQDetail_subSection_embalagem_tipo_CalibreAprox" state="{CalibreAprox}" enabled="{ui>/isEditable}" change=".onFieldChange" customTextOff="{i18n>off}" customTextOn="{i18n>on}"/>
                                         </l:FormElement>
-                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMNembalporcaixa}">
-                                            <Text id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa" emptyIndicatorMode="On" text="{MMNembalporcaixa}"/>
-                                        </l:FormElement>
-                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Nembalporcaixa}">
-                                            <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_edit" value="{Nembalporcaixa}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
-                                                <layoutData>
-                                                    <l:ColumnElementData id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_layout" cellsSmall="12" cellsLarge="12"/>
-                                                </layoutData>
-                                            </Input>
-                                        </l:FormElement>
+
                                         <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMApresentacao_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMApresentacao}">
                                             <Text id="CQDetail_subSection_embalagem_tipo_MMApresentacao" emptyIndicatorMode="On" text="{parts:[ 'MMApresentacao', 'MMApresentacaoDesc' ], formatter:'.formatter.detailFieldFormatter'}"/>
                                         </l:FormElement>
@@ -622,6 +636,18 @@
                                                     <l:ColumnElementData id="CQDetail_subSection_embalagem_tipo_Apresentacao_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Select>
+                                        </l:FormElement>
+
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa_label" label="{i18n>cqDetail.dadosProduto.subsection.tipo.MMNembalporcaixa}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_MMNembalporcaixa" emptyIndicatorMode="On" text="{MMNembalporcaixa}"/>
+                                        </l:FormElement>
+                                        <l:FormElement id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_label" visible="{path: 'HideNembalporcaixa', formatter: '.formatter.hideFormatter'}" label="{i18n>cqDetail.dadosProduto.subsection.tipo.Nembalporcaixa}">
+                                            <Text id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa" emptyIndicatorMode="On" text="{Nembalporcaixa}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_edit" value="{Nembalporcaixa}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                                <layoutData>
+                                                    <l:ColumnElementData id="CQDetail_subSection_embalagem_tipo_Nembalporcaixa_layout" cellsSmall="12" cellsLarge="12"/>
+                                                </layoutData>
+                                            </Input>
                                         </l:FormElement>
                                     </l:FormContainer>
                                 </l:Form>
@@ -855,10 +881,20 @@
                     <IconTabFilter id="CQDetail_section_amostragens" text="{i18n>cqDetail.amostragens.title}">
                         <ScrollContainer id="CQDetail_section_scroll_amostragens" vertical="true" height="100%">
                             <VBox id="CQDetail_section_amostragens_vbox">
+
+                                <Title id="CQDetail_subSection_mps_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" visible="{path: 'HideMps', formatter: '.formatter.hideFormatter'}" text="{i18n>cqDetail.amostragens.subsection.mps.title}"/>
+                                <layout:Grid id="CQDetail_section_amostragens_grid3" defaultSpan="XL12 L12 M12 S12">
+                                    <OverflowToolbar id="CQDetail_mps_table_toolbar" visible="{= ${ui>/isEditable} &amp;&amp; !${HideMps} }">
+                                        <Button id="CQDetail_mps_btn_getMp" text="{i18n>cqDetail.amostragens.subsection.mps.btn.getMp}" icon="sap-icon://factory" type="Emphasized" press=".onGetMp" visible="{= ${ui>/isEditable} &amp;&amp; !${HideMps} }"></Button>
+                                    </OverflowToolbar>
+                                    <macros:Table id="CQDetail_mps_table" header="{i18n>cqDetail.amostragens.subsection.mps.title}" metaPath="_mp/@com.sap.vocabularies.UI.v1.LineItem" visible="{path: 'HideMps', formatter: '.formatter.hideFormatter'}" enableAutoColumnWidth="true"/>
+                                </layout:Grid>
+
                                 <Title id="CQDetail_subSection_amostragens_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.amostragens.subsection.amostragens.title}"/>
                                 <layout:Grid id="CQDetail_section_amostragens_grid1" defaultSpan="XL12 L12 M12 S12">
                                     <macros:Table id="CQDetail_amostragens_table" header="{i18n>cqDetail.amostragens.subsection.amostragens.table.title}" metaPath="_linhas/@com.sap.vocabularies.UI.v1.LineItem" enableAutoColumnWidth="true"/>
                                 </layout:Grid>
+
                                 <Title id="CQDetail_subSection_fcontrolo_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.amostragens.subsection.fcontrolo.title}"/>
                                 <layout:Grid id="CQDetail_section_amostragens_grid2" defaultSpan="XL12 L12 M12 S12">
                                     <macros:Table id="CQDetail_fcontrolo_table" header="{i18n>cqDetail.amostragens.subsection.fcontrolo.table.title}" metaPath="_semControlo/@com.sap.vocabularies.UI.v1.LineItem" selectionMode="Multi">
@@ -867,6 +903,7 @@
                                         </macros:actions>
                                     </macros:Table>
                                 </layout:Grid>
+
                             </VBox>
                         </ScrollContainer>
                     </IconTabFilter>

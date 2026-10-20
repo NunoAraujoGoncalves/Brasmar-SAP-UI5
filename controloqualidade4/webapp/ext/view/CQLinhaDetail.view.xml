@@ -115,7 +115,7 @@
                                 </form:layout>
 
                                 <form:FormContainer id="CQDetailLinha_amostra_container">
-                                    <form:FormElement id="CQDetailLinha_amostra_LoteFornecedor_label" label="{i18n>CQLinhaDetail.amostra.LoteFornecedor}">
+                                    <form:FormElement id="CQDetailLinha_amostra_LoteFornecedor_label" label="{i18n>CQLinhaDetail.amostra.LoteFornecedor}" visible="{= !${HideLoteFornecedor} }">
                                         <Text id="CQDetailLinha_amostra_LoteFornecedor" emptyIndicatorMode="On" text="{LoteFornecedor}" visible="{= !${ui>/isEditable} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout1" cellsSmall="12" cellsLarge="12"/>
@@ -995,6 +995,20 @@
                                                 <form:ColumnElementData id="CQDetailLinha_layout136" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Select>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_ObsRoteiro_label" label="{i18n>CQLinhaDetail.amostra.ObsRoteiro}" visible="{= !${HideObsRoteiro} }">
+                                        <Text id="CQDetailLinha_amostra_ObsRoteiro" emptyIndicatorMode="On" text="{ObsRoteiro}" visible="{= !${ui>/isEditable} &amp;&amp; !${HideObsRoteiro} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout200" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <TextArea id="CQDetailLinha_amostra_ObsRoteiro_edit" value="{ObsRoteiro}" rows="4" growing="true" width="100%" change=".onFieldChange" 
+                                        visible="{= ${ui>/isEditable} &amp;&amp; !${HideObsRoteiro} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout201" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </TextArea>
                                     </form:FormElement>
                                 </form:FormContainer>
                             </form:Form>

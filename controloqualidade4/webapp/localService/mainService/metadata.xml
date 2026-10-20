@@ -290,6 +290,7 @@
                 <Property Name="Pl" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
                 <Property Name="Ple" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
                 <Property Name="Declarado" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="PesoDeclarado" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
                 <Property Name="Uom" Type="Edm.String" Nullable="false" MaxLength="3"/>
                 <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
@@ -316,6 +317,44 @@
                     <ReferentialConstraint Property="Centro" ReferencedProperty="Centro"/>
                     <ReferentialConstraint Property="Id" ReferencedProperty="Id"/>
                     <ReferentialConstraint Property="Linha" ReferencedProperty="Linha"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CQMpType">
+                <Key>
+                    <PropertyRef Name="Centro"/>
+                    <PropertyRef Name="Id"/>
+                    <PropertyRef Name="Mp"/>
+                    <PropertyRef Name="DraftUUID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="Centro" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Mp" Type="Edm.String" Nullable="false" MaxLength="18"/>
+                <Property Name="MpDesc" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Qtd1" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Percent1" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
+                <Property Name="Qtd2" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="Percent2" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
+                <Property Name="Uom" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LocalLastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="ParentDraftUUID" Type="Edm.Guid"/>
+                <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DraftEntityLastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.EntityControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.I_DraftAdministrativeDataType"/>
+                <NavigationProperty Name="SiblingEntity" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType"/>
+                <NavigationProperty Name="_CabCQ" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false" Partner="_mp">
+                    <ReferentialConstraint Property="Centro" ReferencedProperty="Centro"/>
+                    <ReferentialConstraint Property="Id" ReferencedProperty="ID"/>
                 </NavigationProperty>
             </EntityType>
             <EntityType Name="CQCalibresType">
@@ -547,7 +586,7 @@
                 <Property Name="CarneDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="Tentaculo" Type="Edm.String" Nullable="false" MaxLength="2"/>
                 <Property Name="TentaculoDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="Odor" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Odor" Type="Edm.String" Nullable="false" MaxLength="1"/>
                 <Property Name="OdorDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="Pabertas" Type="Edm.String" Nullable="false" MaxLength="1"/>
                 <Property Name="PabertasDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
@@ -679,6 +718,7 @@
                 <Property Name="PPPercDesPl" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
                 <Property Name="PPPercDesCoz" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
                 <Property Name="LoteFornecedor" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="ObsRoteiro" Type="Edm.String" Nullable="false"/>
                 <Property Name="ObsLin" Type="Edm.String" Nullable="false"/>
                 <Property Name="HideAcondhigiene" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideAcondintegre" Type="Edm.Boolean" Nullable="false"/>
@@ -749,6 +789,8 @@
                 <Property Name="HideResiduos" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideSabor" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideTemperaturas" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideLoteFornecedor" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideObsRoteiro" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
                 <Property Name="LocalLastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
@@ -947,6 +989,7 @@
                 <Property Name="LocalAbate" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="NumViveiro" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="ATestemunho" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="ATestemunhoDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="NCaixa" Type="Edm.Int16" Nullable="false"/>
                 <Property Name="NPalete" Type="Edm.Int16" Nullable="false"/>
                 <Property Name="Parasitas" Type="Edm.String" Nullable="false" MaxLength="1"/>
@@ -1029,6 +1072,9 @@
                 <Property Name="HideDadosDoc" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideCxDim" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideUnDim" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideNomeCientifico" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideNembalporcaixa" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideMps" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
                 <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
@@ -1054,6 +1100,9 @@
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_linhas" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType)" Partner="_CabCQ">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="_mp" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType)" Partner="_CabCQ">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_nutricionais" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQNutricionaisType)" Partner="_CabCq">
@@ -1133,6 +1182,7 @@
                 <Property Name="descodificaCBCaixa" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="descodificaCBUn" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="Edit" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="getMp" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="printCQ" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="reabrirCQ" Type="Edm.Boolean" Nullable="false"/>
             </ComplexType>
@@ -1141,6 +1191,13 @@
                 <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="MaterialDesc" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="PrefixoEan" Type="Edm.String" Nullable="false" MaxLength="1"/>
+            </ComplexType>
+            <ComplexType Name="zresult_cqemail">
+                <Property Name="bc_addresses" Type="Edm.String" Nullable="false"/>
+                <Property Name="cc_addresses" Type="Edm.String" Nullable="false"/>
+                <Property Name="html_body" Type="Edm.String" Nullable="false"/>
+                <Property Name="subject" Type="Edm.String" Nullable="false"/>
+                <Property Name="to_addresses" Type="Edm.String" Nullable="false"/>
             </ComplexType>
             <ComplexType Name="ZPARAM_CQ_PRINT">
                 <Property Name="attachment" Type="Edm.Stream" Nullable="false"/>
@@ -1170,6 +1227,11 @@
                 <Property Name="numericSeverity" Type="Edm.Byte" Nullable="false"/>
                 <Property Name="longtextUrl" Type="Edm.String"/>
             </ComplexType>
+            <Action Name="getEmail" IsBound="true">
+                <Parameter Name="_it" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)" Nullable="false"/>
+                <Parameter Name="keys" Type="Edm.String" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.zresult_cqemail" Nullable="false"/>
+            </Action>
             <Action Name="Discard" IsBound="true">
                 <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
             </Action>
@@ -1256,6 +1318,9 @@
                 <Parameter Name="new_lote" Type="Edm.String" Nullable="false" MaxLength="10"/>
                 <ReturnType Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
             </Action>
+            <Action Name="getMp" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
+            </Action>
             <Action Name="reabrirCQ" EntitySetPath="_it" IsBound="true">
                 <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
                 <ReturnType Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
@@ -1282,6 +1347,7 @@
                     <NavigationPropertyBinding Path="_HabBrasil" Target="CQHabBrasil"/>
                     <NavigationPropertyBinding Path="_ingredientes" Target="CQIngredientes"/>
                     <NavigationPropertyBinding Path="_linhas" Target="CQLinhas"/>
+                    <NavigationPropertyBinding Path="_mp" Target="CQMp"/>
                     <NavigationPropertyBinding Path="_nutricionais" Target="CQNutricionais"/>
                     <NavigationPropertyBinding Path="_paletizacao" Target="CQPaletizacao"/>
                     <NavigationPropertyBinding Path="_semControlo" Target="CQLinhasSemControlo"/>
@@ -1313,6 +1379,11 @@
                     <NavigationPropertyBinding Path="_Vidragens" Target="CQVidragens"/>
                 </EntitySet>
                 <EntitySet Name="CQLinhasSemControlo" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasSemControloType"/>
+                <EntitySet Name="CQMp" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType">
+                    <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="CQMp"/>
+                    <NavigationPropertyBinding Path="_CabCQ" Target="CQCab"/>
+                </EntitySet>
                 <EntitySet Name="CQNutricionais" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQNutricionaisType">
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="CQNutricionais"/>
@@ -2057,7 +2128,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="An exception was raised"/>
+                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -2989,6 +3060,10 @@
                 <Annotation Term="SAP__measures.Unit" Path="Uom"/>
                 <Annotation Term="SAP__common.Label" String="Quantity"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQPesosUnType/PesoDeclarado">
+                <Annotation Term="SAP__measures.Unit" Path="Uom"/>
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQPesosUnType/Uom">
                 <Annotation Term="SAP__common.IsUnit"/>
                 <Annotation Term="SAP__core.Computed"/>
@@ -3227,6 +3302,10 @@
                             <PropertyValue Property="Value" Path="Declarado"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Peso Declarado"/>
+                            <PropertyValue Property="Value" Path="PesoDeclarado"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="PLE Real"/>
                             <PropertyValue Property="Value" Path="Ple"/>
                         </Record>
@@ -3250,9 +3329,321 @@
                             <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Peso Declarado"/>
+                            <PropertyValue Property="Value" Path="PesoDeclarado"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="PLE Real"/>
                             <PropertyValue Property="Value" Path="Ple"/>
                             <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Centro">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Id">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Mp">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Material"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/MpDesc">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Material Description"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Percent1">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Profile Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 2 Decimal Places and +/- Sign"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Percent2">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Profile Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 2 Decimal Places and +/- Sign"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Uom">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Base Unit of Measure"/>
+                <Annotation Term="SAP__common.Heading" String="BUn"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/CreatedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Created By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Created By User"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/CreatedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Created On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Creation Date Time"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/LocalLastChangedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Changed By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Local Instance Last Changed By User"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/LocalLastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Local Instance Last Change Date Time"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/LastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Change Date Time"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/HasDraftEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Has Draft"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Draft - Indicator - Has draft document"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/DraftUUID">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Key"/>
+                <Annotation Term="SAP__common.QuickInfo" String="UUID serving as key (parent key, root key)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/ParentDraftUUID">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Key"/>
+                <Annotation Term="SAP__common.QuickInfo" String="UUID serving as key (parent key, root key)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/DraftEntityCreationDateTime">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Draft Created On"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/DraftEntityLastChangeDateTime">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Draft Last Changed On"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/HasActiveEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Has active"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Draft - Indicator - Has active document"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/IsActiveEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Is active"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Draft - Indicator - Is active document"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/__EntityControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/CQMp">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_CabCQ"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.DraftNode">
+                    <Record/>
+                </Annotation>
+                <Annotation Term="SAP__common.DraftActivationVia">
+                    <Collection>
+                        <String>SAP__self.Container/CQLinhasSemControlo</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="Filterable" Bool="true"/>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="DraftEntityCreationDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="DraftEntityLastChangeDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection>
+                        <PropertyPath>LocalLastChangedAt</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType">
+                <Annotation Term="SAP__common.Label" String="Projection ZTABCQMP"/>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Qtd1">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="SourceProperties">
+                            <Collection>
+                                <PropertyPath>Qtd1</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_CabCQ</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Qtd2">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="SourceProperties">
+                            <Collection>
+                                <PropertyPath>Qtd2</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_CabCQ</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Facets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Ingredientes"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Identification"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.Identification">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Mp"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="MpDesc"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Qtd. 1"/>
+                            <PropertyValue Property="Value" Path="Qtd1"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="% 1"/>
+                            <PropertyValue Property="Value" Path="Percent1"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Qtd. 2"/>
+                            <PropertyValue Property="Value" Path="Qtd2"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="% 2"/>
+                            <PropertyValue Property="Value" Path="Percent2"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Uom"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Mp"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="MpDesc"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Qtd. 1"/>
+                            <PropertyValue Property="Value" Path="Qtd1"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="% 1"/>
+                            <PropertyValue Property="Value" Path="Percent1"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Qtd. 2"/>
+                            <PropertyValue Property="Value" Path="Qtd2"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="% 2"/>
+                            <PropertyValue Property="Value" Path="Percent2"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Uom"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -5688,6 +6079,7 @@
             </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/LoteFornecedor">
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden" Path="HideLoteFornecedor"/>
                 <Annotation Term="SAP__common.Label" String="Char20"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Char 20"/>
             </Annotations>
@@ -5967,6 +6359,14 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/HideLoteFornecedor">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/HideObsRoteiro">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/CreatedBy">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
@@ -6225,6 +6625,10 @@
                         <PropertyValue Property="FilterExpressionRestrictions">
                             <Collection>
                                 <Record>
+                                    <PropertyValue Property="Property" PropertyPath="ObsRoteiro"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SearchExpression"/>
+                                </Record>
+                                <Record>
                                     <PropertyValue Property="Property" PropertyPath="ObsLin"/>
                                     <PropertyValue Property="AllowedExpressions" String="SearchExpression"/>
                                 </Record>
@@ -6251,6 +6655,7 @@
                     <Record>
                         <PropertyValue Property="NonSortableProperties">
                             <Collection>
+                                <PropertyPath>ObsRoteiro</PropertyPath>
                                 <PropertyPath>ObsLin</PropertyPath>
                                 <PropertyPath>__CreateByAssociationControl</PropertyPath>
                                 <PropertyPath>__EntityControl</PropertyPath>
@@ -6373,6 +6778,20 @@
             </Annotations>
             <Annotations Target="SAP__self.CQLinhasType">
                 <Annotation Term="SAP__common.Label" String="Projection ZTABCQLINHAS"/>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_CumpreRoteiro">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="SourceProperties">
+                            <Collection>
+                                <PropertyPath>CumpreRoteiro</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath/>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_PPAposCozer">
                     <Record Type="SAP__common.SideEffectsType">
                         <PropertyValue Property="SourceProperties">
@@ -6497,6 +6916,25 @@
                         <PropertyValue Property="Value" Path="Material"/>
                         <PropertyValue Property="Title" String="Material"/>
                     </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
+                        </Record>
+                    </Collection>
                 </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
@@ -6623,25 +7061,6 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
-                        </Record>
-                    </Collection>
-                </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Linha"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Material"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Lote"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -6960,6 +7379,10 @@
                                 <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Label" String="Sabor"/>
                                     <PropertyValue Property="Value" Path="Sabor"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="Obs. Roteiro"/>
+                                    <PropertyValue Property="Value" Path="ObsRoteiro"/>
                                 </Record>
                                 <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Label" String="Índice Qualidade"/>
@@ -7580,6 +8003,11 @@
                             <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Obs. Roteiro"/>
+                            <PropertyValue Property="Value" Path="ObsRoteiro"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Índice Qualidade"/>
                             <PropertyValue Property="Value" Path="Indicequal"/>
                             <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Medium"/>
@@ -7972,7 +8400,7 @@
                 <Annotation Term="SAP__common.Heading" String="BUn"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Cxtara">
-                <Annotation Term="SAP__measures.Unit" Path="Cxuomtara"/>
+                <Annotation Term="SAP__measures.Unit" Path="Cxuompeso"/>
                 <Annotation Term="SAP__common.Label" String="Profile Value"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 4 Decimal Places and +/- Sign"/>
             </Annotations>
@@ -8039,7 +8467,7 @@
                 <Annotation Term="SAP__common.Heading" String="BUn"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Untara">
-                <Annotation Term="SAP__measures.Unit" Path="Unuomtara"/>
+                <Annotation Term="SAP__measures.Unit" Path="Unuompeso"/>
                 <Annotation Term="SAP__common.Label" String="Profile Value"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 4 Decimal Places and +/- Sign"/>
             </Annotations>
@@ -8192,7 +8620,6 @@
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Nomecientifico">
                 <Annotation Term="SAP__common.Text" Path="NomecientificoDesc"/>
-                <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.ValueListReferences">
                     <Collection>
                         <String>../../../../srvd_f4/sap/zi_ncientificosh/0001;ps='srvd-zui_tabcq_o4-0001';va='com.sap.gateway.srvd.zui_tabcq_o4.v0001.et-ztabcq_c.nomecientifico'/$metadata</String>
@@ -8283,7 +8710,20 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Character field of length 40"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/ATestemunho">
+                <Annotation Term="SAP__common.Text" Path="ATestemunhoDesc"/>
+                <Annotation Term="SAP__common.ValueListForValidation" String=""/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_domsh/0001;ps='srvd-zui_tabcq_o4-0001';va='com.sap.gateway.srvd.zui_tabcq_o4.v0001.et-ztabcq_c.atestemunho'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/ATestemunhoDesc">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/Parasitas">
                 <Annotation Term="SAP__common.Text" Path="ParasitasDesc">
@@ -8348,7 +8788,7 @@
             <Annotations Target="SAP__self.CQCabType/MMNomecientifico">
                 <Annotation Term="SAP__common.Text" Path="MMNomecientificoDesc"/>
                 <Annotation Term="SAP__core.Computed"/>
-                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__UI.Hidden" Path="HideNomeCientifico"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/MMNomecientificoDesc">
                 <Annotation Term="SAP__core.Computed"/>
@@ -8620,6 +9060,18 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/HideNomeCientifico">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/HideNembalporcaixa">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/HideMps">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/HasDraftEntity">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
@@ -8720,6 +9172,14 @@
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
                                             <PropertyValue Property="Insertable" Path="__CreateByAssociationControl/_linhas"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_mp"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
                                         </Record>
                                     </PropertyValue>
                                 </Record>
@@ -8867,6 +9327,9 @@
             <Annotations Target="SAP__self.CQCabType/_linhas">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/_mp">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/_nutricionais">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
@@ -8936,7 +9399,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="An exception was raised"/>
+                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -9038,6 +9501,18 @@
                     </Record>
                 </Annotation>
             </Annotations>
+            <Annotations Target="SAP__self.getMp(SAP__self.CQCabType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/getMp"/>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Action_getMp">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_it/_mp</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
             <Annotations Target="SAP__self.reabrirCQ(SAP__self.CQCabType)">
                 <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/reabrirCQ"/>
             </Annotations>
@@ -9091,44 +9566,6 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Cxuompeso">
-                    <Record Type="SAP__common.SideEffectsType">
-                        <PropertyValue Property="SourceProperties">
-                            <Collection>
-                                <PropertyPath>Cxuompeso</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="TargetProperties">
-                            <Collection>
-                                <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
-                                <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Cxuomtara">
-                    <Record Type="SAP__common.SideEffectsType">
-                        <PropertyValue Property="SourceProperties">
-                            <Collection>
-                                <PropertyPath>Cxuomtara</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="TargetProperties">
-                            <Collection>
-                                <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
-                                <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
                 <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Grupopais">
                     <Record Type="SAP__common.SideEffectsType">
                         <PropertyValue Property="SourceProperties">
@@ -9143,6 +9580,39 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Lote">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="SourceProperties">
+                            <Collection>
+                                <PropertyPath>Lote</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="TargetProperties">
+                            <Collection>
+                                <String>Artepesca</String>
+                                <String>ArtePesca2</String>
+                                <String>ArtePesca3</String>
+                                <String>ArtePesca4</String>
+                                <String>DtCongelacao</String>
+                                <String>DtEmbalamento</String>
+                                <String>DtProducao</String>
+                                <String>DtVencimento</String>
+                                <String>MMArtepesca</String>
+                                <String>MMIdiomapadrao</String>
+                                <String>MMNomecientifico</String>
+                                <String>MMOrigem</String>
+                                <String>MMZonadecaptura</String>
+                                <String>Nomecientifico</String>
+                                <String>Origem</String>
+                                <String>Zidiomapadrao</String>
+                                <String>Zonadecaptura</String>
+                                <String>ZonaDeCaptura2</String>
+                                <String>ZonaDeCaptura3</String>
+                                <String>ZonaDeCaptura4</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Nembalporcaixa">
                     <Record Type="SAP__common.SideEffectsType">
                         <PropertyValue Property="SourceProperties">
@@ -9153,11 +9623,6 @@
                         <PropertyValue Property="TargetProperties">
                             <Collection>
                                 <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
-                                <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -9229,49 +9694,7 @@
                         <PropertyValue Property="TargetProperties">
                             <Collection>
                                 <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
                                 <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Unuompeso">
-                    <Record Type="SAP__common.SideEffectsType">
-                        <PropertyValue Property="SourceProperties">
-                            <Collection>
-                                <PropertyPath>Unuompeso</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="TargetProperties">
-                            <Collection>
-                                <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
-                                <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_Unuomtara">
-                    <Record Type="SAP__common.SideEffectsType">
-                        <PropertyValue Property="SourceProperties">
-                            <Collection>
-                                <PropertyPath>Unuomtara</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="TargetProperties">
-                            <Collection>
-                                <String>Cxpesobruto</String>
-                                <String>Cxpesoliquido</String>
-                                <String>Cxpesoliquidoesc</String>
-                                <String>Unpesobruto</String>
-                                <String>Unpesoliquido</String>
-                                <String>Unpesoliquidoesc</String>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -9331,6 +9754,31 @@
                         <PropertyValue Property="Value" Path="Tipoprod"/>
                         <PropertyValue Property="Title" String="CQ Tipo Produto"/>
                     </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
+                        </Record>
+                    </Collection>
                 </Annotation>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
@@ -9499,6 +9947,19 @@
                             </PropertyValue>
                         </Record>
                         <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="Label" String="Mps"/>
+                            <PropertyValue Property="ID" String="Mps"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="MpsLines"/>
+                                        <PropertyValue Property="Target" AnnotationPath="_mp/@SAP__UI.LineItem"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                            <Annotation Term="SAP__UI.Hidden" Path="HideMps"/>
+                        </Record>
+                        <Record Type="SAP__UI.CollectionFacet">
                             <PropertyValue Property="Label" String="Falta Controlo"/>
                             <PropertyValue Property="ID" String="SemControlo"/>
                             <PropertyValue Property="Facets">
@@ -9537,31 +9998,6 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
-                        </Record>
-                    </Collection>
-                </Annotation>
-                <Annotation Term="SAP__UI.HeaderFacets">
-                    <Collection>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Centro"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Id"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Estado"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Responsavel"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoDoc"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Documento"/>
-                        </Record>
-                        <Record Type="SAP__UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#TipoProd"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -10163,6 +10599,11 @@
                         <Record Type="SAP__UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="Imprimir"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.printCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Gerar MP"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.getMp(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
                         <Record Type="SAP__UI.DataFieldForAction">
@@ -10985,6 +11426,10 @@
                 <Annotation Term="SAP__common.Label" String="Profile Value"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Decimal Field Length 16 with 4 Decimal Places and +/- Sign"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/ObsRoteiro">
+                <Annotation Term="SAP__UI.Hidden" Path="HideObsRoteiro"/>
+                <Annotation Term="SAP__UI.MultiLineText"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/ObsLin">
                 <Annotation Term="SAP__UI.MultiLineText"/>
             </Annotations>
@@ -11037,6 +11482,11 @@
             <Annotations Target="SAP__self.CQCabType/PP">
                 <Annotation Term="SAP__UI.Hidden" Path="HidePP"/>
                 <Annotation Term="SAP__common.Label" String="Checkbox"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/Nembalporcaixa">
+                <Annotation Term="SAP__UI.Hidden" Path="HideNembalporcaixa"/>
+                <Annotation Term="SAP__common.Label" String="INT4"/>
+                <Annotation Term="SAP__common.QuickInfo" String="4 Byte Signed Integer"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/DataAbate">
                 <Annotation Term="SAP__UI.Hidden" Path="HideDataAbate"/>
@@ -11134,6 +11584,22 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
             </Annotations>
             <Annotations Target="SAP__self.CQPesosUnType/__EntityControl/Updatable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Qtd1">
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Qtd2">
+                <Annotation Term="SAP__common.Label" String="Quantity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/__EntityControl/Deletable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQMpType/__EntityControl/Updatable">
                 <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
@@ -11261,10 +11727,6 @@
             <Annotations Target="SAP__self.CQCabType/SGluten">
                 <Annotation Term="SAP__common.Label" String="Checkbox"/>
             </Annotations>
-            <Annotations Target="SAP__self.CQCabType/Nembalporcaixa">
-                <Annotation Term="SAP__common.Label" String="INT4"/>
-                <Annotation Term="SAP__common.QuickInfo" String="4 Byte Signed Integer"/>
-            </Annotations>
             <Annotations Target="SAP__self.CQCabType/NCaixa">
                 <Annotation Term="SAP__common.Label" String="INT2"/>
                 <Annotation Term="SAP__common.QuickInfo" String="2 Byte Signed Integer"/>
@@ -11349,6 +11811,11 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/__OperationControl/Edit">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/__OperationControl/getMp">
                 <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
@@ -11484,6 +11951,11 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabOperationControl/Edit">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabOperationControl/getMp">
                 <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>

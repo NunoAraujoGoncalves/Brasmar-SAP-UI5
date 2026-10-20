@@ -7,6 +7,9 @@ import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import MessageBox from "sap/m/MessageBox";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import { openCqEmailDraft } from "../modules/CqEmail";
+import type MDCTable from "sap/ui/mdc/Table";
+
 
 const COUNT_TABS = ["main_IconTabBar_todos", "main_IconTabBar_pendentes", "main_IconTabBar_concluidos", "main_IconTabBar_aprovados"];
 
@@ -115,6 +118,27 @@ export default class Main extends Controller {
     }
 
 
+    public async onMail(): Promise<void> {
+        const table = this.byId("main_table") as TableAPI;
+        const selected = table.getSelectedContexts();
+        if (selected.length === 0) {
+            MessageBox.warning(this.getText("main.noSelections.error"));
+            return;
+        }
+        table.setBusy(true);
+        try {
+            await openCqEmailDraft(selected);
+            this.clearTableSelection(table);
+            MessageToast.show(this.getText("main.email.msg.draft", [String(selected.length)]));
+        } catch (error) {
+            MessageBox.error(this.getText("main.email.error"), {
+                details: String((error as Error)?.message ?? error)
+            });
+        } finally {
+            table.setBusy(false);
+        }
+    }
+
     /* ---------- helpers ---------- */
     /**
      * Ao voltar do CQDetail (novo controlo gravado, alterado ou eliminado)
@@ -139,6 +163,17 @@ export default class Main extends Controller {
     private refreshCounts(): void {
         COUNT_TABS.forEach((id) => this.byId(id)?.getBinding("count")?.refresh());
     }
+
+    /**
+     * Limpa as linhas selecionadas da tabela FE.
+     * TableAPI (1.120) não tem clearSelection: usa o sap.ui.mdc.Table interno (API pública clearSelection),
+     * encontrado com findAggregatedObjects (API pública de ManagedObject).
+     */
+    private clearTableSelection(table: TableAPI): void {
+        const [mdcTable] = table.findAggregatedObjects(true, (object) => object.isA("sap.ui.mdc.Table")) as MDCTable[];
+        mdcTable?.clearSelection();
+    }
+
 
     private confirm(title: string, text: string): Promise<boolean> {
         return new Promise((resolve) => {

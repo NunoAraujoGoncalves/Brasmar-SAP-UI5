@@ -19,6 +19,8 @@ import List from "sap/m/List";
 import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
 import MessageToast from "sap/m/MessageToast";
 import TableAPI from "sap/fe/macros/table/TableAPI";
+import { openCqEmailDraft } from "../modules/CqEmail";
+import MessageBox from "sap/m/MessageBox";
 
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.view
@@ -30,6 +32,7 @@ export default class CQDetail extends Controller {
     oPopover: Promise<Popover> | undefined;
     cbCaixaFragment: Dialog;
     cbUnidadeFragment: Dialog;
+    URLHelper = mobileLibrary.URLHelper;
 
 
     public onInit(): void {
@@ -55,10 +58,12 @@ export default class CQDetail extends Controller {
         page.setBusy(true);
         const context = this.getContext();
 
-        await this.getExtensionAPI().getEditFlow().deleteDocument(context, {
-            title: this.getText("cqDetail.delete.title"),
-            description: this.getText("cqDetail.delete.description", [String(context.getProperty("ID"))])
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().deleteDocument(context, {
+                title: this.getText("cqDetail.delete.title"),
+                description: this.getText("cqDetail.delete.description", [String(context.getProperty("ID"))])
+            });
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -68,11 +73,13 @@ export default class CQDetail extends Controller {
         page.setBusy(true);
         const context = this.getContext();
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.print, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.print"),
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.print, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.print"),
+            });
+        } catch (error) { }
 
         page.setBusy(false);
         const url = (await context.requestProperty("Attachment")) as string | undefined;
@@ -85,12 +92,14 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.copy, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.copy"),
-            requiresNavigation: false
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.copy, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.copy"),
+                requiresNavigation: false
+            });
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -99,11 +108,13 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.concluir, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.Concluir")
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.concluir, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.Concluir")
+            });
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -112,11 +123,13 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.reabrir, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.Reabrir")
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.reabrir, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.Reabrir")
+            });
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -125,11 +138,13 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.aprovar, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.Aprovar")
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.aprovar, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.Aprovar")
+            });
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -138,13 +153,47 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.desaprovar, {
-            contexts: this.getContext(),
-            invocationGrouping: "Isolated",
-            label: this.getText("cqDetail.btn.Desaprovar")
-        })
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.desaprovar, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.btn.Desaprovar")
+            })
+        } catch (error) { }
 
         page.setBusy(false);
+    }
+
+    public async onGetMp(): Promise<void> {
+        const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
+        page.setBusy(true);
+
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.getMp, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.amostragens.subsection.mps.btn.getMp")
+            })
+        } catch (error) { }
+
+        page.setBusy(false);
+    }
+
+
+    public async onMail(): Promise<void> {
+        const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
+        page.setBusy(true);
+
+        try {
+            await openCqEmailDraft([this.getContext()]);
+            MessageToast.show(this.getText("cqDetail.email.msg.draft"));
+        } catch (error) {
+            MessageBox.error(this.getText("cqDetail.email.error"), {
+                details: String((error as Error)?.message ?? error)
+            });
+        } finally {
+            page.setBusy(false);
+        }
     }
 
     /* ---------- title bar, edit mode ---------- */
@@ -153,10 +202,12 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.changeMaterial, {
-            contexts: this.getContext(),
-            label: this.getText("cqDetail.btn.modifyMaterial")
-        })
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.changeMaterial, {
+                contexts: this.getContext(),
+                label: this.getText("cqDetail.btn.modifyMaterial")
+            })
+        } catch (error) { }
 
         page.setBusy(false);
     }
@@ -252,11 +303,11 @@ export default class CQDetail extends Controller {
         // replaces Core.OperationAvailable (_it/__OperationControl/copy) of the generated button
         const available = await Promise.all(selected.map((context) =>
             context.requestProperty("__OperationControl/copy") as Promise<boolean | undefined>));
-        const contexts = selected.filter((_context, index) => available[index] === true );
+        const contexts = selected.filter((_context, index) => available[index] === true);
         if (contexts.length === 0) {
             MessageToast.show(this.getText("cqDetail.semControlo.copy.notAvailable"));
             return;
-        } 
+        }
 
         try {
             await this.getExtensionAPI().getEditFlow().invokeAction(Actions.copySemControlo, {
@@ -268,7 +319,7 @@ export default class CQDetail extends Controller {
             // parameter dialog cancelled or backend error (FE already shows the messages): nothing to refresh
             return;
         }
-        
+
         // the table is bound relative to the CQ (_semControlo), so it can't be refreshed directly:
         // ask the CQ context to reload the navigation instead
         await this.getContext().requestSideEffects([{ $NavigationPropertyPath: "_semControlo" }]);

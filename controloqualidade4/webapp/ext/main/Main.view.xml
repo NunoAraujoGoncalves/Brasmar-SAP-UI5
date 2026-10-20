@@ -34,6 +34,7 @@
                     <macros:Table id="main_table" metaPath="@com.sap.vocabularies.UI.v1.LineItem" filterBar="main_filter" enableAutoColumnWidth="true" type="ResponsiveTable" selectionMode="Multi">
                         <macros:creationMode name="NewPage"/>
                         <macros:actions>
+                            <macros:Action id="main_table_email" key="email" text="{i18n>main.btn.email}" press=".onMail"/>
                             <macros:Action id="main_table_create" key="create" text="{i18n>main.btn.create}" press=".onCreate"/>
                             <macros:Action id="main_table_delete" key="delete" text="{i18n>main.btn.delete}" press=".onDelete" requiresSelection="true"/>
                         </macros:actions>

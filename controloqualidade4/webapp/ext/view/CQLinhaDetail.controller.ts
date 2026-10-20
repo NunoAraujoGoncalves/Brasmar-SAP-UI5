@@ -113,10 +113,12 @@ export default class CQLinhaDetail extends Controller {
         const oContainer = this.getView()?.byId("CQDetailLinha_Content_scroll") as ScrollContainer;
         oContainer.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().invokeAction(Actions.doCalculations, {
-            contexts: this.getContext(),
-            label: this.getText("CQLinhaDetail.btn.Calcular")
-        });
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.doCalculations, {
+                contexts: this.getContext(),
+                label: this.getText("CQLinhaDetail.btn.Calcular")
+            });
+        } catch (error) { }
 
         oContainer.setBusy(false);
     }
@@ -466,6 +468,7 @@ export default class CQLinhaDetail extends Controller {
 
     /* ---------- Footer Functions ---------- */
     public async onApply(): Promise<void> {
+        await this.onCalcular();
         await this.getExtensionAPI().getEditFlow().applyDocument(this.getContext());
     }
 

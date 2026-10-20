@@ -11,5 +11,7 @@ export const Actions = {
     desaprovar: `${SERVICE_NAMESPACE}.desaprovarCQ`,
     copySemControlo: `${SERVICE_NAMESPACE}.copy`, // bound to CQLinhasSemControloType (overload resolved by the context)
     convertUom: `${SERVICE_NAMESPACE}.convertUom`,
-    convertUomCalibre: `${SERVICE_NAMESPACE}.convertUomCalibre`
+    convertUomCalibre: `${SERVICE_NAMESPACE}.convertUomCalibre`,
+    getMp: `${SERVICE_NAMESPACE}.getMp`,
+    getEmails: `${SERVICE_NAMESPACE}.getEmail`
 } as const;

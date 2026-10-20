@@ -90,7 +90,7 @@
                                     <PropertyValue Property="ValueListProperty" String="Text"/>
                                 </Record>
                                 <Record Type="SAP__common.ValueListParameterConstant">
-                                    <PropertyValue Property="Constant" String="ZCONF"/>
+                                    <PropertyValue Property="Constant" String="ZLOGGER"/>
                                     <PropertyValue Property="ValueListProperty" String="DomName"/>
                                 </Record>
                             </Collection>
