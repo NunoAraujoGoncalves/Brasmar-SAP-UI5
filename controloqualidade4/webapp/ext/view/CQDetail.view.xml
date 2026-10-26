@@ -29,7 +29,7 @@
 
                     <Button id="CQDetail_dynamicPage_Edit" text="{i18n>cqDetail.btn.edit}" icon="sap-icon://edit" type="Emphasized" press=".onEdit" visible="{= !${ui>/isEditable} &amp;&amp; %{__OperationControl/Edit} === true }"/>
                     <Button id="CQDetail_dynamicPage_Delete" text="{i18n>cqDetail.btn.delete}" icon="sap-icon://delete" type="Transparent" press=".onDelete" visible="{= !${ui>/isEditable} &amp;&amp; %{__EntityControl/Deletable} === true }"/>
-                    
+
                     <Button id="CQDetail_dynamicPage_Email" text="{i18n>cqDetail.btn.email}" icon="sap-icon://email" type="Transparent" press=".onMail" visible="true"/>
                     <Button id="CQDetail_dynamicPage_Print" text="{i18n>cqDetail.btn.print}" icon="sap-icon://print" type="Transparent" press=".onPrint" visible="{= %{__OperationControl/printCQ} === true }"/>
                     <Button id="CQDetail_dynamicPage_Copy" text="{i18n>cqDetail.btn.copy}" icon="sap-icon://copy" type="Transparent" press=".onCopy" visible="{= %{__OperationControl/copy2} === true }"/>
@@ -141,7 +141,7 @@
                                                 </layoutData>
                                             </DatePicker>
                                         </l:FormElement>
-                                        <l:FormElement id="CQDetail_subSection_material_DtProducao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtProducao}">
+                                        <l:FormElement id="CQDetail_subSection_material_DtProducao_label" label="{i18n>cqDetail.dadosProduto.ss.material.DtProducao}" visible="{= !${HideDtProducao} }">
                                             <Text id="CQDetail_subSection_material_DtProducao" emptyIndicatorMode="On" text="{path:'DtProducao', type:'Date', formatOptions: { pattern: 'dd/MM/yyyy', style: 'short' }}" visible="{= !${ui>/isEditable} }"/>
                                             <DatePicker id="CQDetail_subSection_material_DtProducao_edit" value="{path:'DtProducao', type:'Date', formatOptions: { pattern: 'dd/MM/yyyy' } }" change=".onFieldChange" visible="{ui>/isEditable}">
                                                 <layoutData>
@@ -285,7 +285,7 @@
                                         <l:FormElement id="CQDetail_subSection_lote_Teorvidragem_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Teorvidragem}">
                                             <Text id="CQDetail_subSection_lote_Teorvidragem" emptyIndicatorMode="On" text="{path:'Teorvidragem', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}"/>
                                         </l:FormElement>
-                                        <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}">
+                                        <l:FormElement id="CQDetail_subSection_lote_VidragemM_label" label="{i18n>cqDetail.dadosProduto.ss.lote.VidragemM}" visible="{= !${HideVidragemM} }" >
                                             <Text id="CQDetail_subSection_lote_VidragemM" emptyIndicatorMode="On" text="{path:'VidragemM', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:4,scale:2}}"/>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_lote_Tipocaptura_label" label="{i18n>cqDetail.dadosProduto.ss.lote.Tipocaptura}">
@@ -695,32 +695,42 @@
                                             <Select id="CQDetail_subSection_dimensoes_cx_Cxuomdim_edit" selectedKey="{Cxuomdim}" forceSelection="false" width="100%" change=".onFieldChange" app:valueList="true"/>
                                         </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesobruto}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto" emptyIndicatorMode="On" text="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_edit" value="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesobruto"
+                                             emptyIndicatorMode="On" text="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                             constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_edit" value="{path:'Cxpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesobruto_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquido}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" emptyIndicatorMode="On" text="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_edit" value="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido" 
+                                            emptyIndicatorMode="On" text="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                            constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_edit" 
+                                            value="{path:'Cxpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}"
+                                             description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesoliquido_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxpesoliquidoesc}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_edit" value="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Cxpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                            constraints:{precision:12,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_edit" value="{path:'Cxpesoliquidoesc', type:'Decimal', 
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxpesoliquidoesc_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_cx_Cxtara_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.cx.Cxtara}">
-                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxtara_edit" value="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_cx_Cxtara" emptyIndicatorMode="On" text="{path:'Cxtara', type:'Decimal', 
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:14,scale:2}} {Cxuompeso}" visible="{= !${ui>/isEditable} }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_cx_Cxtara_edit" value="{path:'Cxtara', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                            constraints:{precision:14,scale:2}}" description="{Cxuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_cx_Cxtara_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
@@ -763,24 +773,29 @@
                                             </Select>
                                         </l:FormElement> -->
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesobruto_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesobruto}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesobruto_edit" value="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesobruto" emptyIndicatorMode="On" text="{path:'Unpesobruto', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, 
+                                            constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesobruto_edit" value="{path:'Unpesobruto', type:'Decimal', 
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesobruto_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquido_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquido}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{path:'Unpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquido_edit" value="{path:'Unpesoliquido', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquido" emptyIndicatorMode="On" text="{path:'Unpesoliquido', type:'Decimal', 
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquido_edit" value="{path:'Unpesoliquido', type:'Decimal', 
+                                            formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesoliquido_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>
                                             </Input>
                                         </l:FormElement>
                                         <l:FormElement id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_label" label="{i18n>cqDetail.dadosProduto.subsection.dimensoes.un.Unpesoliquidoesc}">
-                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} }"/>
-                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_edit" value="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <Text id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc" emptyIndicatorMode="On" text="{path:'Unpesoliquidoesc', 
+                                            type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Unuompeso}" visible="{= !${ui>/isEditable} || %{Tipoprod} === '0005' }"/>
+                                            <Input id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_edit" value="{path:'Unpesoliquidoesc', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Unuompeso}" fieldWidth="60%" textAlign="End" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; %{Tipoprod} !== '0005' }">
                                                 <layoutData>
                                                     <l:ColumnElementData id="CQDetail_subSection_dimensoes_un_Unpesoliquidoesc_layout" cellsSmall="12" cellsLarge="12"/>
                                                 </layoutData>

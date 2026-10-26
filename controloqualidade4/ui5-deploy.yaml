@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: brasmar.bm01.controloqualidade4
+type: application
+builder:
+  customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://sapappdev01.brasmargroup.com:44400
+          client: '100'
+        app:
+          name: ZBRA_CQ
+          description: Controlo Qualidade
+          package: ZBRA_CQ
+          transport: MTDK985580
+        exclude:
+          - /test/
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+      - /test/**
+      - /localService/**

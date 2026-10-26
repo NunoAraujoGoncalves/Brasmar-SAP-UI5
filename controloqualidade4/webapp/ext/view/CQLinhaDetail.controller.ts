@@ -261,7 +261,7 @@ export default class CQLinhaDetail extends Controller {
             }
 
             //2. Escrever o peso no Pb da linha + respetivos side effects
-            const text = weight.toFixed(2);
+            const text = (weight * 100).toFixed(2);
             try {
                 await rowContext.setProperty(landProperty, text);
                 await this.editHelper.requestPropertySideEffects(rowContext, landProperty);
@@ -508,7 +508,7 @@ export default class CQLinhaDetail extends Controller {
         const model = this.getBalancaModel();
         const path = this.currentPesoCollection.replace(/^balanca>/, "");
         const rows = (model.getProperty(path) as Pesagem[] | undefined) ?? [];
-        model.setProperty(path, [...rows, { PB: weight.toFixed(2), uom }]);
+        model.setProperty(path, [...rows, { PB: (weight * 100).toFixed(2), uom }]);
     }
 
     /**

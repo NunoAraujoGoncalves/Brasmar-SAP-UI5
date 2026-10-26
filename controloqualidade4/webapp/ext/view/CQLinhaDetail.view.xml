@@ -1003,12 +1003,24 @@
                                                 <form:ColumnElementData id="CQDetailLinha_layout200" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </Text>
-                                        <TextArea id="CQDetailLinha_amostra_ObsRoteiro_edit" value="{ObsRoteiro}" rows="4" growing="true" width="100%" change=".onFieldChange" 
-                                        visible="{= ${ui>/isEditable} &amp;&amp; !${HideObsRoteiro} }">
+                                        <TextArea id="CQDetailLinha_amostra_ObsRoteiro_edit" value="{ObsRoteiro}" rows="4" growing="true" width="100%" change=".onFieldChange" visible="{= ${ui>/isEditable} &amp;&amp; !${HideObsRoteiro} }">
                                             <layoutData>
                                                 <form:ColumnElementData id="CQDetailLinha_layout201" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </TextArea>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_amostra_Responsavel_label" label="{i18n>CQLinhaDetail.amostra.Responsavel}" visible="{= !${HideLinhasResponsavel} }">
+                                        <Text id="CQDetailLinha_amostra_Responsavel" emptyIndicatorMode="On" text="{Responsavel}" visible="{= !${ui>/isEditable} }">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout202" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Input id="CQDetailLinha_amostra_Responsavel_edit" value="{Responsavel}" maxLength="100" showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onFieldChange" visible="{ui>/isEditable}">
+                                            <layoutData>
+                                                <form:ColumnElementData id="CQDetailLinha_layout203" cellsSmall="12" cellsLarge="12"/>
+                                            </layoutData>
+                                        </Input>
                                     </form:FormElement>
                                 </form:FormContainer>
                             </form:Form>
@@ -1401,6 +1413,27 @@
                                                 <form:ColumnElementData id="CQDetailLinha_Observacoes_obs_input_layout" cellsSmall="12" cellsLarge="12"/>
                                             </layoutData>
                                         </TextArea>
+                                    </form:FormElement>
+                                </form:FormContainer>
+                            </form:Form>
+
+                            <!-- Administração Linha -->
+                            <Title id="CQDetailLinha_admin_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>CQLinhaDetail.admin.title}"></Title>
+                            <form:Form id="CQDetailLinha_admin_form" editable="false">
+                                <form:layout>
+                                    <form:ColumnLayout id="CQDetailLinha_admin_form_layout" columnsM="2" columnsL="3" columnsXL="3"></form:ColumnLayout>
+                                </form:layout>
+                                <form:FormContainer id="CQDetailLinha_admin_container">
+                                    <form:FormElement id="CQDetailLinha_admin_DataCriacao_label" label="{i18n>CQLinhaDetail.admin.DataCriacao}">
+                                        <Text id="CQDetailLinha_admin_DataCriacao" emptyIndicatorMode="On" text="{DataCriacao}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_admin_HorasCriacao_label" label="{i18n>CQLinhaDetail.admin.HorasCriacao}">
+                                        <Text id="CQDetailLinha_admin_HorasCriacao" emptyIndicatorMode="On" text="{HorasCriacao}"></Text>
+                                    </form:FormElement>
+
+                                    <form:FormElement id="CQDetailLinha_admin_UserCriacao_label" label="{i18n>CQLinhaDetail.admin.UserCriacao}">
+                                        <Text id="CQDetailLinha_admin_UserCriacao" emptyIndicatorMode="On" text="{UserCriacao}"></Text>
                                     </form:FormElement>
                                 </form:FormContainer>
                             </form:Form>

@@ -332,9 +332,11 @@ export default class CQDetail extends Controller {
         const page = this.byId("CQDetail_dynamicPage") as DynamicPage;
         page.setBusy(true);
 
-        await this.getExtensionAPI().getEditFlow().saveDocument(this.getContext());
-
-        page.setBusy(false);
+        try {
+            await this.getExtensionAPI().getEditFlow().saveDocument(this.getContext());
+        } finally {
+            page.setBusy(false);
+        }
     }
 
     public async onCancel(oEvent: Event): Promise<void> {

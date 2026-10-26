@@ -720,6 +720,10 @@
                 <Property Name="LoteFornecedor" Type="Edm.String" Nullable="false" MaxLength="20"/>
                 <Property Name="ObsRoteiro" Type="Edm.String" Nullable="false"/>
                 <Property Name="ObsLin" Type="Edm.String" Nullable="false"/>
+                <Property Name="Responsavel" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="UserCriacao" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DataCriacao" Type="Edm.Date"/>
+                <Property Name="HorasCriacao" Type="Edm.TimeOfDay" Nullable="false"/>
                 <Property Name="HideAcondhigiene" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideAcondintegre" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideCestranho" Type="Edm.Boolean" Nullable="false"/>
@@ -790,6 +794,7 @@
                 <Property Name="HideSabor" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideTemperaturas" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideLoteFornecedor" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideLinhasResponsavel" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideObsRoteiro" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
@@ -912,6 +917,8 @@
                 <Property Name="MMEan" Type="Edm.String" Nullable="false" MaxLength="18"/>
                 <Property Name="Gtin" Type="Edm.String" Nullable="false" MaxLength="18"/>
                 <Property Name="MMGtin" Type="Edm.String" Nullable="false" MaxLength="18"/>
+                <Property Name="Pmaximo" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
+                <Property Name="Pminimo" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="2"/>
                 <Property Name="Tipoproduto" Type="Edm.Byte" Nullable="false"/>
                 <Property Name="TipoprodutoDesc" Type="Edm.String" Nullable="false" MaxLength="255"/>
                 <Property Name="Nembalporcaixa" Type="Edm.Int32" Nullable="false"/>
@@ -1074,6 +1081,7 @@
                 <Property Name="HideUnDim" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideNomeCientifico" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideNembalporcaixa" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideDtProducao" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideMps" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
@@ -2128,7 +2136,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
+                                            <PropertyValue Property="message" String="An exception was raised"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -6083,6 +6091,25 @@
                 <Annotation Term="SAP__common.Label" String="Char20"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Char 20"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/Responsavel">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_responsalvel/0001;ps='srvd-zui_tabcq_o4-0001';va='com.sap.gateway.srvd.zui_tabcq_o4.v0001.et-ztabcqlinhas_c.responsavel'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Label" String="Char255"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/UserCriacao">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/DataCriacao">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/HorasCriacao">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/HideAcondhigiene">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
@@ -6360,6 +6387,10 @@
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/HideLoteFornecedor">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/HideLinhasResponsavel">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
@@ -8295,6 +8326,12 @@
                 <Annotation Term="SAP__common.Label" String="EAN/UPC"/>
                 <Annotation Term="SAP__common.QuickInfo" String="International Article Number (EAN/UPC)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/Pmaximo">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CQCabType/Pminimo">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/Tipoproduto">
                 <Annotation Term="SAP__common.Text" Path="TipoprodutoDesc"/>
                 <Annotation Term="SAP__core.Computed"/>
@@ -9068,6 +9105,10 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/HideDtProducao">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/HideMps">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
@@ -9399,7 +9440,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
+                                            <PropertyValue Property="message" String="An exception was raised"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -11475,6 +11516,11 @@
                 <Annotation Term="SAP__UI.Hidden" Path="HideDatalogger"/>
                 <Annotation Term="SAP__common.Label" String="Checkbox"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/DtProducao">
+                <Annotation Term="SAP__UI.Hidden" Path="HideDtProducao"/>
+                <Annotation Term="SAP__common.Label" String="Date"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Date for Free Use"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/CAlhalal">
                 <Annotation Term="SAP__UI.Hidden" Path="HideHalal"/>
                 <Annotation Term="SAP__common.Label" String="Checkbox"/>
@@ -11715,10 +11761,6 @@
             <Annotations Target="SAP__self.CQCabType/DtCongelacao">
                 <Annotation Term="SAP__common.Label" String="Date of Manufacture"/>
                 <Annotation Term="SAP__common.Heading" String="Manuf. Dte"/>
-            </Annotations>
-            <Annotations Target="SAP__self.CQCabType/DtProducao">
-                <Annotation Term="SAP__common.Label" String="Date"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Date for Free Use"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabType/DtEmbalamento">
                 <Annotation Term="SAP__common.Label" String="Date"/>
