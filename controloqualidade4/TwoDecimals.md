@@ -51,6 +51,7 @@ Every numeric column becomes a `macros:Column` with the same bindings as the for
 - Constraints: same integer digits as the backend field but **scale 2**
   (13,3 → `precision:12,scale:2`, 16,4 → `14,2`, 16,5 → `13,2`), so the Input rejects a third decimal.
 - The unit (`Uom`) is shown the same way the forms do: after the value in the `Text`, as `description` in the `Input`.
+  Inputs with a description use `fieldWidth="80%"`, so the value gets 80% of the cell and the unit 20% (the default is 50/50).
 
 The original annotation columns are removed from the LineItem (A.3), otherwise every value would appear twice.
 The balança button columns that anchor to `DataField::Pb`, `DataField::Pl` and `DataField::Ple` are re-anchored
@@ -69,7 +70,7 @@ to the new custom column keys.
         <macros:Column id="CQDetailLinha_PesoCX_column_Pb" key="num_PesoCx_Pb" header="{i18n>table.col.Pb}" hAlign="End" importance="High">
             <VBox id="CQDetailLinha_PesoCX_Pb_box">
                 <Text id="CQDetailLinha_PesoCX_Pb" text="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Uom}" visible="{= !${ui>/isEditable} }"/>
-                <Input id="CQDetailLinha_PesoCX_Pb_edit" value="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
+                <Input id="CQDetailLinha_PesoCX_Pb_edit" value="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" fieldWidth="80%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
             </VBox>
         </macros:Column>
 
@@ -95,7 +96,7 @@ to the new custom column keys.
         <macros:Column id="CQDetailLinha_PesoUn_column_Pb" key="num_PesoUn_Pb" header="{i18n>table.col.Pb}" hAlign="End" importance="High">
             <VBox id="CQDetailLinha_PesoUn_Pb_box">
                 <Text id="CQDetailLinha_PesoUn_Pb" text="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Uom}" visible="{= !${ui>/isEditable} }"/>
-                <Input id="CQDetailLinha_PesoUn_Pb_edit" value="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
+                <Input id="CQDetailLinha_PesoUn_Pb_edit" value="{path:'Pb', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" fieldWidth="80%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
             </VBox>
         </macros:Column>
 
@@ -110,7 +111,7 @@ to the new custom column keys.
         <macros:Column id="CQDetailLinha_PesoUn_column_PesoDeclarado" key="num_PesoUn_PesoDeclarado" header="{i18n>table.col.PesoDeclarado}" hAlign="End" importance="High">
             <VBox id="CQDetailLinha_PesoUn_PesoDeclarado_box">
                 <Text id="CQDetailLinha_PesoUn_PesoDeclarado" text="{path:'PesoDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Uom}" visible="{= !${ui>/isEditable} }"/>
-                <Input id="CQDetailLinha_PesoUn_PesoDeclarado_edit" value="{path:'PesoDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
+                <Input id="CQDetailLinha_PesoUn_PesoDeclarado_edit" value="{path:'PesoDeclarado', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" fieldWidth="80%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
             </VBox>
         </macros:Column>
 
@@ -129,7 +130,7 @@ Anchors are chained, so the order is deterministic: `Posnr | balança | Pl | bal
         <macros:Column id="CQDetailLinha_Vidragem_column_Ple" key="num_Vid_Ple" header="{i18n>table.col.VidPle}" anchor="DataField::Vidragem" placement="Before" hAlign="End" importance="High">
             <VBox id="CQDetailLinha_Vidragem_Ple_box">
                 <Text id="CQDetailLinha_Vidragem_Ple" text="{path:'Ple', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Uom}" visible="{= !${ui>/isEditable} }"/>
-                <Input id="CQDetailLinha_Vidragem_Ple_edit" value="{path:'Ple', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
+                <Input id="CQDetailLinha_Vidragem_Ple_edit" value="{path:'Ple', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" fieldWidth="80%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
             </VBox>
         </macros:Column>
 
@@ -140,7 +141,7 @@ Anchors are chained, so the order is deterministic: `Posnr | balança | Pl | bal
         <macros:Column id="CQDetailLinha_Vidragem_column_Pl" key="num_Vid_Pl" header="{i18n>table.col.Pl}" anchor="pesoPle_vid_balanca" placement="Before" hAlign="End" importance="High">
             <VBox id="CQDetailLinha_Vidragem_Pl_box">
                 <Text id="CQDetailLinha_Vidragem_Pl" text="{path:'Pl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}} {Uom}" visible="{= !${ui>/isEditable} }"/>
-                <Input id="CQDetailLinha_Vidragem_Pl_edit" value="{path:'Pl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
+                <Input id="CQDetailLinha_Vidragem_Pl_edit" value="{path:'Pl', type:'Decimal', formatOptions:{minFractionDigits:2,maxFractionDigits:2,preserveDecimals: false}, constraints:{precision:12,scale:2}}" description="{Uom}" fieldWidth="80%" textAlign="End" change=".onFieldChange" visible="{ui>/isEditable}"/>
             </VBox>
         </macros:Column>
 
