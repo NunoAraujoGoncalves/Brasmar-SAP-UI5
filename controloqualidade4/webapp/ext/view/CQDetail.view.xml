@@ -897,13 +897,13 @@
                         <ScrollContainer id="CQDetail_section_scroll_amostragens" vertical="true" height="100%">
                             <VBox id="CQDetail_section_amostragens_vbox">
 
-                                <Title id="CQDetail_subSection_mps_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" visible="{path: 'HideMps', formatter: '.formatter.hideFormatter'}" text="{i18n>cqDetail.amostragens.subsection.mps.title}"/>
+                                <!-- <Title id="CQDetail_subSection_mps_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" visible="{path: 'HideMps', formatter: '.formatter.hideFormatter'}" text="{i18n>cqDetail.amostragens.subsection.mps.title}"/>
                                 <layout:Grid id="CQDetail_section_amostragens_grid3" defaultSpan="XL12 L12 M12 S12">
                                     <OverflowToolbar id="CQDetail_mps_table_toolbar" visible="{= ${ui>/isEditable} &amp;&amp; !${HideMps} }">
                                         <Button id="CQDetail_mps_btn_getMp" text="{i18n>cqDetail.amostragens.subsection.mps.btn.getMp}" icon="sap-icon://factory" type="Emphasized" press=".onGetMp" visible="{= ${ui>/isEditable} &amp;&amp; !${HideMps} }"></Button>
                                     </OverflowToolbar>
                                     <macros:Table id="CQDetail_mps_table" header="{i18n>cqDetail.amostragens.subsection.mps.title}" metaPath="_mp/@com.sap.vocabularies.UI.v1.LineItem" visible="{path: 'HideMps', formatter: '.formatter.hideFormatter'}" enableAutoColumnWidth="true"/>
-                                </layout:Grid>
+                                </layout:Grid> -->
 
                                 <Title id="CQDetail_subSection_amostragens_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.amostragens.subsection.amostragens.title}"/>
                                 <layout:Grid id="CQDetail_section_amostragens_grid1" defaultSpan="XL12 L12 M12 S12">

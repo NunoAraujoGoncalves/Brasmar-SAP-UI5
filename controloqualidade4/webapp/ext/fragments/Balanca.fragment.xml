@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:form="sap.ui.layout.form">
-    <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="500px" beforeOpen=".onBalancaBeforeOpen" afterClose=".onBalancaAfterClose">
+    <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="600px" beforeOpen=".onBalancaBeforeOpen" afterClose=".onBalancaAfterClose">
         <form:SimpleForm id="BalancaDialog_form" editable="true" labelSpanS="2">
             <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onPressBalancaStart" enabled="{= !${balanca>/reading} }"  />
             <Button id="BalancaDialog_btn_stop" text="{i18n>BalancaDialog.btn.stop}" icon="sap-icon://media-pause" press=".onPressBalancaEnd" enabled="{balanca>/reading}" />
@@ -25,14 +25,22 @@
                 </OverflowToolbar>
             </headerToolbar>
             <columns>
-                <Column id="BalancaDialog_column_peso_label" demandPopin="true" minScreenWidth="Phone">
+                <Column id="BalancaDialog_column_peso_label" demandPopin="true" minScreenWidth="Tablet">
                     <Text id="BalancaDialog_column_peso" text="{i18n>BalancaDialog.table.peso}" />
+                </Column>
+                <Column id="BalancaDialog_column_pleDeclarado_label" demandPopin="true" minScreenWidth="Tablet" visible="{balanca>/showDeclarado}">
+                    <Text id="BalancaDialog_column_pleDeclarado" text="{i18n>BalancaDialog.table.pleDeclarado}" />
+                </Column>
+                <Column id="BalancaDialog_column_pesoDeclarado_label" demandPopin="true" minScreenWidth="Tablet" visible="{balanca>/showDeclarado}">
+                    <Text id="BalancaDialog_column_pesoDeclarado" text="{i18n>BalancaDialog.table.pesoDeclarado}" />
                 </Column>
             </columns>
             <items>
                 <ColumnListItem id="BalancaDialog_item_peso" vAlign="Middle">
                     <cells>
                         <Input id="BalancaDialog_input_peso" value="{balanca>PB}" description="{balanca>uom}" />
+                        <Text id="BalancaDialog_text_pleDeclarado" text="" />
+                        <Input id="BalancaDialog_input_pesoDeclarado" value="{balanca>PesoDeclarado}" description="{balanca>uom}" />
                     </cells>
                 </ColumnListItem>
             </items>

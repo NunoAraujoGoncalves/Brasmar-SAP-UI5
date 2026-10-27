@@ -22,9 +22,11 @@ import MessageBox from "sap/m/MessageBox";
 import MessageToast from "sap/m/MessageToast";
 import ColumnListItem from "sap/m/ColumnListItem";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
+import DynamicPage from "sap/f/DynamicPage";
+import Text from "sap/m/Text";
 
 /** Uma linha da tabela de pesagens do dialog Balanca */
-type Pesagem = { PB: string; uom: string };
+type Pesagem = { PB: string; uom: string; PesoDeclarado?: string };
 
 /** Entidades filhas da linha que recebem pesagens */
 type PesagemNavigation = "_PesosUn" | "_Calibres";
@@ -56,7 +58,10 @@ export default class CQLinhaDetail extends Controller {
         const oPesosModel = new JSONModel({
             "PesosUn": [],
             "Calibres": [],
-            "reading": false
+            "reading": false,
+            "showDeclarado": false,
+            "Untara": 0,
+            "Teorvidragem": 0
         });
         this.getView()?.setModel(oPesosModel, "balanca");
         this.getView()?.setModel(SerialScale.model, "serial");
@@ -138,6 +143,22 @@ export default class CQLinhaDetail extends Controller {
             label: this.getText("CQLinhaDetail.calibre.convertUm")
         })
     }
+
+    public async onGetMp(): Promise<void> {
+        const page = this.byId("CQDetailLinha_dynamicPage") as DynamicPage;
+        page.setBusy(true);
+
+        try {
+            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.getMp, {
+                contexts: this.getContext(),
+                invocationGrouping: "Isolated",
+                label: this.getText("cqDetail.amostragens.subsection.mps.btn.getMp")
+            })
+        } catch (error) { }
+
+        page.setBusy(false);
+    }
+
 
     /* ---------- Balança Config ---------- */
     /**
@@ -261,7 +282,7 @@ export default class CQLinhaDetail extends Controller {
             }
 
             //2. Escrever o peso no Pb da linha + respetivos side effects
-            const text = (weight * 100).toFixed(2);
+            const text = (weight * 1000).toFixed(2);
             try {
                 await rowContext.setProperty(landProperty, text);
                 await this.editHelper.requestPropertySideEffects(rowContext, landProperty);
@@ -287,6 +308,17 @@ export default class CQLinhaDetail extends Controller {
                 cells: [
                     new Input({
                         value: "{balanca>PB}",
+                        description: "{balanca>uom}",
+                        valueLiveUpdate: true
+                    }),
+                    new Text({
+                        text: {
+                            parts: ["balanca>PB", "balanca>/Untara", "balanca>/Teorvidragem", "balanca>uom"],
+                            formatter: (pb: unknown, tara: number, teor: number, uom: string) => this.formatPleDeclarado(pb, tara, teor, uom)
+                        }
+                    }),
+                    new Input({
+                        value: "{balanca>PesoDeclarado}",
                         description: "{balanca>uom}"
                     })
                 ]
@@ -306,6 +338,16 @@ export default class CQLinhaDetail extends Controller {
         this.currentPesoCollection = collection;
         this.currentPesoUom = uomProperty;
         this.currentNavigation = navigation;
+
+        const model = this.getBalancaModel();
+        const showDeclarado = navigation === "_PesosUn";
+        model.setProperty("/showDeclarado", showDeclarado);
+        if (showDeclarado) {
+            const [tara, taraUom, teor] = await this.getContext().requestProperty(["Untara", "Unuompeso", "Teorvidragem"]) as unknown[];
+            model.setProperty("/Untara", this.toGrams(tara, taraUom));
+            model.setProperty("/Teorvidragem", Number(teor ?? 0) || 0);
+        }
+
         this.balancaDialog.open();
     }
 
@@ -324,12 +366,12 @@ export default class CQLinhaDetail extends Controller {
 
     /** Test function com pesos ficticios para testar outras fms sem balanca */
     public async onTestStart(oEvent: Button$PressEvent): Promise<void> {
-        let pesoTeste = 200;
+        let pesoTeste = 0.200;
         this.getBalancaModel().setProperty("/reading", true);
 
         this.iTimer = setInterval(() => {
             this.addPesagem(pesoTeste, "G");
-            pesoTeste += 105;
+            pesoTeste += 0.105;
         }, 1000);
     }
 
@@ -378,6 +420,7 @@ export default class CQLinhaDetail extends Controller {
     public async onPressOkayDialog(oEvent: Button$PressEvent): Promise<void> {
         const model = this.getBalancaModel();
         const path = this.currentPesoCollection.replace(/^balanca>/, "");
+        const navigation = this.currentNavigation;
         const rows = (model.getProperty(path) as Pesagem[] | undefined) ?? [];
         if (rows.length === 0) {
             this.balancaDialog.close();
@@ -392,8 +435,18 @@ export default class CQLinhaDetail extends Controller {
             return;
         }
 
-        const context = this.getContext();
-        const navigation = this.currentNavigation;
+        //1.b Validar Pesos Declarados
+        const isEmpty = (value: unknown): boolean => String(value ?? "").trim() === "";
+        const declarados = rows.map((row) =>
+            navigation === "_PesosUn" && !isEmpty(row.PesoDeclarado) ? this.toWeightString(row.PesoDeclarado) : undefined);
+        const invalidDeclarado = rows.findIndex((row, index) =>
+            navigation === "_PesosUn" && !isEmpty(row.PesoDeclarado) && declarados[index] === undefined);
+        if (invalidDeclarado >= 0) {
+            MessageBox.error(this.getText("BalancaDialog.error.invalidPesoDeclarado", [String(invalidDeclarado + 1), String(rows[invalidDeclarado].PesoDeclarado ?? "")]));
+            return;
+        }
+
+        const context = this.getContext();   
         this.balancaDialog.setBusy(true);
         try {
             // 2. o backend permite criar filhos nesta linha? (InsertRestrictions -> __CreateByAssociationControl)
@@ -408,7 +461,7 @@ export default class CQLinhaDetail extends Controller {
                 $$ownRequest: true
             }) as ODataListBinding;
             const results = await Promise.allSettled(rows.map((row, index) =>
-                binding.create(this.toEntityData(navigation, weights[index]!, row), true).created() ?? Promise.resolve()
+                binding.create(this.toEntityData(navigation, weights[index]!, row, declarados[index]), true).created() ?? Promise.resolve()
             ));
             binding.destroy();
 
@@ -486,6 +539,24 @@ export default class CQLinhaDetail extends Controller {
     }
 
     /* ---------- helpers ---------- */
+    private formatPleDeclarado(pb: unknown, tara: number, teor: number, uom: string): string {
+        const weight = this.toWeightString(pb);
+        if (weight === undefined) {
+            return "";
+        }
+        const pl = Number(weight) - (tara ?? 0);
+        const ple = pl - (pl * (teor ?? 0) / 100);
+        return `${this.round2(ple).toFixed(2)} ${uom ?? ""}`.trim();
+    }
+
+    private toGrams(value: unknown, uom: unknown): number {
+        const number = Number(value ?? 0);
+        if (!Number.isFinite(number)) {
+            return 0;
+        }
+        return String(uom ?? "").toUpperCase() === "KG" ? number * 1000 : number;
+    }
+
     private round2(value: number): number {
         return Math.sign(value) * Math.round((Math.abs(value) + Number.EPSILON) * 100) / 100
     }
@@ -508,7 +579,7 @@ export default class CQLinhaDetail extends Controller {
         const model = this.getBalancaModel();
         const path = this.currentPesoCollection.replace(/^balanca>/, "");
         const rows = (model.getProperty(path) as Pesagem[] | undefined) ?? [];
-        model.setProperty(path, [...rows, { PB: (weight * 100).toFixed(2), uom }]);
+        model.setProperty(path, [...rows, { PB: (weight * 1000).toFixed(2), uom, PesoDeclarado: "" }]);
     }
 
     /**
@@ -549,7 +620,6 @@ export default class CQLinhaDetail extends Controller {
         });
     }
 
-
     /**
      * Peso do dialog -> string Edm.Decimal com 2 casas ("12,5" -> "12.50").
      * undefined = vazio, não numérico ou <= 0.
@@ -566,11 +636,15 @@ export default class CQLinhaDetail extends Controller {
     /**
      * Dialog Pesos para Odata Pesos da chamada
      */
-    private toEntityData(navigation: PesagemNavigation, weight: string, row: Pesagem): Record<string, string> {
+    private toEntityData(navigation: PesagemNavigation, weight: string, row: Pesagem, pesoDeclarado?: string): Record<string, string> {
         if (navigation === "_Calibres") {
             return row.uom ? { Medicao: weight, UomInternal: row.uom } : { Medicao: weight, UomInternal: "G" };
         }
-        return row.uom ? { Pb: weight, Uom: row.uom } : { Pb: weight, Uom: "G" }
+        const data: Record<string, string> = row.uom ? { Pb: weight, Uom: row.uom } : { Pb: weight, Uom: "G" };
+        if (pesoDeclarado !== undefined) {
+            data.PesoDeclarado = pesoDeclarado;
+        }
+        return data;
     }
 
 

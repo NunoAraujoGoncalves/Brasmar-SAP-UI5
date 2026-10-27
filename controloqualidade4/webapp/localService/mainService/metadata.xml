@@ -323,12 +323,14 @@
                 <Key>
                     <PropertyRef Name="Centro"/>
                     <PropertyRef Name="Id"/>
+                    <PropertyRef Name="Linha"/>
                     <PropertyRef Name="Mp"/>
                     <PropertyRef Name="DraftUUID"/>
                     <PropertyRef Name="IsActiveEntity"/>
                 </Key>
                 <Property Name="Centro" Type="Edm.String" Nullable="false" MaxLength="4"/>
                 <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Linha" Type="Edm.String" Nullable="false" MaxLength="6"/>
                 <Property Name="Mp" Type="Edm.String" Nullable="false" MaxLength="18"/>
                 <Property Name="MpDesc" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="Qtd1" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
@@ -352,9 +354,14 @@
                 <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.SAP__Message)" Nullable="false"/>
                 <NavigationProperty Name="DraftAdministrativeData" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.I_DraftAdministrativeDataType"/>
                 <NavigationProperty Name="SiblingEntity" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType"/>
-                <NavigationProperty Name="_CabCQ" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false" Partner="_mp">
+                <NavigationProperty Name="_CQCab" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false">
                     <ReferentialConstraint Property="Centro" ReferencedProperty="Centro"/>
                     <ReferentialConstraint Property="Id" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="_Linhas" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType" Nullable="false" Partner="_mps">
+                    <ReferentialConstraint Property="Centro" ReferencedProperty="Centro"/>
+                    <ReferentialConstraint Property="Id" ReferencedProperty="Id"/>
+                    <ReferentialConstraint Property="Linha" ReferencedProperty="Linha"/>
                 </NavigationProperty>
             </EntityType>
             <EntityType Name="CQCalibresType">
@@ -795,6 +802,7 @@
                 <Property Name="HideTemperaturas" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideLoteFornecedor" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideLinhasResponsavel" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideMps" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideObsRoteiro" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
@@ -837,6 +845,9 @@
                     <ReferentialConstraint Property="Id" ReferencedProperty="ID"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_Calibres" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCalibresType)" Partner="_CQLinhas">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="_mps" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType)" Partner="_Linhas">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_PesosCX" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQPesosCxType)" Partner="_CQLinhas">
@@ -1083,6 +1094,7 @@
                 <Property Name="HideNembalporcaixa" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideDtProducao" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HideMps" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HideVidragemM" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
                 <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
@@ -1108,9 +1120,6 @@
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_linhas" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType)" Partner="_CabCQ">
-                    <OnDelete Action="Cascade"/>
-                </NavigationProperty>
-                <NavigationProperty Name="_mp" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType)" Partner="_CabCQ">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <NavigationProperty Name="_nutricionais" Type="Collection(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQNutricionaisType)" Partner="_CabCq">
@@ -1179,6 +1188,7 @@
                 <Property Name="convertUom" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="convertUomCalibre" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="doCalculations" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="getMp" Type="Edm.Boolean" Nullable="false"/>
             </ComplexType>
             <ComplexType Name="CQCabOperationControl">
                 <Property Name="aprovarCQ" Type="Edm.Boolean" Nullable="false"/>
@@ -1190,7 +1200,6 @@
                 <Property Name="descodificaCBCaixa" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="descodificaCBUn" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="Edit" Type="Edm.Boolean" Nullable="false"/>
-                <Property Name="getMp" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="printCQ" Type="Edm.Boolean" Nullable="false"/>
                 <Property Name="reabrirCQ" Type="Edm.Boolean" Nullable="false"/>
             </ComplexType>
@@ -1327,7 +1336,7 @@
                 <ReturnType Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
             </Action>
             <Action Name="getMp" IsBound="true">
-                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType" Nullable="false"/>
             </Action>
             <Action Name="reabrirCQ" EntitySetPath="_it" IsBound="true">
                 <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType" Nullable="false"/>
@@ -1355,7 +1364,6 @@
                     <NavigationPropertyBinding Path="_HabBrasil" Target="CQHabBrasil"/>
                     <NavigationPropertyBinding Path="_ingredientes" Target="CQIngredientes"/>
                     <NavigationPropertyBinding Path="_linhas" Target="CQLinhas"/>
-                    <NavigationPropertyBinding Path="_mp" Target="CQMp"/>
                     <NavigationPropertyBinding Path="_nutricionais" Target="CQNutricionais"/>
                     <NavigationPropertyBinding Path="_paletizacao" Target="CQPaletizacao"/>
                     <NavigationPropertyBinding Path="_semControlo" Target="CQLinhasSemControlo"/>
@@ -1381,6 +1389,7 @@
                     <NavigationPropertyBinding Path="SiblingEntity" Target="CQLinhas"/>
                     <NavigationPropertyBinding Path="_CabCQ" Target="CQCab"/>
                     <NavigationPropertyBinding Path="_Calibres" Target="CQCalibres"/>
+                    <NavigationPropertyBinding Path="_mps" Target="CQMp"/>
                     <NavigationPropertyBinding Path="_PesosCX" Target="CQPesosCx"/>
                     <NavigationPropertyBinding Path="_PesosUn" Target="CQPesosUn"/>
                     <NavigationPropertyBinding Path="_Temperaturas" Target="CQTemperaturas"/>
@@ -1390,7 +1399,8 @@
                 <EntitySet Name="CQMp" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQMpType">
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="CQMp"/>
-                    <NavigationPropertyBinding Path="_CabCQ" Target="CQCab"/>
+                    <NavigationPropertyBinding Path="_CQCab" Target="CQCab"/>
+                    <NavigationPropertyBinding Path="_Linhas" Target="CQLinhas"/>
                 </EntitySet>
                 <EntitySet Name="CQNutricionais" EntityType="com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQNutricionaisType">
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
@@ -2136,7 +2146,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="An exception was raised"/>
+                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -3362,6 +3372,13 @@
                 <Annotation Term="SAP__common.IsDigitSequence"/>
                 <Annotation Term="SAP__UI.Hidden"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQMpType/Linha">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Item (SD)"/>
+                <Annotation Term="SAP__common.Heading" String="Item"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Item number of the SD document"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQMpType/Mp">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
@@ -3478,7 +3495,15 @@
                         <PropertyValue Property="RestrictedProperties">
                             <Collection>
                                 <Record>
-                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_CabCQ"/>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_CQCab"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Linhas"/>
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
                                             <PropertyValue Property="Insertable" Bool="false"/>
@@ -3570,7 +3595,7 @@
                         </PropertyValue>
                         <PropertyValue Property="TargetEntities">
                             <Collection>
-                                <NavigationPropertyPath>_CabCQ</NavigationPropertyPath>
+                                <NavigationPropertyPath>_Linhas</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -3584,7 +3609,7 @@
                         </PropertyValue>
                         <PropertyValue Property="TargetEntities">
                             <Collection>
-                                <NavigationPropertyPath>_CabCQ</NavigationPropertyPath>
+                                <NavigationPropertyPath>_Linhas</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -6394,6 +6419,10 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/HideMps">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/HideObsRoteiro">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
@@ -6602,6 +6631,14 @@
                                     </PropertyValue>
                                 </Record>
                                 <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_mps"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                                <Record>
                                     <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_PesosCX"/>
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
@@ -6724,6 +6761,9 @@
             <Annotations Target="SAP__self.CQLinhasType/_Calibres">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/_mps">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQLinhasType/_PesosCX">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
@@ -6802,6 +6842,18 @@
                                 <String>_it/UnSumPl</String>
                                 <String>_it/UnSumPle</String>
                                 <String>_it/UnUom</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.getMp(SAP__self.CQLinhasType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/getMp"/>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Action_getMp">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_it/_mps</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -6979,6 +7031,19 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                        </Record>
+                        <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="Label" String="Mps"/>
+                            <PropertyValue Property="ID" String="Mps"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="MpsLines"/>
+                                        <PropertyValue Property="Target" AnnotationPath="_mps/@SAP__UI.LineItem"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                            <Annotation Term="SAP__UI.Hidden" Path="HideMps"/>
                         </Record>
                         <Record Type="SAP__UI.CollectionFacet">
                             <PropertyValue Property="Label" String="Perda de Peso"/>
@@ -7637,6 +7702,11 @@
                         <Record Type="SAP__UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="Calcular"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.doCalculations(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Gerar MP"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.getMp(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQLinhasType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
                     </Collection>
@@ -9113,6 +9183,10 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQCabType/HideVidragemM">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/HasDraftEntity">
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__UI.HiddenFilter"/>
@@ -9213,14 +9287,6 @@
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
                                             <PropertyValue Property="Insertable" Path="__CreateByAssociationControl/_linhas"/>
-                                        </Record>
-                                    </PropertyValue>
-                                </Record>
-                                <Record>
-                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_mp"/>
-                                    <PropertyValue Property="InsertRestrictions">
-                                        <Record>
-                                            <PropertyValue Property="Insertable" Bool="false"/>
                                         </Record>
                                     </PropertyValue>
                                 </Record>
@@ -9368,9 +9434,6 @@
             <Annotations Target="SAP__self.CQCabType/_linhas">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
-            <Annotations Target="SAP__self.CQCabType/_mp">
-                <Annotation Term="SAP__common.Composition"/>
-            </Annotations>
             <Annotations Target="SAP__self.CQCabType/_nutricionais">
                 <Annotation Term="SAP__common.Composition"/>
             </Annotations>
@@ -9440,7 +9503,7 @@
                                     <Collection>
                                         <Record>
                                             <PropertyValue Property="code" String="SY-530"/>
-                                            <PropertyValue Property="message" String="An exception was raised"/>
+                                            <PropertyValue Property="message" String="Ocorreu uma exceção"/>
                                             <PropertyValue Property="severity" String="error"/>
                                         </Record>
                                     </Collection>
@@ -9537,18 +9600,6 @@
                             <Collection>
                                 <NavigationPropertyPath/>
                                 <NavigationPropertyPath>_it/_semControlo</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="SAP__self.getMp(SAP__self.CQCabType)">
-                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/getMp"/>
-                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Action_getMp">
-                    <Record Type="SAP__common.SideEffectsType">
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>_it/_mp</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -9986,19 +10037,6 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
-                        </Record>
-                        <Record Type="SAP__UI.CollectionFacet">
-                            <PropertyValue Property="Label" String="Mps"/>
-                            <PropertyValue Property="ID" String="Mps"/>
-                            <PropertyValue Property="Facets">
-                                <Collection>
-                                    <Record Type="SAP__UI.ReferenceFacet">
-                                        <PropertyValue Property="ID" String="MpsLines"/>
-                                        <PropertyValue Property="Target" AnnotationPath="_mp/@SAP__UI.LineItem"/>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                            <Annotation Term="SAP__UI.Hidden" Path="HideMps"/>
                         </Record>
                         <Record Type="SAP__UI.CollectionFacet">
                             <PropertyValue Property="Label" String="Falta Controlo"/>
@@ -10640,11 +10678,6 @@
                         <Record Type="SAP__UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="Imprimir"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.printCQ(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
-                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="Gerar MP"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_tabcq_o4.v0001.getMp(com.sap.gateway.srvd.zui_tabcq_o4.v0001.CQCabType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
                         <Record Type="SAP__UI.DataFieldForAction">
@@ -11754,6 +11787,11 @@
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasType/__OperationControl/getMp">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabType/DtVencimento">
                 <Annotation Term="SAP__common.Label" String="SLED/BBD"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Shelf Life Expiration or Best-Before Date"/>
@@ -11857,11 +11895,6 @@
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
-            <Annotations Target="SAP__self.CQCabType/__OperationControl/getMp">
-                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
-                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
-            </Annotations>
             <Annotations Target="SAP__self.CQCabType/__OperationControl/printCQ">
                 <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
@@ -11952,6 +11985,11 @@
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
+            <Annotations Target="SAP__self.CQLinhasOperationControl/getMp">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
             <Annotations Target="SAP__self.CQCabOperationControl/aprovarCQ">
                 <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
@@ -11993,11 +12031,6 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
             </Annotations>
             <Annotations Target="SAP__self.CQCabOperationControl/Edit">
-                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
-                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
-            </Annotations>
-            <Annotations Target="SAP__self.CQCabOperationControl/getMp">
                 <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
                 <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>

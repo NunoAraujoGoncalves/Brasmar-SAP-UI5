@@ -22,26 +22,6 @@ export default class Formatter {
         return !sValue;
     }
 
-    // public qtdFormatter(this: CQLinhaDetail, sQtd: string | undefined, sUom: string) {
-    //     let rounded: string;
-    //     if (typeof sQtd === 'string') {
-    //         const normalised = sQtd.replace('.', '').replace(',', '.');
-    //          rounded = this.formatter.formatWithSpace(parseFloat(normalised));               
-    //         // rounded = parseFloat(normalised).toFixed(2);
-    //     } else {
-    //         rounded = parseFloat('0').toFixed(2);
-    //     }
-
-    //     return `${rounded} ${sUom}`;
-    // }
-
-    // public formatWithSpace(value: number) {
-    //     return new Intl.NumberFormat('fr-FR', {
-    //         minimumFractionDigits: 2,
-    //         maximumFractionDigits: 2
-    //     }).format(value);
-    // }
-
     public detailLineFormatter(this: Controller, sI18n: string, sLine: string) {
         return `${sI18n}: ${sLine}`;
     }
