@@ -352,8 +352,11 @@ export default class CQDetail extends Controller {
             return;
         }
 
-        MultiInstance.open(selected);
-        this.getExtensionAPI().getRouting().navigate(selected[0]);
+        const paths = selected.map((context) => context.getPath());
+        const parameters = MultiInstance.getRouteParameters(paths[0], paths);
+        if (parameters) {
+            void this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters);
+        }
     }
 
 

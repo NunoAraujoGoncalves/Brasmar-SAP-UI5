@@ -11,15 +11,33 @@ The FE route of the amostra page already accepts a query string:
 ```
 "pattern": "CQCab({CQCabKey})/_linhas({_linhasKey}):?query:"
 ```
-The open tabs go into one parameter, **`amostras`**. Its value is the list of their `Linha` values, in tab order:
+The open tabs go into one parameter, **`amostras`**: one **token per tab**, in tab order.
 ```
-#app-preview&/CQCab(Centro='BM01',ID='1000000102',DraftUUID=…,IsActiveEntity=false)/_linhas(Centro='BM01',Id='1000000102',Linha='20',DraftUUID=…,IsActiveEntity=false)?amostras=10,20,30
-                                                                                                            └── selected tab (route path) ─┘       └ all open tabs ┘
+#app-preview&/CQCab(Centro='BM01',ID='1000000102',DraftUUID=…,IsActiveEntity=false)/_linhas(Centro='BM01',Id='1000000102',Linha='20',DraftUUID=…,IsActiveEntity=false)?amostras=10,20,~6f1c2a3b-…
+                                                                                                            └── selected tab (route path) ─┘       └── all open tabs ──┘
 ```
 - **The selected tab** is the amostra in the route path, exactly as today.
-- **Only `Linha` goes in the query.** The other keys (`Centro`, `Id`, `DraftUUID`, `IsActiveEntity`) are the same for every
-  tab: all tabs belong to the same CQ, in the same draft or active state. Each tab's path is rebuilt from the route key
-  by swapping its `Linha`.
+
+### Tokens: `Linha` is not enough
+The `CQLinhas` key is `Centro, Id, Linha, DraftUUID, IsActiveEntity`.
+
+**`Linha` is numbered by the backend only when the whole CQ is saved.** An amostra created with "+" in the draft has
+`Linha=''` and is identified by its own **`DraftUUID`**. Amostras that already existed have
+`DraftUUID=00000000-…`, both active and in the CQ draft.
+
+So each token carries what tells the tabs apart:
+
+| Amostra | Key (`_linhas(...)`) | Token |
+|---|---|---|
+| existing | `…Linha='10',DraftUUID=00000000-…,…` | `10` |
+| new, in the draft (not saved yet) | `…Linha='',DraftUUID=6f1c2a3b-…,…` | `~6f1c2a3b-…` |
+| any other non-empty `DraftUUID` | `…Linha='30',DraftUUID=9a…,…` | `30~9a…` |
+
+- Rule: `<Linha>` plus `~<DraftUUID>` whenever the `DraftUUID` is not the empty GUID.
+- **The other key fields** (`Centro`, `Id`, `IsActiveEntity`) are the same for every tab, because all tabs belong to
+  the same CQ and the same draft or active state. Each tab's path is rebuilt from the route key by swapping
+  `Linha` and `DraftUUID`.
+- **Safe characters:** tokens contain only digits, hex, `-` and `~`, so the URL needs no escaping.
 - **A single tab** writes no `?amostras`. The URL then stays identical to the standard FE row navigation.
 
 ## Design
@@ -45,17 +63,24 @@ Why `navigateToRoute` instead of writing the hash directly:
 `onAmostraContextChange` keeps calling `MultiInstance.ensure` as a fallback for a path that isn't in the tabs. It now
 takes `Linha` from the path (`linhaOf`) instead of reading it from the backend, because `Linha` is part of the key.
 
+### Label of a new amostra's tab
+A new amostra has no `Linha` yet, so the tab would read "Nº Amostra: ". The tab name shows **"Nova amostra"** instead
+(section 4), and the creation toast no longer prints an empty number (section 5).
+
 ## Files
 | File | Change |
 |---|---|
-| `webapp/ext/modules/MultiInstance.ts` | `ROUTE`, `AmostraRouteArguments`, `fromRoute`, `getRouteParameters`, `linhaOf`; `open` removed (no longer used) |
+| `webapp/ext/modules/MultiInstance.ts` | `ROUTE`, `AmostraRouteArguments`, `fromRoute`, `getRouteParameters`, `linhaOf`, URL tokens (`Linha` / `~DraftUUID`); `open` removed (no longer used) |
 | `webapp/ext/view/CQDetail.controller.ts` | `onOpenAmostras` navigates with `?amostras` |
 | `webapp/ext/view/CQLinhaDetail.controller.ts` | route `patternMatched` → `fromRoute`; `navigateToPath` uses `navigateToRoute`; close always navigates; `ensure` uses `linhaOf` |
+| `webapp/ext/view/CQLinhaDetail.view.xml` | tab name: "Nova amostra" when `Linha` is empty |
+| `webapp/i18n/i18n.properties` | `multiInstance.tab.new`; `multiInstance.msg.created` without the number |
 
-No changes to views, CSS, manifest or i18n.
-
-The sources below were applied to a copy of the **current working tree**. They **compile with the project's `strict`
+The sources below were applied to a copy of the **current working tree** and **compile with the project's `strict`
 TypeScript settings against the UI5 1.120 typings**.
+
+The URL round trip of `MultiInstance` was run in Node against a stubbed JSONModel. It covered two existing amostras
+plus one new draft amostra: `getRouteParameters` → `fromRoute` gives back the same 3 paths and the same selection.
 
 ---
 
@@ -79,8 +104,18 @@ const CAB_PATH = /^\/CQCab\([^)]*\)/;
 const AMOSTRA_PATH = /^\/CQCab\(([^)]*)\)\/_linhas\(([^)]*)\)$/;
 /** Linha='10' dentro da chave da amostra */
 const LINHA_KEY = /Linha='([^']*)'/;
-/** parâmetro do URL com as Linhas dos separadores abertos: ...?amostras=10,20,30 */
+/** DraftUUID=... dentro da chave da amostra */
+const DRAFT_KEY = /DraftUUID=([0-9a-fA-F-]+)/;
+/** DraftUUID das amostras que já existiam (ativas ou no draft do CQ) */
+const ZERO_GUID = "00000000-0000-0000-0000-000000000000";
+/**
+ * parâmetro do URL com os separadores abertos, um token por amostra: ...?amostras=10,20,~6f1c…
+ * - amostra existente: a Linha ("10")
+ * - amostra nova no draft: ainda sem Linha (numerada só ao gravar o CQ), identificada pelo DraftUUID ("~<guid>")
+ */
 const QUERY_AMOSTRAS = "amostras";
+/** separa a Linha do DraftUUID num token */
+const TOKEN_DRAFT = "~";
 
 /** decodeURIComponent que não rebenta com texto já descodificado (p.e. um "%" solto) */
 function decode(value: string): string {
@@ -114,25 +149,25 @@ export default class MultiInstance {
         const cabKey = decode(args.CQCabKey);
         const linhaKey = decode(args._linhasKey);
         const selectedPath = `/CQCab(${cabKey})/_linhas(${linhaKey})`;
-        const selectedLinha = MultiInstance.linhaOf(selectedPath);
+        const selectedToken = MultiInstance.toToken(selectedPath);
 
-        const linhas = decode(args["?query"]?.[QUERY_AMOSTRAS] ?? "")
+        const tokens = decode(args["?query"]?.[QUERY_AMOSTRAS] ?? "")
             .split(",")
-            .map((linha) => linha.trim())
+            .map((token) => token.trim())
             .filter(Boolean);
-        if (selectedLinha && !linhas.includes(selectedLinha)) {
-            linhas.unshift(selectedLinha);
+        if (!tokens.includes(selectedToken)) {
+            tokens.unshift(selectedToken);
         }
 
-        // mesma chave da amostra da rota, só muda a Linha (mesmo CQ, mesmo draft / ativo)
-        const tabs = [...new Set(linhas)].map((linha) => ({
-            path: `/CQCab(${cabKey})/_linhas(${linhaKey.replace(LINHA_KEY, `Linha='${linha}'`)})`,
-            linha
-        }));
-        MultiInstance.model.setData({
-            tabs: tabs.length ? tabs : [{ path: selectedPath, linha: selectedLinha }],
-            selectedPath
+        // mesma chave da amostra da rota, só mudam a Linha e o DraftUUID (mesmo CQ, mesmo draft / ativo)
+        const tabs = [...new Set(tokens)].map((token) => {
+            const [linha, draftUUID] = token.split(TOKEN_DRAFT);
+            const key = linhaKey
+                .replace(LINHA_KEY, `Linha='${linha}'`)
+                .replace(DRAFT_KEY, `DraftUUID=${draftUUID || ZERO_GUID}`);
+            return { path: `/CQCab(${cabKey})/_linhas(${key})`, linha };
         });
+        MultiInstance.model.setData({ tabs, selectedPath });
     }
 
     /**
@@ -144,11 +179,11 @@ export default class MultiInstance {
         if (!match) {
             return undefined;
         }
-        const linhas = paths.map((tabPath) => MultiInstance.linhaOf(tabPath)).filter(Boolean);
+        const tokens = paths.map((tabPath) => MultiInstance.toToken(tabPath));
         return {
             CQCabKey: match[1],
             _linhasKey: match[2],
-            ...(linhas.length > 1 ? { "?query": { [QUERY_AMOSTRAS]: linhas.join(",") } } : {})
+            ...(tokens.length > 1 ? { "?query": { [QUERY_AMOSTRAS]: tokens.join(",") } } : {})
         };
     }
 
@@ -214,9 +249,21 @@ export default class MultiInstance {
         return CAB_PATH.exec(path)?.[0];
     }
 
-    /** "/CQCab(...)/_linhas(...,Linha='10',...)" -> "10" */
+    /** "/CQCab(...)/_linhas(...,Linha='10',...)" -> "10" ("" numa amostra nova ainda por gravar) */
     static linhaOf(path: string): string {
         return LINHA_KEY.exec(path)?.[1] ?? "";
+    }
+
+    /**
+     * Token do URL de uma amostra: "10" (existente) ou "~<DraftUUID>" (nova, sem Linha até gravar o CQ).
+     * Se o DraftUUID não for o vazio vai sempre no token, mesmo com Linha ("10~<guid>").
+     */
+    private static toToken(path: string): string {
+        // só a chave da amostra: o CQ também tem DraftUUID
+        const key = AMOSTRA_PATH.exec(path)?.[2] ?? "";
+        const draftUUID = DRAFT_KEY.exec(key)?.[1] ?? ZERO_GUID;
+        const linha = MultiInstance.linhaOf(key);
+        return draftUUID.toLowerCase() === ZERO_GUID ? linha : `${linha}${TOKEN_DRAFT}${draftUUID}`;
     }
 
     private static getTabs(): AmostraTab[] {
@@ -358,7 +405,185 @@ After:
     }
 ```
 
+## 4. `webapp/ext/view/CQLinhaDetail.view.xml` – tab name
+Before:
+```xml
+<TabContainerItem id="CQDetailLinha_multi_tab" key="{multi>path}" name="{parts:[ 'i18n>CQLinhaDetail.Title', 'multi>linha' ], formatter: '.formatter.detailLineFormatter'}"></TabContainerItem>
+```
+After:
+```xml
+<TabContainerItem id="CQDetailLinha_multi_tab" key="{multi>path}" name="{= ${multi>linha} ? ${i18n>CQLinhaDetail.Title} + ': ' + ${multi>linha} : ${i18n>multiInstance.tab.new} }"></TabContainerItem>
+```
+
+## 5. `webapp/i18n/i18n.properties`
+```properties
+# separador de uma amostra criada no draft (a Linha só é numerada ao gravar o CQ)
+multiInstance.tab.new=Nova amostra
+# era "Amostra {0} criada." - a Linha ainda vem vazia
+multiInstance.msg.created=Amostra criada.
+```
+`onAmostraAdd` can keep passing `[linha]`; the text just no longer uses it.
+
 ---
+
+## Fix: page stuck busy when switching tabs fast
+**Symptom:** the user clicks several tabs quickly. The whole page shows the busy animation and stays stuck.
+The console shows:
+```
+The PageReady Event was not fired within the 7000 ms timeout . It has been forced.
+  PageReadyControllerExtension.onAfterBinding ← InternalRouting._bindPageToContext ← _bindPageToPath
+```
+
+**Cause (most likely):** every click started a new FE navigation (`navigateToRoute`) while the previous one was still
+**routing**, that is, resolving the path and rebinding the page. Two FE routings running at the same time leave the
+page busy. The data that never arrives for a binding that was already replaced also leaves FE's PageReady waiting
+until its 7 s timeout.
+
+**Fix:** no waiting for each amostra to load. Two small mechanisms:
+1. **Debounce the clicks (300 ms).**
+   - The clicked tab is marked immediately.
+   - Navigation starts only once the user has stopped clicking for 300 ms, and only to the **last** tab clicked.
+   - Clicking 2 → 3 → 4 → 3 quickly gives one navigation, to 3. Amostras 2 and 4 are never bound or loaded, so no
+     load is left half-done.
+2. **One FE routing at a time, without waiting for data.**
+   - `navigateToPath` waits only for the `navigateToRoute` promise, which resolves when FE has routed and rebound the
+     page. That is a short step.
+   - It does **not** wait for the amostra's data or for PageReady. The next tab can start while the previous amostra is
+     still loading, as in any FE app.
+   - A navigation requested while a routing is running is kept in `pendingAmostraPath` (last one wins) and starts as
+     soon as that routing ends.
+
+Supporting details:
+- **Programmatic selection is not a click.** `selectAmostraTab` sets `selectingAmostraTab`, so re-marking the shown tab
+  is not treated as a click.
+- **Return to the starting amostra.** If a routing is running when the debounce fires, the navigation is always queued,
+  even to the amostra shown before. When the routing ends, it compares against the amostra actually shown and then
+  either navigates or only re-marks the tab.
+- **Safety timeout.** If a routing never resolves, the queue unlocks after 10 s (`AMOSTRA_NAVIGATION_TIMEOUT_MS`).
+- **Same queue for × and "+".** Both call `navigateToPath` directly, without the debounce, and share the queue.
+
+**Trade-off:** each tab switch waits 300 ms before it starts. The tab itself is marked immediately.
+
+**If the page still sticks busy:** the busy then comes from overlapping **data** loads, not overlapping routings. The
+only robust option left is waiting for the load, which is the previous version of this fix:
+`await context.requestObject()` plus `pageReady.waitPageReady()` in `navigateAndWait`.
+
+These blocks **replace** `onAmostraTabSelect`, `navigateToPath` and `selectAmostraTab` from section 3. They compile
+with the rest of the plan under `strict` TypeScript.
+
+### Constants (next to `ROW_WEIGHING_TIMEOUT_MS`)
+```ts
+/** Tempo máximo à espera de uma navegação entre separadores de amostras */
+const AMOSTRA_NAVIGATION_TIMEOUT_MS = 10000;
+
+/** Pausa nos cliques dos separadores antes de navegar: cliques rápidos só carregam a última amostra */
+const AMOSTRA_TAB_DEBOUNCE_MS = 300;
+```
+### Fields (after `currentAmostraPath`)
+```ts
+    /** navegação entre amostras em curso (só uma de cada vez) */
+    amostraNavigation?: Promise<void>;
+    /** último separador clicado durante uma navegação: é para lá que se vai quando ela acabar */
+    pendingAmostraPath?: string;
+    /** setSelectedItem feito pelo código (não é um clique) */
+    selectingAmostraTab = false;
+    /** espera entre cliques nos separadores (só o último navega) */
+    amostraTabTimer?: ReturnType<typeof setTimeout>;
+```
+### `onExit` (add the `clearTimeout` line)
+```ts
+    public onExit(): void {
+        this.getView()?.detachModelContextChange(this.onAmostraContextChange, this);
+        this.getAppComponent().getRouter().getRoute(MultiInstance.ROUTE)?.detachPatternMatched(this.onAmostraRouteMatched, this);
+        clearTimeout(this.amostraTabTimer);
+        this.cancelRowWeighing?.();
+        // ...
+```
+### `onAmostraTabSelect`
+```ts
+    /** Clique num separador: liga a página a essa amostra (FE refaz o binding de toda a página)
+     * O TabContainer também dispara itemSelect sem clique (setSelectedItem programático e seleção por defeito
+     * no onBeforeRendering, quando a página pode ainda não ter contexto). Por isso compara-se com o
+     * separador selecionado no modelo "multi" e não com o contexto da view. 
+     */
+    public onAmostraTabSelect(oEvent: TabContainer$ItemSelectEvent): void {
+        const item = oEvent.getParameter("item") as TabContainerItem | null;
+        const path = item?.getKey();
+        const selectedPath = MultiInstance.getSelectedPath();
+        if (this.selectingAmostraTab || !path || !selectedPath) {
+            return;
+        }
+        // cliques seguidos: o separador fica marcado logo, mas só se navega para o último,
+        // quando o utilizador pára de clicar (as amostras do meio nem chegam a ser carregadas)
+        clearTimeout(this.amostraTabTimer);
+        this.amostraTabTimer = setTimeout(() => {
+            this.amostraTabTimer = undefined;
+            // com uma navegação em curso navega-se sempre (pode ser o regresso à amostra de onde se saiu)
+            if (this.amostraNavigation || path !== MultiInstance.getSelectedPath()) {
+                this.navigateToPath(path);
+            }
+        }, AMOSTRA_TAB_DEBOUNCE_MS);
+    }
+```
+### `navigateToPath` + new `navigateAndWait` + `selectAmostraTab`
+```ts
+    /**
+     * Navega (routing FE) para a amostra / CQ com este caminho OData.
+     * Para uma amostra o URL leva os separadores abertos (?amostras=...), para o refresh / link colado.
+     */
+    private navigateToPath(path: string): void {
+        const parameters = MultiInstance.getRouteParameters(path);
+        if (!parameters) {
+            // CQ (fechar o último separador)
+            const binding = this.getContext().getModel().bindContext(path);
+            this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as Context);
+            return;
+        }
+        if (this.amostraNavigation) {
+            this.pendingAmostraPath = path;
+            return;
+        }
+
+        // um routing do FE de cada vez: dois em simultâneo deixavam a página presa no busy do FE
+        this.amostraNavigation = this.navigateAndWait(parameters).finally(() => {
+            this.amostraNavigation = undefined;
+            const pending = this.pendingAmostraPath;
+            this.pendingAmostraPath = undefined;
+            if (pending && pending !== MultiInstance.getSelectedPath()) {
+                this.navigateToPath(pending);
+            } else {
+                this.syncAmostraTab(); // o separador marcado volta a ser o da amostra mostrada
+            }
+        });
+    }
+
+    /**
+     * Navega para a amostra e espera só pelo routing do FE (hash + binding da página), não pelos dados:
+     * os dados da amostra podem continuar a carregar enquanto o utilizador já escolhe outro separador.
+     */
+    private navigateAndWait(parameters: object): Promise<void> {
+        const navigation = this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters)
+            .then(() => undefined, () => undefined); // navegação cancelada / inexistente: o FE já mostra o erro
+        // segurança: os separadores nunca ficam bloqueados mais do que isto
+        const timeout = new Promise<void>((resolve) => setTimeout(resolve, AMOSTRA_NAVIGATION_TIMEOUT_MS));
+        return Promise.race([navigation, timeout]);
+    }
+
+
+    /** Marca no TabContainer o separador da amostra com este caminho (sem contar como clique) */
+    private selectAmostraTab(path: string): void {
+        const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer | undefined;
+        const item = tabs?.getItems().find((tab) => tab.getKey() === path);
+        if (tabs && item) {
+            this.selectingAmostraTab = true;
+            try {
+                tabs.setSelectedItem(item);
+            } finally {
+                this.selectingAmostraTab = false;
+            }
+        }
+    }
+```
 
 ## Risks to verify first
 1. **`?query` passes through FE.**
@@ -386,7 +611,13 @@ After:
      "not found".
    - Optional hardening: after `fromRoute`, `requestObject()` each non-selected path. Remove the ones that fail with
      `MultiInstance.remove`, then navigate to update the URL.
-6. **History.** Each tab change already adds a browser-history entry; that doesn't change. Back now also restores
+6. **New amostras after saving the CQ.**
+   - Once the CQ is saved, a new amostra gets its `Linha`, and its draft key (`~<DraftUUID>`) no longer exists.
+   - Save happens on the CQ page, which clears the tabs, so this doesn't break the normal flow.
+   - Only an **old link** that still contains `~<DraftUUID>` will show that tab as not found (see risk 5).
+7. **Draft GUID format.** The token uses the `DraftUUID` exactly as it appears in the context path. Check one new
+   amostra's path (`created.getPath()` in `onAmostraAdd`) to confirm it has `Linha=''` and its own `DraftUUID`.
+8. **History.** Each tab change already adds a browser-history entry; that doesn't change. Back now also restores
    the previous tab **set**, not only the previous amostra.
 
 ## Tests
@@ -397,8 +628,12 @@ After:
 4. Copy the URL → paste it in a new browser tab → the same tabs and the same selection.
 5. × on tab 20 (not selected) → the URL becomes `?amostras=10,30`, and the page doesn't reload. **F5** → 2 tabs.
 6. × on the selected tab → the neighbour is shown and the URL is updated. × on the last tab → the CQ page, with no query.
-7. In edit mode, "+" → the new Linha is appended to `?amostras`. **F5** → the new tab is still there.
+7. In edit mode, "+" → a **"Nova amostra"** tab appears and `?amostras` ends in `,~<guid>`. **F5** → the new tab is
+   still there and opens the same new amostra. Add a second one → two different `~<guid>` tokens.
+7b. Save the CQ, then reopen the amostras → the new ones now show their numbers (`Linha`), and their tokens are plain numbers.
 8. Row click in the CQ Amostras table → a single tab, with no `?amostras` in the URL.
+8b. Open 4 tabs and click 2 → 3 → 4 → 3 very fast. The page never stays busy and ends on **3**, with tab 3 marked and
+    the URL on `Linha='3…'`. Click 2 and then back to the current tab quickly → the page stays on the current one.
 9. Browser **Back** after several tab changes → the previous amostra and the previous tab set.
 10. A URL with a bogus Linha (`?amostras=10,999`) → tab 999 appears, and selecting it shows FE's not-found message
     (see risk 5).

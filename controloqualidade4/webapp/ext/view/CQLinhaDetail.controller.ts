@@ -24,9 +24,10 @@ import ColumnListItem from "sap/m/ColumnListItem";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import DynamicPage from "sap/f/DynamicPage";
 import Text from "sap/m/Text";
-import MultiInstance from "../modules/MultiInstance";
+import MultiInstance, { AmostraRouteArguments } from "../modules/MultiInstance";
 import TabContainer, { TabContainer$ItemCloseEvent, TabContainer$ItemSelectEvent } from "sap/m/TabContainer";
 import TabContainerItem from "sap/m/TabContainerItem";
+import { Route$PatternMatchedEvent } from "sap/ui/core/routing/Route";
 
 /** Uma linha da tabela de pesagens do dialog Balanca */
 type Pesagem = { PB: string; uom: string; PesoDeclarado?: string };
@@ -79,10 +80,13 @@ export default class CQLinhaDetail extends Controller {
         const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer;
         tabs.getBinding("items")?.attachChange(this.syncAmostraTab, this);
         this.syncAmostraTab();
+
+        this.getAppComponent().getRouter().getRoute(MultiInstance.ROUTE)?.attachPatternMatched(this.onAmostraRouteMatched, this)
     }
 
     public onExit(): void {
         this.getView()?.detachModelContextChange(this.onAmostraContextChange, this);
+        this.getAppComponent().getRouter().getRoute(MultiInstance.ROUTE)?.detachPatternMatched(this.onAmostraRouteMatched, this)
         this.cancelRowWeighing?.();
         this.stopWeighing();
         this.editHelper.destroy();
@@ -552,11 +556,14 @@ export default class CQLinhaDetail extends Controller {
         this.getBalancaModel().setProperty("/PesosUn", []);
         this.getBalancaModel().setProperty("/Calibres", []);
 
-        MultiInstance.ensure(path, String(context.getProperty("Linha") ?? ""));
+        //a Linha faz parte da chave
+        MultiInstance.ensure(path, MultiInstance.linhaOf(path));
         this.selectAmostraTab(path);
-        if (!context.getProperty("Linha")) {
-            void context.requestProperty("Linha").then((linha) => MultiInstance.ensure(path, String(linha ?? "")));
-        }
+    }
+
+    private onAmostraRouteMatched(oEvent: Route$PatternMatchedEvent): void {
+        MultiInstance.fromRoute(oEvent.getParameter("arguments") as AmostraRouteArguments);
+        this.syncAmostraTab();
     }
 
     /** Clique num separador: liga a página a essa amostra (FE refaz o binding de toda a página)
@@ -599,11 +606,8 @@ export default class CQLinhaDetail extends Controller {
             return;
         }
 
-        if (next !== this.getContext().getPath()) {
-            this.navigateToPath(next);
-        } else {
-            this.selectAmostraTab(next);
-        }
+        //navega sempre
+        this.navigateToPath(next);
     }
 
     /**
@@ -735,10 +739,19 @@ export default class CQLinhaDetail extends Controller {
     }
 
 
-    /** Navega (routing FE) para a amostra / CQ com este caminho OData */
+    /** 
+     * Navega (routing FE) para a amostra / CQ com este caminho OData
+     * Para uma amostra o URL leva os separadores abertos (?amostras=...), para o refresh / link colado.
+     */
     private navigateToPath(path: string): void {
+        const parameters = MultiInstance.getRouteParameters(path);
+        if (parameters) {
+            void this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters);
+            return;            
+        }
+        //CQ Fecha o ultimo
         const binding = this.getContext().getModel().bindContext(path);
-        this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as Context);
+        this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as  Context);
     }
 
 
