@@ -93,6 +93,9 @@
       "css": [
         {
           "uri": "Icon/style.css"
+        },
+        {
+          "uri": "css/style.css"
         }
       ]
     },

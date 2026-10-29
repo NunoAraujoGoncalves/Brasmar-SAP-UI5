@@ -21,6 +21,7 @@ import MessageToast from "sap/m/MessageToast";
 import TableAPI from "sap/fe/macros/table/TableAPI";
 import { openCqEmailDraft } from "../modules/CqEmail";
 import MessageBox from "sap/m/MessageBox";
+import MultiInstance from "../modules/MultiInstance";
 
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.view
@@ -34,14 +35,30 @@ export default class CQDetail extends Controller {
     cbUnidadeFragment: Dialog;
     URLHelper = mobileLibrary.URLHelper;
 
+    /** refresca a tabela de amostras quando o CQLinhaDetail cria uma amostra ("+" dos separadores) */
+    private readonly refreshAmostras = (): void => {
+        const context = this.getView()?.getBindingContext() as Context | null | undefined;
+        void context?.requestSideEffects([{ $NavigationPropertyPath: "_linhas" }]);
+    }
 
     public onInit(): void {
         super.onInit(); // needs to be called to properly initialize the page controller
         this.editHelper = new EditHelper(this.getView()!, "CQDetail_footer_draftIndicator");
+        MultiInstance.refreshAmostras = this.refreshAmostras;
+        this.getAppComponent().getRouter().getRoute("CQCabCQDetailPage")?.attachPatternMatched(this.onRouteMatched, this);
     }
 
     public onExit(): void {
+        this.getAppComponent().getRouter().getRoute("CQCabCQDetailPage")?.detachPatternMatched(this.onRouteMatched, this);
+        if (MultiInstance.refreshAmostras === this.refreshAmostras) {
+            MultiInstance.refreshAmostras = undefined;
+        }
         this.editHelper.destroy();
+    }
+
+    /** De volta à página do CQ: os separadores de amostras abertos deixam de valer */
+    private onRouteMatched(): void {
+        MultiInstance.clear();
     }
 
     /* ---------- title bar, display mode ---------- */
@@ -323,6 +340,20 @@ export default class CQDetail extends Controller {
         // the table is bound relative to the CQ (_semControlo), so it can't be refreshed directly:
         // ask the CQ context to reload the navigation instead
         await this.getContext().requestSideEffects([{ $NavigationPropertyPath: "_semControlo" }]);
+    }
+
+    /* ---------- Tabela Amostras ---------- */
+    
+    /** Abrir selecionadas: abre a página da amostra com um separador por amostra selecionada */
+    public onOpenAmostras(): void {
+        const table = this.byId("CQDetail_amostragens_table") as TableAPI;
+        const selected = table.getSelectedContexts();
+        if (selected.length === 0) {
+            return;
+        }
+
+        MultiInstance.open(selected);
+        this.getExtensionAPI().getRouting().navigate(selected[0]);
     }
 
 

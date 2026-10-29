@@ -907,7 +907,11 @@
 
                                 <Title id="CQDetail_subSection_amostragens_title" level="Auto" titleStyle="H3" class="sapUiTinyMarginBottom" text="{i18n>cqDetail.amostragens.subsection.amostragens.title}"/>
                                 <layout:Grid id="CQDetail_section_amostragens_grid1" defaultSpan="XL12 L12 M12 S12">
-                                    <macros:Table id="CQDetail_amostragens_table" header="{i18n>cqDetail.amostragens.subsection.amostragens.table.title}" metaPath="_linhas/@com.sap.vocabularies.UI.v1.LineItem" enableAutoColumnWidth="true"/>
+                                    <macros:Table id="CQDetail_amostragens_table" header="{i18n>cqDetail.amostragens.subsection.amostragens.table.title}" metaPath="_linhas/@com.sap.vocabularies.UI.v1.LineItem" enableAutoColumnWidth="true" selectionMode="Multi">
+                                        <macros:actions>
+                                            <macros:Action id="CQDetail_amostragens_table_btn_open" key="openAmostras" text="{i18n>cqDetail.amostragens.btn.openSelected}" press=".onOpenAmostras" requiresSelection="true"/>
+                                        </macros:actions>
+                                    </macros:Table>
                                 </layout:Grid>
 
                                 <Title id="CQDetail_subSection_fcontrolo_title" titleStyle="H3" class="sapUiTinyMarginBottom sapUiSmallMarginTop" text="{i18n>cqDetail.amostragens.subsection.fcontrolo.title}"/>

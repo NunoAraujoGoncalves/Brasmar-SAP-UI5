@@ -150,11 +150,17 @@ export default class MultiInstance {
         }
 
         const remaining = tabs.filter((_tab, i) => i !== index);
+        const next = remaining.length === 0
+            ? undefined
+            : selected !== path ? selected : remaining[Math.min(index, remaining.length - 1)].path;
+        // selectedPath primeiro: quando os separadores são recriados o CQLinhaDetail já seleciona o certo
+        MultiInstance.model.setProperty("/selectedPath", next ?? "");
         MultiInstance.model.setProperty("/tabs", remaining);
-        if (remaining.length === 0) {
-            return undefined;
-        }
-        return selected !== path ? selected : remaining[Math.min(index, remaining.length - 1)].path;
+        return next;
+    }
+
+    static getSelectedPath(): string {
+        return (MultiInstance.model.getProperty("/selectedPath") as string | undefined) ?? "";
     }
 
     static clear(): void {
@@ -687,6 +693,11 @@ export default class CQLinhaDetail extends Controller {
         // separadores de amostras (TabContainer) partilhados com o CQDetail
         this.getView()?.setModel(MultiInstance.model, "multi");
         this.getView()?.attachModelContextChange(this.onAmostraContextChange, this);
+        // sempre que os separadores são recriados (alteração em multi>/tabs) o TabContainer perderia a seleção
+        // e, ao renderizar, selecionaria o 1º separador (itemSelect sem clique): repõe-se o separador da amostra atual
+        const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer;
+        tabs.getBinding("items")?.attachChange(this.syncAmostraTab, this);
+        this.syncAmostraTab();
     }
 
     public onExit(): void {
@@ -1168,11 +1179,27 @@ export default class CQLinhaDetail extends Controller {
         }
     }
 
-    /** Clique num separador: liga a página a essa amostra (FE refaz o binding de toda a página) */
+    /**
+     * Clique num separador: liga a página a essa amostra (FE refaz o binding de toda a página).
+     * O TabContainer também dispara itemSelect sem clique (setSelectedItem programático e seleção por defeito
+     * no onBeforeRendering, quando a página pode ainda não ter contexto). Por isso compara-se com o
+     * separador selecionado no modelo "multi" e não com o contexto da view.
+     */
     public onAmostraTabSelect(oEvent: TabContainer$ItemSelectEvent): void {
-        const path = (oEvent.getParameter("item") as TabContainerItem).getKey();
-        if (path !== this.getContext().getPath()) {
-            this.navigateToPath(path);
+        const item = oEvent.getParameter("item") as TabContainerItem | null;
+        const path = item?.getKey();
+        const selectedPath = MultiInstance.getSelectedPath();
+        if (!path || !selectedPath || path === selectedPath) {
+            return;
+        }
+        this.navigateToPath(path);
+    }
+
+    /** Volta a marcar no TabContainer o separador da amostra atual (depois de os separadores serem recriados) */
+    private syncAmostraTab(): void {
+        const selectedPath = MultiInstance.getSelectedPath();
+        if (selectedPath) {
+            this.selectAmostraTab(selectedPath);
         }
     }
 
@@ -1258,17 +1285,26 @@ export default class CQLinhaDetail extends Controller {
 
         const current = this.getContext();
         const model = current.getModel();
-        const bindings = MultiInstance.getPaths()
-            .filter((path) => path !== current.getPath())
-            .map((path) => model.bindContext(path));
+        const editFlow = this.getExtensionAPI().getEditFlow();
+        const label = this.getText("CQLinhaDetail.btn.Calcular");
         try {
-            await this.getExtensionAPI().getEditFlow().invokeAction(Actions.doCalculations, {
-                contexts: [current, ...bindings.map((binding) => binding.getBoundContext() as Context)],
-                invocationGrouping: "Isolated",
-                label: this.getText("CQLinhaDetail.btn.Calcular")
-            });
+            // uma amostra de cada vez, à espera do pedido anterior: com "Isolated" o FE envia um $batch por
+            // amostra mas em paralelo, e todos disputam o bloqueio do mesmo draft do CQ
+            // ("bloqueio da entidade ZTABCQLINHAS_R falhou")
+            await editFlow.invokeAction(Actions.doCalculations, { contexts: current, label });
+
+            for (const path of MultiInstance.getPaths().filter((path) => path !== current.getPath())) {
+                const binding = model.bindContext(path);
+                try {
+                    const context = binding.getBoundContext() as Context;
+                    // lida só agora: ETag atual para o If-Match (o cálculo anterior pode tê-lo mudado)
+                    await context.requestObject();
+                    await editFlow.invokeAction(Actions.doCalculations, { contexts: context, label });
+                } finally {
+                    binding.destroy();
+                }
+            }
         } catch (error) { }
-        bindings.forEach((binding) => binding.destroy());
         oContainer.setBusy(false);
 
         await this.getExtensionAPI().getEditFlow().applyDocument(current);
@@ -1488,9 +1524,13 @@ Start of `f:content` (replaces `<f:content>` + the `<IconTabBar …>` opening ta
                     <items>
                         <TabContainerItem id="CQDetailLinha_multi_tab" key="{multi>path}" name="{parts:[ 'i18n>CQLinhaDetail.Title', 'multi>linha' ], formatter: '.formatter.detailLineFormatter'}"/>
                     </items>
+                    <layoutData>
+                        <!-- não encolher: o IconTabBar (height 100%) ocuparia todo o espaço e a barra ficava com altura 0 -->
+                        <FlexItemData id="CQDetailLinha_multi_tabs_layout" shrinkFactor="0"/>
+                    </layoutData>
                 </TabContainer>
 
-            <IconTabBar id="CQDetailLinha_sections_tabBar" stretchContentHeight="true" select=".onFilterSelect">
+            <IconTabBar id="CQDetailLinha_sections_tabBar" class="cqAmostraTabBar" stretchContentHeight="true" select=".onFilterSelect">
                 <layoutData>
                     <FlexItemData id="CQDetailLinha_sections_tabBar_layout" growFactor="1" minHeight="0"/>
                 </layoutData>
@@ -1508,10 +1548,18 @@ End of `f:content` (replaces `</IconTabBar>` + `</f:content>`):
    o conteúdo da amostra fica fora dele, no IconTabBar por baixo */
 .cqMultiTabs.sapMTabContainer {
     height: auto;
+    flex: 0 0 auto;
 }
 
 .cqMultiTabs .sapMTabContainerContent {
     display: none;
+}
+
+/* IconTabBar com stretchContentHeight posiciona-se em absoluto (top: 0) dentro do content da DynamicPage
+   e tapava o TabContainer: passa a ocupar só o espaço que o VBox lhe dá, por baixo dos separadores */
+.cqAmostraTabBar.sapMITB {
+    position: relative;
+    top: auto;
 }
 ```
 
@@ -1538,6 +1586,104 @@ multiInstance.error.create=Não foi possível criar a amostra.
 ```
 
 ---
+
+## Fix: `Cannot read properties of null (reading 'getPath')` in `onAmostraTabSelect`
+**Symptom:** the error appears after "Abrir selecionadas" and when reloading an amostra URL.
+
+**Cause:** `sap.m.TabContainer` fires `itemSelect` without a user click in two cases:
+- Every `setSelectedItem` call fires it.
+- In `onBeforeRendering` (`_setDefaultTab`), it selects the **first** tab whenever the selected item is missing.
+  That happens on the first render, and every time `multi>/tabs` changes, because the bound items are then
+  destroyed and recreated.
+
+At first render the page often has no binding context yet, so `this.getContext().getPath()` throws. Even when
+it doesn't throw, that automatic default selection would navigate to the first tab, not to the current amostra.
+
+**Fix (already applied to the sources above):**
+1. `onAmostraTabSelect` compares the tab with `MultiInstance.getSelectedPath()` instead of the view context. It
+   only navigates when the tab differs from the current amostra: a real click on another tab.
+2. `onInit` attaches `syncAmostraTab` to the `change` event of the TabContainer's `items` binding. After the items
+   are recreated, the current amostra's tab is selected again **before** rendering, so `_setDefaultTab` never picks
+   the wrong tab.
+3. `MultiInstance.remove` now updates `selectedPath` to the next tab **before** it replaces `/tabs`. The resync in
+   step 2 then selects the right tab. A new `MultiInstance.getSelectedPath()` helper reads it.
+
+## Fix: TabContainer not visible on `CQLinhaDetail`
+**Cause:** `CQDetailLinha_multi_box` is a flex column that fills the page. The `IconTabBar` below the TabContainer
+has `stretchContentHeight` (height 100%) and grows. Flex items shrink by default, and `.sapMTabContainer` has
+`overflow: hidden`, so its minimum height is 0. The browser shrinks the TabContainer to **0 px** to fit the
+IconTabBar.
+
+**Fix (already applied to sections 5, 6 and Appendix B):**
+- The TabContainer gets `FlexItemData shrinkFactor="0"`.
+- As a fallback, `style.css` sets `flex: 0 0 auto`.
+
+**Quick check in the browser console:**
+`document.querySelector(".cqMultiTabs")?.getBoundingClientRect().height`
+- `0` means it's this layout issue.
+- `undefined` means the control isn't rendered at all; check the view.
+- If the bar is there but has no tabs, check that `multi>/tabs` is filled (`MultiInstance.ensure`).
+
+## Fix: TabContainer covered by the IconTabBar
+**Diagnosis (browser console):**
+- The TabContainer is rendered with both tabs, at `top: 278`, `height: 52`.
+- `document.elementFromPoint` at that spot returns `sapMITHTextContent`, so the IconTabBar header is drawn
+  **on top of** the TabContainer.
+- No ancestor hides or scrolls it.
+
+**Cause:** with `stretchContentHeight="true"` inside the DynamicPage content, the IconTabBar is positioned
+absolutely from the top of the content area. It therefore ignores the TabContainer above it in the `VBox`.
+
+**Fix (already applied to sections 5, 6 and Appendix B):**
+- The IconTabBar gets `class="cqAmostraTabBar"`.
+- `style.css` makes it `position: relative`, so it takes the space the `VBox` (growFactor 1) gives it, below the tabs.
+
+## Fix: "The Data Service Request is required to be conditional" in `onApply`
+**Symptom:** `onApply` fails with this error when more than one tab is open, for example after creating
+amostras with "+".
+
+**Cause:** `onApply` builds a context for each open tab other than the current one, using
+`model.bindContext(path)`. These contexts have **never read any data**, so they have no `@odata.etag`. The OData V4
+model then sends the `doCalculations` POST for those amostras **without an `If-Match` header**. RAP requires one,
+because the entity has an ETag. The current amostra works because the FE page already read it.
+
+**Fix (already applied to section 3):**
+- `onApply` calls `context.requestObject()` on those contexts first. This GETs each amostra, including its ETag,
+  so the action is sent with `If-Match`.
+- The contexts are read right before the action, so the ETag is current, even for an amostra created moments
+  earlier.
+
+## Fix: "Impossível processar: bloqueio da entidade ZTABCQLINHAS_R falhou" in `onApply`
+**Symptom:** after the ETag fix, `onApply` with several tabs fails with this lock error.
+
+**Cause (confirmed in the Network tab):**
+- With several contexts and `invocationGrouping: "Isolated"`, FE sends **one `$batch` per amostra** (group ids
+  `apiMode2`, `apiMode3`, …), but it sends them **at the same time**.
+- All the paths are draft (`IsActiveEntity=false`). Every amostra belongs to the same CQ draft, so every request
+  needs the same lock on the CQ.
+- Each `$batch` runs in its own backend session. While the first one holds the lock, the parallel ones can't get
+  it: "bloqueio da entidade ZTABCQLINHAS_R falhou".
+- The single-amostra "Calcular" button never hits this, because only one request runs at a time.
+- A second problem: if the ETag of an amostra depends on the CQ (ETag master), calculating one amostra changes the
+  ETag of the next.
+
+**Fix (already applied to section 3):** `onApply` calculates the amostras **one at a time**:
+- One `invokeAction` per amostra, the current one first. Each call waits for the previous one to finish, exactly
+  like "Calcular", so only one request holds the CQ draft lock at a time.
+- Each other amostra is read (`requestObject`) **just before** its action, so the `If-Match` ETag is current even
+  if the previous calculation changed it (ETag master on the CQ).
+- If one amostra fails, the loop stops there. The amostras already calculated stay calculated.
+
+`invocationGrouping: "ChangeSet"` (a single `$batch`) was considered and rejected. It is all-or-nothing, and every
+call in the change set carries an ETag read beforehand, which risks `412` if the ETag depends on the CQ.
+
+**If the error persists**, check the action requests in the Network tab:
+- **The path has `IsActiveEntity=true`:** a tab points to the **active** amostra while the CQ is in edit, and the
+  draft lock blocks the active one. The tabs must then be reopened from the table in edit mode.
+- **Otherwise:** the lock comes from the `doCalculations` implementation itself (ABAP side).
+
+**Fallback:** go back to calculating only the current amostra in `onApply`
+(`await this.onCalcular()`, as before) and leave the other tabs to their own "Calcular" button.
 
 ## Risks to verify first
 1. **Switching tabs with `Routing.navigate(context)`.** FE decides whether a navigation replaces the
@@ -2661,9 +2807,13 @@ multiInstance.error.create=Não foi possível criar a amostra.
                     <items>
                         <TabContainerItem id="CQDetailLinha_multi_tab" key="{multi>path}" name="{parts:[ 'i18n>CQLinhaDetail.Title', 'multi>linha' ], formatter: '.formatter.detailLineFormatter'}"/>
                     </items>
+                    <layoutData>
+                        <!-- não encolher: o IconTabBar (height 100%) ocuparia todo o espaço e a barra ficava com altura 0 -->
+                        <FlexItemData id="CQDetailLinha_multi_tabs_layout" shrinkFactor="0"/>
+                    </layoutData>
                 </TabContainer>
 
-            <IconTabBar id="CQDetailLinha_sections_tabBar" stretchContentHeight="true" select=".onFilterSelect">
+            <IconTabBar id="CQDetailLinha_sections_tabBar" class="cqAmostraTabBar" stretchContentHeight="true" select=".onFilterSelect">
                 <layoutData>
                     <FlexItemData id="CQDetailLinha_sections_tabBar_layout" growFactor="1" minHeight="0"/>
                 </layoutData>

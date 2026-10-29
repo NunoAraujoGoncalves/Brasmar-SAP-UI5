@@ -1,0 +1,15 @@
+/* TabContainer do CQLinhaDetail usado só como barra de separadores (amostras):
+   o conteúdo da amostra fica fora dele, no IconTabBar por baixo */
+.cqMultiTabs.sapMTabContainer {
+    height: auto;
+    flex: 0 0 auto;
+}
+
+.cqMultiTabs .sapMTabContainerContent {
+    display: none;
+}
+
+.cqAmostraTabBar.sapMITB {
+    position: relative;
+    top: auto;
+}

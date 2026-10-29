@@ -24,6 +24,9 @@ import ColumnListItem from "sap/m/ColumnListItem";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import DynamicPage from "sap/f/DynamicPage";
 import Text from "sap/m/Text";
+import MultiInstance from "../modules/MultiInstance";
+import TabContainer, { TabContainer$ItemCloseEvent, TabContainer$ItemSelectEvent } from "sap/m/TabContainer";
+import TabContainerItem from "sap/m/TabContainerItem";
 
 /** Uma linha da tabela de pesagens do dialog Balanca */
 type Pesagem = { PB: string; uom: string; PesoDeclarado?: string };
@@ -51,6 +54,8 @@ export default class CQLinhaDetail extends Controller {
     cancelRowWeighing?: () => void;
     //testing
     iTimer: number | undefined;
+    //amostra do separador selecionado
+    currentAmostraPath?: string;
 
     public onInit(): void {
         super.onInit(); // needs to be called to properly initialize the page controller
@@ -65,9 +70,19 @@ export default class CQLinhaDetail extends Controller {
         });
         this.getView()?.setModel(oPesosModel, "balanca");
         this.getView()?.setModel(SerialScale.model, "serial");
+
+        // separadores de amostras (TabContainer) partilhados com o CQDetail
+        this.getView()?.setModel(MultiInstance.model, "multi");
+        this.getView()?.attachModelContextChange(this.onAmostraContextChange, this);
+        // sempre que os separadores são recriados (alteração em multi>/tabs) o TabContainer perderia a seleção
+        // e, ao renderizar, selecionaria o 1º separador (itemSelect sem clique): repõe-se o separador da amostra atual
+        const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer;
+        tabs.getBinding("items")?.attachChange(this.syncAmostraTab, this);
+        this.syncAmostraTab();
     }
 
     public onExit(): void {
+        this.getView()?.detachModelContextChange(this.onAmostraContextChange, this);
         this.cancelRowWeighing?.();
         this.stopWeighing();
         this.editHelper.destroy();
@@ -446,7 +461,7 @@ export default class CQLinhaDetail extends Controller {
             return;
         }
 
-        const context = this.getContext();   
+        const context = this.getContext();
         this.balancaDialog.setBusy(true);
         try {
             // 2. o backend permite criar filhos nesta linha? (InsertRestrictions -> __CreateByAssociationControl)
@@ -518,11 +533,156 @@ export default class CQLinhaDetail extends Controller {
         oTable.removeSelections(true);
     }
 
+    /* ---------- Multi-instância (separadores de amostras) ---------- */
+    /**
+     * A página foi ligada a outra amostra (separador, criação ou navegação normal):
+     * sincroniza os separadores e limpa o estado da Balança que pertencia à amostra anterior.
+     */
+    private onAmostraContextChange(): void {
+        const context = this.getView()?.getBindingContext() as Context | null | undefined;
+        const path = context?.getPath();
+        if (!context || !path || path === this.currentAmostraPath) {
+            return;
+        }
+        this.currentAmostraPath = path;
+
+        //Limpa pesagens por grabar
+        this.cancelRowWeighing?.();
+        this.stopWeighing();
+        this.getBalancaModel().setProperty("/PesosUn", []);
+        this.getBalancaModel().setProperty("/Calibres", []);
+
+        MultiInstance.ensure(path, String(context.getProperty("Linha") ?? ""));
+        this.selectAmostraTab(path);
+        if (!context.getProperty("Linha")) {
+            void context.requestProperty("Linha").then((linha) => MultiInstance.ensure(path, String(linha ?? "")));
+        }
+    }
+
+    /** Clique num separador: liga a página a essa amostra (FE refaz o binding de toda a página)
+     * O TabContainer também dispara itemSelect sem clique (setSelectedItem programático e seleção por defeito
+     * no onBeforeRendering, quando a página pode ainda não ter contexto). Por isso compara-se com o
+     * separador selecionado no modelo "multi" e não com o contexto da view. 
+     */
+    public onAmostraTabSelect(oEvent: TabContainer$ItemSelectEvent): void {
+        const item = oEvent.getParameter("item") as TabContainerItem | null;
+        const path = item?.getKey();
+        const selectedPath = MultiInstance.getSelectedPath();
+        if (!path || !selectedPath || path === selectedPath) {
+            return;
+        }
+        this.navigateToPath(path);
+    }
+
+    /** Volta a marcar no TabContainer o separador da amostra atual (depois de os separadores serem recriados) */
+    private syncAmostraTab(): void {
+        const selectedPath = MultiInstance.getSelectedPath();
+        if (selectedPath) {
+            this.selectAmostraTab(selectedPath);
+        }
+    }
+
+    /**
+     * Botão fechar do separador: tira a amostra dos separadores (NÃO a apaga).
+     * Fechar o último separador volta à página do CQ.
+     */
+    public onAmostraTabClose(oEvent: TabContainer$ItemCloseEvent): void {
+        oEvent.preventDefault(); // os separadores vêm do modelo "multi": é lá que se remove
+        const path = (oEvent.getParameter("item") as TabContainerItem).getKey();
+        const next = MultiInstance.remove(path);
+
+        if (next === undefined) {
+            const cabPath = MultiInstance.getCabPath(path);
+            if (cabPath) {
+                this.navigateToPath(cabPath);
+            }
+            return;
+        }
+
+        if (next !== this.getContext().getPath()) {
+            this.navigateToPath(next);
+        } else {
+            this.selectAmostraTab(next);
+        }
+    }
+
+    /**
+     * "+" do TabContainer (só em edição): cria uma amostra nova no CQ (draft) e abre-a num separador novo.
+     * Mesmo padrão de criação que onPressOkayDialog (binding próprio + created()).
+     */
+    public async onAmostraAdd(): Promise<void> {
+        const context = this.getContext();
+        const cabPath = MultiInstance.getCabPath(context.getPath());
+        if (!cabPath) {
+            return;
+        }
+
+        const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer;
+        tabs.setBusyIndicatorDelay(0);
+        tabs.setBusy(true);
+        const model = context.getModel();
+        const cabBinding = model.bindContext(cabPath);
+        try {
+            // 1. o backend permite criar amostras neste CQ? (InsertRestrictions -> __CreateByAssociationControl)
+            const cabContext = cabBinding.getBoundContext() as Context;
+            const insertable = await cabContext.requestProperty("__CreateByAssociationControl/_linhas");
+            if (insertable === false) {
+                MessageBox.error(this.getText("multiInstance.error.notInsertable"));
+                return;
+            }
+
+            // 2. criar a amostra (a Linha é numerada pelo backend)
+            const binding = model.bindList("_linhas", cabContext, undefined, undefined, {
+                $$ownRequest: true
+            }) as ODataListBinding;
+            const created = binding.create({}, true);
+            await created.created();
+            const path = created.getPath();
+            const linha = String(created.getProperty("Linha") ?? "");
+            binding.destroy();
+
+            // 3. novo separador + tabela de amostras do CQ atualizada + abrir a amostra
+            MultiInstance.add(path, linha);
+            MultiInstance.refreshAmostras?.();
+            MessageToast.show(this.getText("multiInstance.msg.created", [linha]));
+            this.navigateToPath(path);
+        } catch (error) {
+            MessageBox.error(this.getText("multiInstance.error.create"), {
+                details: String((error as Error)?.message ?? error)
+            });
+        } finally {
+            cabBinding.destroy();
+            tabs.setBusy(false);
+        }
+    }
 
     /* ---------- Footer Functions ---------- */
+    /** Aplicar: calcula todas as amostras abertas nos separadores e volta ao CQ */
     public async onApply(): Promise<void> {
-        await this.onCalcular();
-        await this.getExtensionAPI().getEditFlow().applyDocument(this.getContext());
+        const oContainer = this.getView()?.byId("CQDetailLinha_Content_scroll") as ScrollContainer;
+        oContainer.setBusy(true);
+
+        const current = this.getContext();
+        const model = current.getModel();
+        const paths = MultiInstance.getPaths().filter((path) => path !== current.getPath());
+        const editFlow = this.getExtensionAPI().getEditFlow();
+        const label = this.getText("CQLinhaDetail.btn.Calcular");
+        try {
+            await editFlow.invokeAction(Actions.doCalculations, { contexts: current, label });
+
+            for (const path of paths) {
+                const binding = model.bindContext(path);
+                try {
+                    const context = binding.getBoundContext() as Context;
+                    await context.requestObject();
+                    await editFlow.invokeAction(Actions.doCalculations, { contexts: context, label });
+                } finally {
+                    binding.destroy();
+                }
+            }
+        } catch (error) { }
+        oContainer.setBusy(false);
+        await this.getExtensionAPI().getEditFlow().applyDocument(current);
     }
 
     public onMessagesPress(oEvent: Event) {
@@ -573,6 +733,24 @@ export default class CQLinhaDetail extends Controller {
     private getBalancaModel(): JSONModel {
         return this.getView()!.getModel("balanca") as JSONModel;
     }
+
+
+    /** Navega (routing FE) para a amostra / CQ com este caminho OData */
+    private navigateToPath(path: string): void {
+        const binding = this.getContext().getModel().bindContext(path);
+        this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as Context);
+    }
+
+
+    /** Marca no TabContainer o separador da amostra com este caminho */
+    private selectAmostraTab(path: string): void {
+        const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer | undefined;
+        const item = tabs?.getItems().find((tab) => tab.getKey() === path);
+        if (tabs && item) {
+            tabs.setSelectedItem(item);
+        }
+    }
+
 
     /** Acrescenta uma pesagem (2 casas decimais) à coleção atual do dialog */
     private addPesagem(weight: number, uom: string): void {
