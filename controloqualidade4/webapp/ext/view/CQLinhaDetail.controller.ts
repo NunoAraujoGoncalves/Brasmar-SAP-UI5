@@ -38,6 +38,12 @@ type PesagemNavigation = "_PesosUn" | "_Calibres";
 /** Tempo máximo à espera de uma pesagem estável no botão por linha (Pesos Caixa) */
 const ROW_WEIGHING_TIMEOUT_MS = 20000;
 
+/** Tempo máximo à espera de uma navegação entre separadores de amostras */
+const AMOSTRA_NAVIGATION_TIMEOUT_MS = 10000;
+
+/** Pausa nos cliques dos separadores antes de navegar: cliques rápidos só carregam a última amostra */
+const AMOSTRA_TAB_DEBOUNCE_MS = 300;
+
 /**
  * @namespace brasmar.bm01.controloqualidade4.ext.view
  */
@@ -57,6 +63,16 @@ export default class CQLinhaDetail extends Controller {
     iTimer: number | undefined;
     //amostra do separador selecionado
     currentAmostraPath?: string;
+
+    /** navegação entre amostras em curso (só uma de cada vez) */
+    amostraNavigation?: Promise<void>;
+    /** último separador clicado durante uma navegação: é para lá que se vai quando ela acabar */
+    pendingAmostraPath?: string;
+    /** setSelectedItem feito pelo código (não é um clique) */
+    selectingAmostraTab = false;
+    /** espera entre cliques nos separadores (só o último navega) */
+    amostraTabTimer?: ReturnType<typeof setTimeout>;
+    amostraBound?: { path: string; resolve: () => void };
 
     public onInit(): void {
         super.onInit(); // needs to be called to properly initialize the page controller
@@ -87,6 +103,9 @@ export default class CQLinhaDetail extends Controller {
     public onExit(): void {
         this.getView()?.detachModelContextChange(this.onAmostraContextChange, this);
         this.getAppComponent().getRouter().getRoute(MultiInstance.ROUTE)?.detachPatternMatched(this.onAmostraRouteMatched, this)
+
+        clearTimeout(this.amostraTabTimer);
+
         this.cancelRowWeighing?.();
         this.stopWeighing();
         this.editHelper.destroy();
@@ -545,6 +564,12 @@ export default class CQLinhaDetail extends Controller {
     private onAmostraContextChange(): void {
         const context = this.getView()?.getBindingContext() as Context | null | undefined;
         const path = context?.getPath();
+
+        if (path && this.amostraBound?.path === path) {
+            this.amostraBound.resolve();
+            this.amostraBound = undefined;
+        }
+
         if (!context || !path || path === this.currentAmostraPath) {
             return;
         }
@@ -575,10 +600,17 @@ export default class CQLinhaDetail extends Controller {
         const item = oEvent.getParameter("item") as TabContainerItem | null;
         const path = item?.getKey();
         const selectedPath = MultiInstance.getSelectedPath();
-        if (!path || !selectedPath || path === selectedPath) {
+        if (this.selectingAmostraTab || !path || !selectedPath) {
             return;
         }
-        this.navigateToPath(path);
+
+        clearTimeout(this.amostraTabTimer);
+        this.amostraTabTimer = setTimeout(() => {
+            this.amostraTabTimer = undefined;
+            if (this.amostraNavigation || path !== MultiInstance.getSelectedPath()) {
+                this.navigateToPath(path);
+            }
+        }, AMOSTRA_TAB_DEBOUNCE_MS);
     }
 
     /** Volta a marcar no TabContainer o separador da amostra atual (depois de os separadores serem recriados) */
@@ -745,13 +777,76 @@ export default class CQLinhaDetail extends Controller {
      */
     private navigateToPath(path: string): void {
         const parameters = MultiInstance.getRouteParameters(path);
-        if (parameters) {
-            void this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters);
-            return;            
+        if (!parameters) {
+            //CQ Fecha o ultimo
+            const binding = this.getContext().getModel().bindContext(path);
+            this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as Context);
+            return;
         }
-        //CQ Fecha o ultimo
-        const binding = this.getContext().getModel().bindContext(path);
-        this.getExtensionAPI().getRouting().navigate(binding.getBoundContext() as  Context);
+        if (this.amostraNavigation) {
+            this.pendingAmostraPath = path;
+            return;
+        }
+
+        // um routing do FE de cada vez: dois em simultâneo deixavam a página presa no busy do FE
+        this.amostraNavigation = this.navigateAndWait(path, parameters).finally(() => {
+            this.amostraNavigation = undefined;
+            const pending = this.pendingAmostraPath;
+            this.pendingAmostraPath = undefined;
+            if (pending && pending !== MultiInstance.getSelectedPath()) {
+                this.navigateToPath(pending);
+            } else {
+                this.syncAmostraTab(); // o separador marcado volta a ser o da amostra mostrada
+            }
+        });
+    }
+
+
+    /**
+     * Navega para a amostra e só termina quando ela acabou de carregar:
+     * 1. routing do FE (hash + binding da página)
+     * 2. dados da amostra (contexto da página)
+     * 3. PageReady do FE (tabelas e restantes bindings da página)
+     * Assim nunca começa outra navegação com a página ainda a carregar.
+     */
+    private navigateAndWait(path: string, parameters: object): Promise<void> {
+        const navigation = (async () => {
+            try {
+                const bound = this.waitForAmostraBound(path); // antes de navegar, para não perder o evento
+                await this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters);
+                await bound;
+
+                // console.log("bound", path)
+
+                const context = this.getView()?.getBindingContext() as Context | undefined | null;
+                if (context?.getPath() === path) {
+                    await context.requestObject();
+                }
+                // waitPageReady existe no FE mas não está nos tipos 1.120
+                const pageReady = (this as unknown as { pageReady?: { waitPageReady?: () => Promise<void> } }).pageReady;
+                await pageReady?.waitPageReady?.();
+
+                // console.log("loaded", path)
+
+            } catch (error) {
+                // navegação cancelada / amostra inexistente: o FE já mostra o erro
+            }
+        })();
+        // segurança: os separadores nunca ficam bloqueados mais do que isto
+        const timeout = new Promise<void>((resolve) => setTimeout(resolve, AMOSTRA_NAVIGATION_TIMEOUT_MS));
+        return Promise.race([navigation, timeout]).finally(() => {
+            this.amostraBound = undefined;
+        });
+    }
+
+     /** Resolve quando a página estiver ligada à amostra `path` (já resolvida se a página já a mostra) */
+    private waitForAmostraBound(path: string): Promise<void> {
+        if (this.getView()?.getBindingContext()?.getPath() === path) {
+            return Promise.resolve();
+        }
+        return new Promise<void>((resolve) => {
+            this.amostraBound = { path, resolve };
+        });
     }
 
 
@@ -760,8 +855,14 @@ export default class CQLinhaDetail extends Controller {
         const tabs = this.byId("CQDetailLinha_multi_tabs") as TabContainer | undefined;
         const item = tabs?.getItems().find((tab) => tab.getKey() === path);
         if (tabs && item) {
-            tabs.setSelectedItem(item);
+            this.selectingAmostraTab = true;
+            try {
+                tabs.setSelectedItem(item);
+            } finally {
+                this.selectingAmostraTab = false;
+            }
         }
+
     }
 
 

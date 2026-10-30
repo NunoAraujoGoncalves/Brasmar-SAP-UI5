@@ -4,7 +4,7 @@
     xmlns:form="sap.ui.layout.form">
     <Dialog id="BalancaDialog_title" title="{i18n>BalancaDialog.title}" contentWidth="600px" beforeOpen=".onBalancaBeforeOpen" afterClose=".onBalancaAfterClose">
         <form:SimpleForm id="BalancaDialog_form" editable="true" labelSpanS="2">
-            <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onPressBalancaStart" enabled="{= !${balanca>/reading} }"  />
+            <Button id="BalancaDialog_btn_start" text="{i18n>BalancaDialog.btn.start}" icon="sap-icon://begin" press=".onTestStart" enabled="{= !${balanca>/reading} }"  />
             <Button id="BalancaDialog_btn_stop" text="{i18n>BalancaDialog.btn.stop}" icon="sap-icon://media-pause" press=".onPressBalancaEnd" enabled="{balanca>/reading}" />
         </form:SimpleForm>
 

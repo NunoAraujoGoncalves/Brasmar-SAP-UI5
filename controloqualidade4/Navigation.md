@@ -464,9 +464,8 @@ Supporting details:
 
 **Trade-off:** each tab switch waits 300 ms before it starts. The tab itself is marked immediately.
 
-**If the page still sticks busy:** the busy then comes from overlapping **data** loads, not overlapping routings. The
-only robust option left is waiting for the load, which is the previous version of this fix:
-`await context.requestObject()` plus `pageReady.waitPageReady()` in `navigateAndWait`.
+**If the page still sticks busy:** the busy then comes from overlapping **data** loads, not overlapping routings.
+Apply the fallback below ("Fallback: wait for each amostra to load (v2)").
 
 These blocks **replace** `onAmostraTabSelect`, `navigateToPath` and `selectAmostraTab` from section 3. They compile
 with the rest of the plan under `strict` TypeScript.
@@ -584,6 +583,150 @@ const AMOSTRA_TAB_DEBOUNCE_MS = 300;
         }
     }
 ```
+
+### Fallback: wait for each amostra to load (v2)
+**Symptom that remained with the first fallback:** fast clicks still left the page busy, and the console showed:
+```
+busy lock for brasmar.bm01.controloqualidade4::CQLinhasCQLinhaDetailPage/busy with value 1 timed out after 30 seconds!
+  BusyLocker.unlock ← InternalRouting.onDataReceived
+```
+
+**What the log says:**
+- When FE binds the page to an amostra, it **locks** the page busy as the page context's request starts
+  (`dataRequested`). It **unlocks** it when that request's data arrives (`InternalRouting.onDataReceived`).
+- The lock is a counter. "value 1 after unlock" means two amostras locked the page but only one unlocked it.
+- So the page was rebound to a new amostra while the previous amostra's request was still running. That request's
+  `dataReceived` never reaches FE, and the busy stays locked for good.
+
+**Why the first fallback didn't prevent it:**
+- `navigateToRoute(...)` resolves as soon as the **hash** changes. FE binds the page only after that, in its
+  route-matched handler.
+- At that moment the view still had the **previous** amostra's context. So `context.getPath() === path` was false
+  and `requestObject()` was skipped.
+- `waitPageReady()` resolved immediately, because the previous page was still "ready".
+- In practice nothing was awaited, and the next queued navigation started while FE was still loading.
+
+**Fix (v2): wait until the page is actually bound to the target amostra**, then for its data:
+1. Before navigating, register a waiter for the target path: `waitForAmostraBound(path)`.
+2. `navigateToRoute(...)`: the hash changes.
+3. `onAmostraContextChange` sees the view context become the target path and resolves the waiter. FE has now bound
+   the page and started its request, and the lock is taken.
+4. `context.requestObject()`: the page context's data has arrived. This is the same request FE unlocks on, so the
+   lock is released.
+5. `pageReady.waitPageReady()`: the tables and other bindings have loaded. By now FE has reset PageReady for the new
+   binding.
+
+Only then may the next navigation start. Step 4 alone already covers the busy lock, so this holds even if
+`waitPageReady` doesn't exist at runtime.
+
+**What stays from the fix above:**
+- the debounce (`onAmostraTabSelect`);
+- the queue in which the last click wins (`navigateToPath`, `pendingAmostraPath`);
+- `selectAmostraTab`;
+- the `onExit` line.
+
+**Safety timeout raised from 10 s to 20 s.** FE's own PageReady gives up after 7 s, so a slow amostra can take
+data time + 7 s. With 10 s, the queue could unlock while FE was still loading and start an overlapping navigation,
+which recreates the bug. 20 s only matters if something really hangs.
+
+**Trade-off:** fast clicking waits for the shown amostra to finish loading before moving to the last tab clicked. The
+clicked tab is marked immediately.
+
+**Already-stuck page:** a leaked lock can't be released from the app, so reload the page (F5) after the bug has
+happened once.
+
+#### Constant (replace the value)
+```ts
+/** Tempo máximo à espera de uma navegação entre separadores de amostras (o PageReady do FE desiste aos 7 s) */
+const AMOSTRA_NAVIGATION_TIMEOUT_MS = 20000;
+```
+
+#### Field (after `amostraTabTimer`)
+```ts
+    /** navegação à espera que o FE ligue a página a esta amostra (resolvida em onAmostraContextChange) */
+    amostraBound?: { path: string; resolve: () => void };
+```
+
+#### `onAmostraContextChange` (start of the method: the new `if` goes **before** the early return)
+```ts
+    private onAmostraContextChange(): void {
+        const context = this.getView()?.getBindingContext() as Context | null | undefined;
+        const path = context?.getPath();
+        // a navegação entre separadores em curso chegou à amostra pedida
+        if (path && this.amostraBound?.path === path) {
+            this.amostraBound.resolve();
+            this.amostraBound = undefined;
+        }
+        if (!context || !path || path === this.currentAmostraPath) {
+            return;
+        }
+        this.currentAmostraPath = path;
+        // ... resto igual
+```
+
+#### `navigateToPath` (only the `navigateAndWait` call changes: it now also passes `path`)
+```ts
+        // um routing do FE de cada vez: dois em simultâneo deixavam a página presa no busy do FE
+        this.amostraNavigation = this.navigateAndWait(path, parameters).finally(() => {
+```
+
+#### `navigateAndWait` + new `waitForAmostraBound` (replace the version above)
+```ts
+    /**
+     * Navega para a amostra e só termina quando ela acabou de carregar:
+     * 1. o FE ligou a página à amostra (onAmostraContextChange). A promise do navigateToRoute
+     *    resolve logo que o hash muda, ANTES do binding: não serve para esperar.
+     * 2. dados da amostra (o pedido do contexto da página é o que prende o busy do FE)
+     * 3. PageReady do FE (tabelas e restantes bindings da página)
+     * Assim nunca começa outra navegação com a página ainda a carregar.
+     */
+    private navigateAndWait(path: string, parameters: object): Promise<void> {
+        const navigation = (async () => {
+            try {
+                const bound = this.waitForAmostraBound(path); // antes de navegar, para não perder o evento
+                await this.getExtensionAPI().getRouting().navigateToRoute(MultiInstance.ROUTE, parameters);
+                await bound;
+                const context = this.getView()?.getBindingContext() as Context | undefined | null;
+                if (context?.getPath() === path) {
+                    await context.requestObject();
+                }
+                // waitPageReady existe no FE mas não está nos tipos 1.120
+                const pageReady = (this as unknown as { pageReady?: { waitPageReady?: () => Promise<void> } }).pageReady;
+                await pageReady?.waitPageReady?.();
+            } catch (error) {
+                // navegação cancelada / amostra inexistente: o FE já mostra o erro
+            }
+        })();
+        // segurança: os separadores nunca ficam bloqueados mais do que isto
+        const timeout = new Promise<void>((resolve) => setTimeout(resolve, AMOSTRA_NAVIGATION_TIMEOUT_MS));
+        return Promise.race([navigation, timeout]).finally(() => {
+            this.amostraBound = undefined;
+        });
+    }
+
+    /** Resolve quando a página estiver ligada à amostra `path` (já resolvida se a página já a mostra) */
+    private waitForAmostraBound(path: string): Promise<void> {
+        if (this.getView()?.getBindingContext()?.getPath() === path) {
+            return Promise.resolve();
+        }
+        return new Promise<void>((resolve) => {
+            this.amostraBound = { path, resolve };
+        });
+    }
+```
+
+#### Verify the fallback
+1. Add a temporary `console.log("bound", path)` after `await bound;` and `console.log("loaded", path)` after
+   `waitPageReady`. Click tabs fast. Each `bound` is followed by its `loaded` before the next `bound`, never interleaved.
+2. Click four tabs as fast as possible. The busy indicator appears and clears, and the last tab clicked is shown. No
+   "busy lock … timed out" and no PageReady timeout appear in the console.
+3. Click tab 2, then tab 3 while tab 2 is still loading. Tab 3 is marked immediately, and its content appears right
+   after tab 2 finishes loading.
+4. Close a tab with × (not the selected one). The page shows the same amostra, so the wait resolves at once and
+   doesn't block for 20 s.
+5. **If a `bound` log never appears** (each navigation waits the full 20 s), the view's context path differs from the
+   tab path. Log both: `this.getView()?.getBindingContext()?.getPath()` and `path`. Typically the difference is key
+   encoding, or FE redirecting draft ↔ active. Report the two values.
 
 ## Risks to verify first
 1. **`?query` passes through FE.**

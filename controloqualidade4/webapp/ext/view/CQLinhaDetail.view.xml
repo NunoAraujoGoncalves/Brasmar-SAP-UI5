@@ -94,7 +94,7 @@
                 <TabContainer id="CQDetailLinha_multi_tabs" class="cqMultiTabs" backgroundDesign="Solid" showAddNewButton="{ui>/isEditable}" addNewButtonPress=".onAmostraAdd" itemSelect=".onAmostraTabSelect" itemClose=".onAmostraTabClose" items="{path: 'multi>/tabs', templateShareable: false}">
                     <items>
                         <TabContainerItem id="CQDetailLinha_multi_tab" key="{multi>path}" 
-                        name="{= ${multi>linha} ? ${i18n>CQLinhaDetail.Title} + ': ' + ${multi>linha} : ${i18n>multiInstance.tab.new} }"></TabContainerItem>
+                        name="{= ${multi>linha} > 0 ? ${i18n>CQLinhaDetail.Title} + ': ' + ${multi>linha} : ${i18n>multiInstance.tab.new} }"></TabContainerItem>
                     </items>
                     <layoutData>
                         <FlexItemData id="CQDetailLinha_multi_tabs_layout" shrinkFactor="0"/>
